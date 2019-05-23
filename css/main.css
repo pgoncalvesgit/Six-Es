@@ -1,0 +1,495 @@
+body{
+	margin: 0px;
+	margin-top: 10px;
+}
+
+
+
+.fundo{	
+	position: relative;
+	margin:auto;
+	display:none;
+	width: 1300px;
+	height: 700px;
+	border:none;	
+}
+
+.jogador{
+	position: absolute;
+	margin-top: 0px;
+	top :10px;
+	left :10px;
+
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 35px;
+	color: #cddccc;
+}
+
+
+.tras{
+	position: absolute;
+	bottom :20px;
+	left :20px; 
+}
+
+.play{
+	display:none;
+	position: absolute;
+	bottom:45px;
+	right: 20px;
+}
+
+/*-----------START MENU-------*/
+#startMenu{
+	background: url("../resources/menu/startMenu_Fundo0.png") 0 0 /100% 100%;
+}
+#startMenu_0{
+	position: absolute;	
+	top :460px;
+	left :510px;
+}
+
+
+
+/*-----------LOGIN REG MENU-------*/
+#loginRegMenu{
+	background: url("../resources/menu/loginRegMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+#nome{
+	position: absolute;	
+	font-size:25pt;
+	font-weight: "bold";
+    height:50px;
+    width:275px;
+	top :330px;
+	left :510px;
+
+}
+
+#loginRegMenu_0{
+	position: absolute;	
+	top :500px;
+	left :480px;
+}
+#loginRegMenu_1{
+	position: absolute;	
+	top :495px;
+	left :700px;
+}
+
+
+
+/*-----------MAIN MENU-------*/
+
+#mainMenu{
+	background: url("../resources/menu/mainMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+
+#mainMenu_0{
+	position: absolute;
+	top :250px;
+	left :505px; 
+}
+
+#mainMenu_1{
+	position: absolute;
+	top :350px;
+	left :510px;
+
+}
+
+#mainMenu_2{
+	position: absolute;
+	top :450px;
+	left :510px;
+
+}
+
+
+
+#mainMenu_4{
+	position: absolute;
+	bottom :60px;
+	left :470px;
+}
+
+#mainMenu_5{
+	position: absolute;
+	bottom :62px;
+	left :770px;
+
+}
+#mainMenu_6{
+	position: absolute;
+	bottom :60px;
+	left :670px;
+}
+
+#mainMenu_7{
+	position: absolute;
+	bottom :60px;
+	left:570px;
+}
+
+
+/*-----------NIVEL MENU-------*/
+
+#nivelMenu{
+	background: url("../resources/menu/nivelMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+#nivelMenu_0{
+	display: none;
+	position: absolute;
+	top :250px;
+	left :510px; 
+}
+
+#nivelMenu_1{
+	display: none;
+	position: absolute;
+	top :320px;
+	left :510px;
+}
+#nivelMenu_2{
+	display: none;
+	position: absolute;
+	top :390px;
+	left :510px;
+}
+#nivelMenu_3{
+	display: none;
+	position: absolute;
+	top :460px;
+	left :510px;
+}
+
+
+
+/*-----------ESCOLHER NAVE MENU-------*/
+
+#escolhernaveMenu{
+	background: url("../resources/menu/escolhernaveMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+#escolhernaveMenu_0{
+	position: absolute;
+	top :250px;
+	left :420px; 
+}
+
+#escolhernaveMenu_1{
+	position: absolute;
+	top :250px;
+	left :760px;
+}
+
+
+
+#CaixaAc{
+	position: absolute;
+	margin: 0px;
+	padding: 10px;
+	padding-top:40px; 
+	left: 15%;
+	right: 55%;
+	bottom: 5%;
+	top: 70%; 
+	background: url("../resources/menu/escolhernaveMenu_Fundo1.png") 0 0 /100% 100%;
+	overflow-y: auto; 
+}
+
+#CaixaSpecs{
+	position: absolute;
+	margin: 0px;
+	padding: 10px;
+	padding-top:40px; 
+	left: 50%;
+	right: 20%;
+	bottom: 5%;
+	top: 70%; 
+	background: url("../resources/menu/escolhernaveMenu_Fundo2.png") 0 0 /100% 100%;
+	overflow-y: auto; 
+}
+
+.nave{
+	display: none;
+	position: absolute;
+}
+
+.textoAc{
+	display:none;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 16px;
+	color: #cddccc;
+}
+.textoSpecs{
+	display:none;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 16px;
+	color: #cddccc;
+}
+
+
+/*-----------POP UP MENU-------*/
+#navPop{
+	position: absolute;
+	width: 100vw;
+	top: 250px;
+	border:none;	
+}
+
+
+#popUpMenu{
+	position: relative;
+	margin:auto;
+	z-index: 1;
+	width: 300px;
+	height: 200px;
+	display:none;
+	background: url("../resources/menu/popUpMenu_Fundo0.png") 0 0 /100% 100%;
+
+}
+
+#textoPop{
+	position: absolute;
+	top :10px;
+	left :20px;
+	padding-right: 10px;
+	font-family: Impact, Charcoal, sans-serif;
+	color: #cddccc;
+}
+
+
+#popUpMenu_0{
+	position: absolute;
+	top :150px;
+	left :40px;
+}
+#popUpMenu_1{
+	position: absolute;
+	top :150px;
+	left :125px;
+}
+#popUpMenu_2{
+	position: absolute;
+	top :150px;
+	left :190px;
+}
+
+
+
+
+
+/*-----------PAUSA MENU-------*/
+#navPausa{
+	position: absolute;
+	width: 100vw;
+	top: 94px;
+	border:none;	
+}
+
+
+
+#pausaMenu{
+	position: relative;
+	margin:auto;
+	z-index: 2;
+	width: 400px;
+	height: 500px;
+	display:none;
+	background: url("../resources/menu/pausaMenu_Fundo0.png") 0 0 /100% 100%;
+
+}
+
+#pausaMenu_0{
+	position: absolute;
+	top :170px;
+	left :160px;
+
+}
+#pausaMenu_1{
+	position: absolute;
+	top :170px;
+	left :260px;
+
+}
+#pausaMenu_2{
+	position: absolute;
+	top :170px;
+	left :320px;
+
+}
+#pausaMenu_3{
+	position: absolute;
+	top :300px;
+	left :160px;
+
+}
+#pausaMenu_4{
+	position: absolute;
+	top :300px;
+	left :260px;
+
+}
+#pausaMenu_5{
+	position: absolute;
+	top :300px;
+	left :320px;
+
+}
+#pausaMenu_6{
+	position: absolute;
+	top :400px;
+	left :90px;
+}
+
+/*-----------AJUDA MENU-------*/
+#ajudaMenu{
+	background: url("../resources/menu/ajudaMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+#InformacaoAjuda{
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+	left: 2%;
+	right: 0%;
+	top: 20%;
+	bottom: 0%;
+	overflow-y: auto; 
+}
+
+#CaixaAjuda{
+	position: absolute;
+	margin: 0px;
+	padding: 10px;
+	left: 15%;
+	right: 15%;
+	top: 5%;
+	bottom: 5%;
+	background: url("../resources/menu/ajudaMenu_Fundo1.png") 0 0 /100% 100%;
+}
+
+.imgAjuda{
+	float:left;
+	width: 100px;
+	height: 100px;
+	border: 5px solid black;
+	background: white;
+	box-sizing: border-box;
+	margin: 0px;
+	margin-bottom: 10px;
+}
+
+.textoAjuda{
+	float:left;
+	width: 740px;
+	height: 100px;
+	border: 5px solid black;
+
+	font-family: Impact, Charcoal, sans-serif;
+	color: #cddccc;
+	
+	box-sizing: border-box;
+	padding: 10px;
+	margin: 0px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	overflow-y: auto; 
+}
+
+
+
+
+/*-----------CREDITOS MENU-------*/
+#creditosMenu{
+	background: url("../resources/menu/creditosMenu_Fundo0.png") 0 0 /100% 100%;
+}
+
+
+
+/*-----------CONTROLOS MENU-------*/
+#controlosMenu{
+	background: url("../resources/menu/controlosMenu_Fundo0.png") 0 0 /100% 100%;
+}
+#CaixaControlos{
+	position: absolute;
+	left: 15%;
+	right: 15%;
+	top: 5%;
+	bottom: 5%;
+	background: url("../resources/menu/controlosMenu_Fundo1.png") 0 0 /100% 100%;
+}
+#controlosMenu_1{
+	display: none;
+	position: absolute;
+	bottom :20px;
+	right: 20px;
+}
+
+
+/*-----------LEADERBOARD-------*/
+#leaderBoard{
+	background: url("../resources/menu/leaderBoard_Fundo0.png") 0 0 /100% 100%;
+}
+
+
+#TabelaLeaderBoard{
+	position: absolute;
+	left: 12%;
+	right: 12%;
+	top: 15%;
+	bottom: 15%;
+	background: url("../resources/menu/leaderBoard_Fundo1.png") 0 0 /100% 100%;
+}
+
+
+#listaC, #listaI{
+	position: absolute;
+	top: 105px;
+	width: 400px;
+	padding: 0px;
+
+	column-count: 2;
+
+	column-gap: 0px;
+	column-width: 1px;
+
+	line-height: 49px;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 35px;
+	color: #cddccc;
+
+
+	display: inline-block;
+	/*border: 2px solid;*/
+}
+
+#listaI{
+	margin-left: 3%;
+}
+#listaC{
+	margin-left: 53%;
+}
+
+
+
+
+#playerI , #playerC{
+	list-style-type: none;
+	text-align: left;
+}
+
+#time, #score{
+	list-style-type: none;
+	text-align: right;
+}
+
+
+
+
+
+

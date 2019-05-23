@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/main.css">
+
+		<!--<script type="application/x-httpd-php" language="php" src="php/test.php"></script>-->
+		
+
+		<script type="text/javascript" src="js/main.js"> </script>
+		<script type="text/javascript" src="js/xmlParser.js"></script>
+		<script type="text/javascript" src="js/jogo.js" defer="true"></script>
+
+		<script type="text/javascript" src="js/Classes/Componente.js" defer="true"></script>
+		
+		<script type="text/javascript" src="js/Classes/Extra.js" defer="true"></script>
+
+		<script type="text/javascript" src="js/Classes/Entidade.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Boss.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Inimigo.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Nave.js" defer="true"></script>
+
+		<script type="text/javascript" src="js/Classes/Objeto.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Asteroide.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Powerup.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Projetil.js" defer="true"></script>
+
+	</head>
+
+	<body>
+
+		<!-- <canvas id="canvas" width="1300" height="750" style="display: block; margin: auto;"></canvas> -->
+		<figure id = figuraCanvas , class = fundo>
+			<canvas id = "canvas" width="1300" height="700"></canvas>
+		</figure>
+
+		<!-- MenuPausa-->
+		<nav id = "navPausa">
+			<figure id = pausaMenu>
+				<img id="pausaMenu_0" src = "resources/menu/pausaMenu_0.png"> </img>
+				<img id="pausaMenu_1" src = "resources/menu/pausaMenu_1.png"> </img>
+				<img id="pausaMenu_2" src = "resources/menu/pausaMenu_2.png"> </img>				
+				<img id="pausaMenu_3" src = "resources/menu/pausaMenu_3.png"> </img>
+				<img id="pausaMenu_4" src = "resources/menu/pausaMenu_4.png"> </img>
+				<img id="pausaMenu_5" src = "resources/menu/pausaMenu_5.png"> </img>
+				<img id="pausaMenu_6" src = "resources/menu/pausaMenu_6.png"> </img>
+			</figure>
+		</nav>
+
+
+		<!-- MenuPopUp-->
+		<nav id = navPop>
+			<figure id = popUpMenu>
+				<p id = textoPop>instruçoes... </p>
+				<img id = "popUpMenu_0" src = "resources/menu/popUpMenu_0.png"> </img>
+				<img id = "popUpMenu_1" src = "resources/menu/popUpMenu_1.png"> </img>	
+				<img id = "popUpMenu_2" src = "resources/menu/popUpMenu_2.png"> </img>
+			</figure>
+		</nav>
+
+
+
+
+		<!-- StartMenu-->
+		<figure id = startMenu , class = fundo>
+			<img id="startMenu_0" src = "resources/menu/startMenu_0.png"> </img>
+		</figure>
+
+
+		<!-- LoginRegMenu-->
+		<figure id = loginRegMenu , class = fundo>
+			<input id = nome , type = "text" value = "player1", maxlength = "15">
+			<!-- input type = "text"  -->
+			<img id = "loginRegMenu_0" src = "resources/menu/loginRegMenu_0.png"> </img>
+			<img id = "loginRegMenu_1" src = "resources/menu/loginRegMenu_1.png"> </img>
+		</figure>
+
+
+
+		<!-- MainMenu-->
+		<figure id = mainMenu , class = fundo >
+			<p id = "jogadorMain", class = "jogador"> </p>
+			<img id="mainMenu_0" src = "resources/menu/mainMenu_0.png"> </img>
+			<img id="mainMenu_1" src = "resources/menu/mainMenu_1.png"> </img>
+			<img id="mainMenu_2" src = "resources/menu/mainMenu_2.png"> </img>
+			<img id="mainMenu_3" , class = tras , src = "resources/menu/mainMenu_3.png"> </img>
+			<img id="mainMenu_4" src = "resources/menu/mainMenu_4.png"> </img>
+			<img id="mainMenu_5" src = "resources/menu/mainMenu_5.png"> </img>
+			<img id="mainMenu_6" src = "resources/menu/mainMenu_6.png"> </img>
+			<img id="mainMenu_7" src = "resources/menu/mainMenu_7.png"> </img>
+		</figure>
+		
+		<!-- NivelMenu-->
+		<figure id = nivelMenu , class = fundo >
+			<p id = "jogadorNivel", class = "jogador"> </p>
+			<img id="nivelMenu_0" src = "resources/menu/nivelMenu_0.png"> </img>
+			<img id="nivelMenu_1" src = "resources/menu/nivelMenu_1.png"> </img>
+			<img id="nivelMenu_2" src = "resources/menu/nivelMenu_2.png"> </img>
+			<img id="nivelMenu_3" src = "resources/menu/nivelMenu_3.png"> </img>
+			<img id="nivelMenu_4" , class = tras src = "resources/menu/nivelMenu_4.png"> </img>
+		</figure>
+
+		<!-- EscolhernaveMenu-->
+		<figure id = escolhernaveMenu , class = fundo >
+			<img id="escolhernaveMenu_0" src = "resources/menu/escolhernaveMenu_0.png"> </img>
+			<img id="escolhernaveMenu_1" src = "resources/menu/escolhernaveMenu_1.png"> </img>
+			<img id="escolhernaveMenu_2" , class = play , src = "resources/menu/escolhernaveMenu_2.png"> </img>
+			<img id="escolhernaveMenu_3", class = tras  src = "resources/menu/escolhernaveMenu_3.png"> </img>
+
+			<figure id = CaixaAc>
+				<p id = nave0 , class = textoAc> - Nave Inicial -</p>
+				<p id = nave1 , class = textoAc> Joga o modo Infinito pelo menos uma vez</p>
+				<p id = nave2 , class = textoAc> Acaba o nivel 1 ficando com pelo menos 3 vidas</p>
+				<p id = nave3 , class = textoAc> Passe o nivel 2 para desbloquear</p>
+				<p id = nave4 , class = textoAc> [ Desafio ] Quando no menu Principal, escreva o que fica muito bom quando possui o ananas como topping. Hint: começa com "p"</p>
+			</figure>
+			<figure id = CaixaSpecs>
+				<p id = nave0 , class = textoSpecs>
+					Número de vidas    -> 3 <br>
+					Velocidade         -> Normal <br>
+					Cooldown dos Tiros -> Normal
+				</p>
+				<p id = nave1 , class = textoSpecs>
+					Número de vidas    -> 2 <br>
+					Velocidade         -> Muito Rápida <br>
+					Cooldown dos Tiros -> Normal
+				</p>
+				<p id = nave2 , class = textoSpecs>
+					Número de vidas    -> 5 <br>
+					Velocidade         -> Lenta <br>
+					Cooldown dos Tiros -> Normal
+				</p>
+				<p id = nave3 , class = textoSpecs>
+					Número de vidas    -> 2 <br>
+					Velocidade         -> Normal <br>
+					Cooldown dos Tiros -> Muito Rápido
+				</p>
+				<p id = nave4 , class = textoSpecs>
+					Número de vidas    -> 3 <br>
+					Velocidade         -> Rápido <br>
+					Cooldown dos Tiros -> Rápido <br>
+					Nota: Maior que as outras naves
+				</p>
+			</figure>
+
+			<img id="nave1_0" , class = nave src = "resources/menu/nave1_0.png"> </img>
+			<img id="nave0_0" , class = nave src = "resources/menu/nave0_0.png"> </img>
+			<img id="nave1_1" , class = nave src = "resources/menu/nave1_1.png"> </img>
+			<img id="nave0_1" , class = nave src = "resources/menu/nave0_1.png"> </img>
+			<img id="nave1_2" , class = nave src = "resources/menu/nave1_2.png"> </img>
+			<img id="nave0_2" , class = nave src = "resources/menu/nave0_2.png"> </img>
+			<img id="nave1_3" , class = nave src = "resources/menu/nave1_3.png"> </img>
+			<img id="nave0_3" , class = nave src = "resources/menu/nave0_3.png"> </img>
+			<img id="nave1_4" , class = nave src = "resources/menu/nave1_4.png"> </img>
+			<img id="nave0_4" , class = nave src = "resources/menu/nave0_4.png"> </img>
+		</figure>
+
+		<!-- LeaderBoard-->
+		<figure id = leaderBoard , class = fundo>
+			<p id = "jogadorLeaderBoard", class = "jogador"> </p>
+			<figure id = TabelaLeaderBoard>
+
+				<ul id = listaI>
+					<ul id = playerI>
+						<li id = I0> </li>
+						<li id = I1> </li>
+						<li id = I2> </li>
+						<li id = I3> </li>
+						<li id = I4> </li>
+						<li id = I5> </li>
+					</ul>	
+
+					<ul id = time>	
+						<li id = I6> </li>
+						<li id = I7> </li>
+						<li id = I8> </li>
+						<li id = I9> </li>
+						<li id = I10> </li>
+						<li id = I11> </li>
+					</ul>
+				</ul>
+
+
+
+
+				<ul id = listaC>
+					<ul id = playerC>
+						<li id = C0> </li>
+						<li id = C1> </li>
+						<li id = C2> </li>
+						<li id = C3> </li>
+						<li id = C4> </li>
+						<li id = C5> </li>
+					</ul>	
+
+					<ul id = score>	
+						<li id = C6> </li>
+						<li id = C7> </li>
+						<li id = C8> </li>
+						<li id = C9> </li>
+						<li id = C10> </li>
+						<li id = C11> </li>
+					</ul>
+				</ul>
+			</figure>
+
+
+			<img id="leaderBoard_0" , class = tras src = "resources/menu/leaderBoard_0.png"> </img>
+		</figure>
+
+		<!-- AjudaMenu-->
+		<figure id = ajudaMenu , class = fundo >
+			<figure id = CaixaAjuda>
+				<figure id = InformacaoAjuda> 
+
+					<img id="ajudaMenuImg_0", class = "imgAjuda", src = "resources/menu/asteroideAjuda_0.png"> </img>
+					<p id = ajudaMenuTexto_0 , class = "textoAjuda"> [Asteroide] Se te acertar perdes uma vida e ficas temporariamente invoneravel </p>					
+
+					<img id="ajudaMenuImg_1", class = "imgAjuda", src = "resources/jogo/powerups_0.png"> </img>
+					<p id = ajudaMenuTexto_1 , class = "textoAjuda"> [PowerUp] Aumenta a velocidade da nave</p>
+					
+					<img id="ajudaMenuImg_2", class = "imgAjuda", src = "resources/jogo/powerups_1.png"> </img>
+					<p id = ajudaMenuTexto_2 , class = "textoAjuda"> [PowerUp] Nave ganha mais 1 vida </p>
+
+					<img id="ajudaMenuImg_3", class = "imgAjuda", src = "resources/jogo/powerups_2.png"> </img>
+					<p id = ajudaMenuTexto_3 , class = "textoAjuda"> [PowerUp] Escudo protetor de uso unico. Expira passado algum tempo</p>
+					
+					<img id="ajudaMenuImg_4", class = "imgAjuda", src = "resources/jogo/powerups_3.png"> </img>
+					<p id = ajudaMenuTexto_4 , class = "textoAjuda"> [PowerUp] os tiros da nave ficam mais rapidos</p>
+
+
+					<img id="ajudaMenuImg_5", class = "imgAjuda", src = "resources/jogo/powerups_4.png"> </img>
+					<p id = ajudaMenuTexto_5 , class = "textoAjuda"> [PowerUp] A nave aumenta de tamanho</p>
+
+
+					<img id="ajudaMenuImg_6", class = "imgAjuda", src = "resources/jogo/powerups_5.png"> </img>
+					<p id = ajudaMenuTexto_6 , class = "textoAjuda"> [PowerUp] A nave diminui de tamanho </p>
+
+
+					<img id="ajudaMenuImg_7", class = "imgAjuda", src = "resources/jogo/powerups_6.png"> </img>
+					<p id = ajudaMenuTexto_7 , class = "textoAjuda"> [PowerUp] Diminui um pouco o cooldown dos tiros da nave </p>
+
+
+					<img id="ajudaMenuImg_8", class = "imgAjuda", src = "resources/jogo/powerups_7.png"> </img>
+					<p id = ajudaMenuTexto_8 , class = "textoAjuda"> [PowerUp] Upgrade nos tiros da tua nave</p>
+
+
+					<img id="ajudaMenuImg_9", class = "imgAjuda", src = "resources/jogo/powerups_8.png"> </img>
+					<p id = ajudaMenuTexto_9 , class = "textoAjuda"> [PowerUp] Diminui significamente o cooldown dos tiros da nave</p>
+
+
+					<img id="ajudaMenuImg_10", class = "imgAjuda", src = "resources/jogo/boss_0.png"> </img>
+					<p id = ajudaMenuTexto_10 , class = "textoAjuda"> [Boss] Inimigo que podera aparecer prto do fim de um nivel </p>
+
+					<img id="ajudaMenuImg_11", class = "imgAjuda", src = "resources/jogo/tirosInimigos_0.png"> </img>
+					<p id = ajudaMenuTexto_11 , class = "textoAjuda"> [Tiros] Boss e inimigos vao dispara contra ti. Se te acertar perdes uma vida e ficas temporariamente invoneravel  </p>
+
+					<img id="ajudaMenuImg_12", class = "imgAjuda", src = "resources/menu/tiroAjuda_0.png"> </img>
+					<p id = ajudaMenuTexto_12 , class = "textoAjuda"> [Tiros] No nivel 2 comeca com o tiro de nivel 2  </p>
+
+					<img id="ajudaMenuImg_13", class = "imgAjuda", src = "resources/menu/tiroAjuda_1.png"> </img>
+					<p id = ajudaMenuTexto_13 , class = "textoAjuda"> [Tiros] No nivel 3 comeca com o tiro de nivel 3</p>
+				</figure>
+			</figure>
+
+			<img id="ajudaMenu_0" , class = tras src = "resources/menu/ajudaMenu_0.png"> </img>
+			<img id="ajudaMenu_1" , class = play src = "resources/menu/ajudaMenu_1.png"> </img>
+		</figure>
+
+		<!-- ControlosMenu-->
+		<figure id = controlosMenu , class = fundo >
+			<figure id = CaixaControlos>
+			</figure>
+			<img id="controlosMenu_0" , class = tras src = "resources/menu/controlosMenu_0.png"> </img>
+			<img id="controlosMenu_1" , src = "resources/menu/controlosMenu_1.png"> </img>
+			<img id="controlosMenu_2" , class = play , src = "resources/menu/controlosMenu_2.png"> </img>
+		</figure>
+
+
+		<!-- CreditosMenu-->
+		<figure id = creditosMenu , class = fundo >
+			<p id = "jogadorCreditos", class = "jogador"> </p>
+			<img id="creditosMenu_0" , class = tras src = "resources/menu/creditosMenu_0.png"> </img>
+		</figure>
+
+
+
+	</body>
+</html>
