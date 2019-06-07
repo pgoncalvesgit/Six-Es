@@ -52,7 +52,7 @@ body{
 
 /*-----------START MENU-------*/
 #startMenu{
-	background: url("../resources/menu/startMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/startMenu_Background0.jpg") 0 0 /100% 100%;
 }
 #startMenu_0{
 	position: absolute;	
@@ -64,7 +64,7 @@ body{
 
 /*-----------LOGIN REG MENU-------*/
 #loginRegMenu{
-	background: url("../resources/menu/loginRegMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/loginRegMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 #name{
@@ -94,7 +94,7 @@ body{
 /*-----------MAIN MENU-------*/
 
 #mainMenu{
-	background: url("../resources/menu/mainMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/mainMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 
@@ -148,7 +148,7 @@ body{
 /*-----------NIVEL MENU-------*/
 
 #levelMenu{
-	background: url("../resources/menu/levelMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/levelMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 #levelMenu_0{
@@ -182,7 +182,7 @@ body{
 /*-----------ESCOLHER NAVE MENU-------*/
 
 #chooseSpaceshipMenu{
-	background: url("../resources/menu/chooseSpaceshipMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/chooseSpaceshipMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 #chooseSpaceshipMenu_0{
@@ -208,7 +208,7 @@ body{
 	right: 55%;
 	bottom: 5%;
 	top: 70%; 
-	background: url("../resources/menu/chooseSpaceshipMenu_Background1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/chooseSpaceshipMenu_Background1.jpg") 0 0 /100% 100%;
 	overflow-y: auto; 
 }
 
@@ -221,7 +221,7 @@ body{
 	right: 20%;
 	bottom: 5%;
 	top: 70%; 
-	background: url("../resources/menu/chooseSpaceshipMenu_Background2.png") 0 0 /100% 100%;
+	background: url("../resources/menu/chooseSpaceshipMenu_Background2.jpg") 0 0 /100% 100%;
 	overflow-y: auto; 
 }
 
@@ -260,7 +260,7 @@ body{
 	width: 300px;
 	height: 200px;
 	display:none;
-	background: url("../resources/menu/popUpMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/popUpMenu_Background0.jpg") 0 0 /100% 100%;
 
 }
 
@@ -311,7 +311,7 @@ body{
 	width: 400px;
 	height: 500px;
 	display:none;
-	background: url("../resources/menu/pauseMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/pauseMenu_Background0.jpg") 0 0 /100% 100%;
 
 }
 
@@ -359,7 +359,7 @@ body{
 
 /*-----------AJUDA MENU-------*/
 #helpMenu{
-	background: url("../resources/menu/helpMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/helpMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 #helpInformation{
@@ -381,7 +381,7 @@ body{
 	right: 15%;
 	top: 5%;
 	bottom: 5%;
-	background: url("../resources/menu/helpMenu_Background1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/helpMenu_Background1.jpg") 0 0 /100% 100%;
 }
 
 .imgHelp{
@@ -417,14 +417,14 @@ body{
 
 /*-----------CREDITOS MENU-------*/
 #creditsMenu{
-	background: url("../resources/menu/creditsMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/creditsMenu_Background0.jpg") 0 0 /100% 100%;
 }
 
 
 
 /*-----------CONTROLOS MENU-------*/
 #controlsMenu{
-	background: url("../resources/menu/controlsMenu_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/controlsMenu_Background0.jpg") 0 0 /100% 100%;
 }
 #BoxControls{
 	position: absolute;
@@ -432,7 +432,7 @@ body{
 	right: 15%;
 	top: 5%;
 	bottom: 5%;
-	background: url("../resources/menu/controlsMenu_Background1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/controlsMenu_Background1.jpg") 0 0 /100% 100%;
 }
 #controlsMenu_1{
 	display: none;
@@ -444,7 +444,7 @@ body{
 
 /*-----------LEADERBOARD-------*/
 #leaderBoard{
-	background: url("../resources/menu/leaderBoard_Background0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/leaderBoard_Background0.jpg") 0 0 /100% 100%;
 }
 
 
@@ -454,7 +454,7 @@ body{
 	right: 12%;
 	top: 15%;
 	bottom: 15%;
-	background: url("../resources/menu/leaderBoard_Background1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/leaderBoard_Background1.jpg") 0 0 /100% 100%;
 }
 
 
