@@ -1,0 +1,30 @@
+Um level é constituido por uma entrada de enemies <enemies> que possui dois tipos de enemies, um obrigatorio (<normal>)
+e outro opcional (<boss>)
+
+Dentro dos normal, cada tag (exemplo: <t1>) constitui uma onda de enemies (a tag no possui qualquer name especifico)
+cada enemy é separado por espaços, por exemplo "1-0.5-0-n 1-0.15-0-n 1-0.2-0-n 1-0.3-0-n", sendo cada característica de
+um enemy separada por "-", exemplo: "1-0.5-0-n". Este enemy, é um enemy com o id 1, tamanho 0.5 (50%) da imagem original
+o nível do rocket é o 0 (ou 1, dependendo do que se considera o começo), e o powerup está ausente porque se colocou n. Podia ser colocado
+qualquer outro valor inteiro, desde que existisse tal index de powerup.
+
+Todas as tags terão que ser closesdas convenientemente (exemplo: </normal>)
+
+Quando à tag do boss, esta irá possui dentro dela dois números separados por um "-".
+O primeiro número corresponde ao id do enemy.
+O segundo número corresponde ao tamanho relactive à imagem original (1 = 100%)
+
+Qualquer erro irá ser apresentado na consola ao ler o nível
+
+
+Exemplo de XML:
+
+<enemies>
+	<normal>
+		<t1>1-0.5-0-n 1-0.15-0-n 1-0.2-0-n 1-0.3-0-n</t1>
+		<t2>0-0.30-1-7</t2>
+		<t3>1-0.25-0-2 1-0.25-0-n 1-0.25-0-n 1-0.25-0-n 1-0.25-0-n</t3>
+		<t4>0-0.40-1-n 1-0.40-1-2</t4>
+		<t5>1-0.50-2-1</t5>
+	</normal>
+	<boss>0-1</boss>
+</enemies>

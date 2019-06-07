@@ -1,72 +1,72 @@
 "use strict";
 
 
-function leXml(rawFile, entidadesInimigas, imgs){
+function readXML(rawFile, enemyEntities, imgs){
 	var allText = rawFile.responseText;
     var parser = new DOMParser();
 	var xmlDoc = parser.parseFromString(allText,"text/xml");
 
-	var inimigos = xmlDoc.children;
-	if(inimigos[0].tagName == "inimigos"){
-		var todosInimigos = inimigos[0].children;
-		if(todosInimigos[0].tagName == "parsererror"){
-			console.log("erro nos inimigos");
+	var enemies = xmlDoc.children;
+	if(enemies[0].tagName == "enemies"){
+		var everyEnemies = enemies[0].children;
+		if(everyEnemies[0].tagName == "parsererror"){
+			console.log("erro nos enemies");
 			return;
 		}
-		for (let i = 0; i < todosInimigos.length; i++){
-			if(todosInimigos[i].tagName == "normais"){
-				var normais_tratado = new Array();
-				var normais = todosInimigos[i];
-				if(normais.children[0].tagName == "parsererror"){
-					console.log("erro nos normais");
+		for (let i = 0; i < everyEnemies.length; i++){
+			if(everyEnemies[i].tagName == "normal"){
+				var normal_tratado = new Array();
+				var normal = everyEnemies[i];
+				if(normal.children[0].tagName == "parsererror"){
+					console.log("erro nos normal");
 					return;
 				}
-				for(let j = 0; j < normais.children.length; j++){
-					if(normais.children[j].children.length == 0){
-						var naves_pre_tratamento = normais.children[j].innerHTML.split(" ");
+				for(let j = 0; j < normal.children.length; j++){
+					if(normal.children[j].children.length == 0){
+						var spaceships_pre_tratamento = normal.children[j].innerHTML.split(" ");
 						var array_aux = new Array();
-						for (let k = 0; k < naves_pre_tratamento.length; k++){
-							var naves = naves_pre_tratamento[k].split("-");
-							if(naves.length == 4){
-								naves[0] = parseInt(naves[0]);
-								naves[1] = parseFloat(naves[1]);
-								naves[2] = parseInt(naves[2]);
-								if(naves[3] != "n"){
-									naves[3] = parseInt(naves[3]);
+						for (let k = 0; k < spaceships_pre_tratamento.length; k++){
+							var spaceships = spaceships_pre_tratamento[k].split("-");
+							if(spaceships.length == 4){
+								spaceships[0] = parseInt(spaceships[0]);
+								spaceships[1] = parseFloat(spaceships[1]);
+								spaceships[2] = parseInt(spaceships[2]);
+								if(spaceships[3] != "n"){
+									spaceships[3] = parseInt(spaceships[3]);
 								}
-								if (naves[0] >= 0 && naves[0] < imgs["inimigos"].length      &&
-									naves[1] >  0                                            &&
-									naves[2] >= 0 && naves[2] < 6                            && //podia nao ser 6
-									(naves[3] == "n" ||
-									naves[3] >= 0 && naves[3] < imgs["powerups"].length)){
-									array_aux.push(naves);
+								if (spaceships[0] >= 0 && spaceships[0] < imgs["enemies"].length      &&
+									spaceships[1] >  0                                            &&
+									spaceships[2] >= 0 && spaceships[2] < 6                            && //podia no ser 6
+									(spaceships[3] == "n" ||
+									spaceships[3] >= 0 && spaceships[3] < imgs["powerups"].length)){
+									array_aux.push(spaceships);
 								}
 								else{
-									console.log("nave nao existente, ou tamanho impossivel, nivel mal feito");
+									console.log("spaceship no existente, ou tamanho impossivel, level mal feito");
 									return;
 								}
 							}
 							else{
-								console.log("erro numa nave");
+								console.log("erro numa spaceship");
 								return;
 							}
 						}
 						if (array_aux.length == 0){
-							console.log("erro nos indices das naves");
+							console.log("erro nos indexs das spaceships");
 							return;
 						}
-						normais_tratado.push(array_aux);
+						normal_tratado.push(array_aux);
 					}
 					else{
 						console.log("erro");
 						return;
 					}
 				}
-				entidadesInimigas[0] = normais_tratado;
+				enemyEntities[0] = normal_tratado;
 			}
-			else if(todosInimigos[i].tagName == "boss"){
+			else if(everyEnemies[i].tagName == "boss"){
 				var boss_tratado = new Array();
-				var boss_pre_tratamento = todosInimigos[i];
+				var boss_pre_tratamento = everyEnemies[i];
 
 				if(boss_pre_tratamento.children.length == 0){
 					var boss = boss_pre_tratamento.innerHTML.split("-");
@@ -74,10 +74,10 @@ function leXml(rawFile, entidadesInimigas, imgs){
 						boss_tratado.push(parseInt(boss[0]));
 						boss_tratado.push(parseFloat(boss[1]));
 						if(boss_tratado[0] >= 0 && boss_tratado[0] < imgs["boss"].length && boss[1] > 0){
-							entidadesInimigas.push(boss_tratado);
+							enemyEntities.push(boss_tratado);
 						}
 						else{
-							console.log("Boss com indice ou tamanho nao permitido");
+							console.log("Boss com index ou tamanho no permitido");
 							return;
 						}
 					}
@@ -87,7 +87,7 @@ function leXml(rawFile, entidadesInimigas, imgs){
 					}
 				}
 				else{
-					console.log("Erro na formatacao do boss (nao pode ter filhos)");
+					console.log("Erro na formatacao do boss (no pode ter filhos)");
 					return;
 				}
 			}

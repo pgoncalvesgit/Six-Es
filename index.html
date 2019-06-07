@@ -5,46 +5,44 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/main.css">
 
-		<!--<script type="application/x-httpd-php" language="php" src="php/test.php"></script>-->
-		
-
 		<script type="text/javascript" src="js/main.js"> </script>
 		<script type="text/javascript" src="js/xmlParser.js"></script>
-		<script type="text/javascript" src="js/jogo.js" defer="true"></script>
 
-		<script type="text/javascript" src="js/Classes/Componente.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Game.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Player.js" defer="true"></script>
+
+		<script type="text/javascript" src="js/Classes/Component.js" defer="true"></script>
 		
 		<script type="text/javascript" src="js/Classes/Extra.js" defer="true"></script>
 
-		<script type="text/javascript" src="js/Classes/Entidade.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Entity.js" defer="true"></script>
 		<script type="text/javascript" src="js/Classes/Boss.js" defer="true"></script>
-		<script type="text/javascript" src="js/Classes/Inimigo.js" defer="true"></script>
-		<script type="text/javascript" src="js/Classes/Nave.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Enemy.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Spaceship.js" defer="true"></script>
 
-		<script type="text/javascript" src="js/Classes/Objeto.js" defer="true"></script>
-		<script type="text/javascript" src="js/Classes/Asteroide.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Bulk.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Asteroid.js" defer="true"></script>
 		<script type="text/javascript" src="js/Classes/Powerup.js" defer="true"></script>
-		<script type="text/javascript" src="js/Classes/Projetil.js" defer="true"></script>
+		<script type="text/javascript" src="js/Classes/Rocket.js" defer="true"></script>
 
 	</head>
 
 	<body>
 
-		<!-- <canvas id="canvas" width="1300" height="750" style="display: block; margin: auto;"></canvas> -->
-		<figure id = figuraCanvas , class = fundo>
+		<figure id = canvasFigure , class = background>
 			<canvas id = "canvas" width="1300" height="700"></canvas>
 		</figure>
 
-		<!-- MenuPausa-->
-		<nav id = "navPausa">
-			<figure id = pausaMenu>
-				<img id="pausaMenu_0" src = "resources/menu/pausaMenu_0.png"> </img>
-				<img id="pausaMenu_1" src = "resources/menu/pausaMenu_1.png"> </img>
-				<img id="pausaMenu_2" src = "resources/menu/pausaMenu_2.png"> </img>				
-				<img id="pausaMenu_3" src = "resources/menu/pausaMenu_3.png"> </img>
-				<img id="pausaMenu_4" src = "resources/menu/pausaMenu_4.png"> </img>
-				<img id="pausaMenu_5" src = "resources/menu/pausaMenu_5.png"> </img>
-				<img id="pausaMenu_6" src = "resources/menu/pausaMenu_6.png"> </img>
+		<!-- MenuPause-->
+		<nav id = "navPause">
+			<figure id = pauseMenu>
+				<img id="pauseMenu_0" src = "resources/menu/pauseMenu_0.png"> </img>
+				<img id="pauseMenu_1" src = "resources/menu/pauseMenu_1.png"> </img>
+				<img id="pauseMenu_2" src = "resources/menu/pauseMenu_2.png"> </img>				
+				<img id="pauseMenu_3" src = "resources/menu/pauseMenu_3.png"> </img>
+				<img id="pauseMenu_4" src = "resources/menu/pauseMenu_4.png"> </img>
+				<img id="pauseMenu_5" src = "resources/menu/pauseMenu_5.png"> </img>
+				<img id="pauseMenu_6" src = "resources/menu/pauseMenu_6.png"> </img>
 			</figure>
 		</nav>
 
@@ -52,7 +50,7 @@
 		<!-- MenuPopUp-->
 		<nav id = navPop>
 			<figure id = popUpMenu>
-				<p id = textoPop>instruçoes... </p>
+				<p id = textPop>Sample Text. Shouldn't appear. Please contact a senior technician ... </p>
 				<img id = "popUpMenu_0" src = "resources/menu/popUpMenu_0.png"> </img>
 				<img id = "popUpMenu_1" src = "resources/menu/popUpMenu_1.png"> </img>	
 				<img id = "popUpMenu_2" src = "resources/menu/popUpMenu_2.png"> </img>
@@ -63,14 +61,14 @@
 
 
 		<!-- StartMenu-->
-		<figure id = startMenu , class = fundo>
+		<figure id = startMenu , class = background>
 			<img id="startMenu_0" src = "resources/menu/startMenu_0.png"> </img>
 		</figure>
 
 
 		<!-- LoginRegMenu-->
-		<figure id = loginRegMenu , class = fundo>
-			<input id = nome , type = "text" value = "player1", maxlength = "15">
+		<figure id = loginRegMenu , class = background>
+			<input id = name , type = "text" value = "YourName", maxlength = "8">
 			<!-- input type = "text"  -->
 			<img id = "loginRegMenu_0" src = "resources/menu/loginRegMenu_0.png"> </img>
 			<img id = "loginRegMenu_1" src = "resources/menu/loginRegMenu_1.png"> </img>
@@ -79,89 +77,89 @@
 
 
 		<!-- MainMenu-->
-		<figure id = mainMenu , class = fundo >
-			<p id = "jogadorMain", class = "jogador"> </p>
+		<figure id = mainMenu , class = background >
+			<p id = "playerMain", class = "player"> </p>
 			<img id="mainMenu_0" src = "resources/menu/mainMenu_0.png"> </img>
 			<img id="mainMenu_1" src = "resources/menu/mainMenu_1.png"> </img>
 			<img id="mainMenu_2" src = "resources/menu/mainMenu_2.png"> </img>
-			<img id="mainMenu_3" , class = tras , src = "resources/menu/mainMenu_3.png"> </img>
+			<img id="mainMenu_3" , class = back , src = "resources/menu/mainMenu_3.png"> </img>
 			<img id="mainMenu_4" src = "resources/menu/mainMenu_4.png"> </img>
 			<img id="mainMenu_5" src = "resources/menu/mainMenu_5.png"> </img>
 			<img id="mainMenu_6" src = "resources/menu/mainMenu_6.png"> </img>
 			<img id="mainMenu_7" src = "resources/menu/mainMenu_7.png"> </img>
 		</figure>
 		
-		<!-- NivelMenu-->
-		<figure id = nivelMenu , class = fundo >
-			<p id = "jogadorNivel", class = "jogador"> </p>
-			<img id="nivelMenu_0" src = "resources/menu/nivelMenu_0.png"> </img>
-			<img id="nivelMenu_1" src = "resources/menu/nivelMenu_1.png"> </img>
-			<img id="nivelMenu_2" src = "resources/menu/nivelMenu_2.png"> </img>
-			<img id="nivelMenu_3" src = "resources/menu/nivelMenu_3.png"> </img>
-			<img id="nivelMenu_4" , class = tras src = "resources/menu/nivelMenu_4.png"> </img>
+		<!-- LevelMenu-->
+		<figure id = levelMenu , class = background >
+			<p id = "playerLevel", class = "player"> </p>
+			<img id="levelMenu_0" src = "resources/menu/levelMenu_0.png"> </img>
+			<img id="levelMenu_1" src = "resources/menu/levelMenu_1.png"> </img>
+			<img id="levelMenu_2" src = "resources/menu/levelMenu_2.png"> </img>
+			<img id="levelMenu_3" src = "resources/menu/levelMenu_3.png"> </img>
+			<img id="levelMenu_4" , class = back src = "resources/menu/levelMenu_4.png"> </img>
 		</figure>
 
-		<!-- EscolhernaveMenu-->
-		<figure id = escolhernaveMenu , class = fundo >
-			<img id="escolhernaveMenu_0" src = "resources/menu/escolhernaveMenu_0.png"> </img>
-			<img id="escolhernaveMenu_1" src = "resources/menu/escolhernaveMenu_1.png"> </img>
-			<img id="escolhernaveMenu_2" , class = play , src = "resources/menu/escolhernaveMenu_2.png"> </img>
-			<img id="escolhernaveMenu_3", class = tras  src = "resources/menu/escolhernaveMenu_3.png"> </img>
+		<!-- ChoosespaceshipMenu-->
+		<figure id = chooseSpaceshipMenu , class = background >
+			<img id="chooseSpaceshipMenu_0" src = "resources/menu/chooseSpaceshipMenu_0.png"> </img>
+			<img id="chooseSpaceshipMenu_1" src = "resources/menu/chooseSpaceshipMenu_1.png"> </img>
+			<img id="chooseSpaceshipMenu_2" , class = play , src = "resources/menu/chooseSpaceshipMenu_2.png"> </img>
+			<img id="chooseSpaceshipMenu_3", class = back  src = "resources/menu/chooseSpaceshipMenu_3.png"> </img>
 
-			<figure id = CaixaAc>
-				<p id = nave0 , class = textoAc> - Nave Inicial -</p>
-				<p id = nave1 , class = textoAc> Joga o modo Infinito pelo menos uma vez</p>
-				<p id = nave2 , class = textoAc> Acaba o nivel 1 ficando com pelo menos 3 vidas</p>
-				<p id = nave3 , class = textoAc> Passe o nivel 2 para desbloquear</p>
-				<p id = nave4 , class = textoAc> [ Desafio ] Quando no menu Principal, escreva o que fica muito bom quando possui o ananas como topping. Hint: começa com "p"</p>
+			<figure id = BoxAc>
+				<p id = spaceship0 , class = textAc> - Standard spaceship -</p>
+				<p id = spaceship1 , class = textAc> Play Endless mode at least one time. </p>
+				<p id = spaceship2 , class = textAc> Finish level 1 with at least 3 lifes. </p>
+				<p id = spaceship3 , class = textAc> Finish level 2. </p>
+				<p id = spaceship4 , class = textAc> [ EasterEgg ] (Type in the Main Menu) What's good when on pizza. </p>
 			</figure>
-			<figure id = CaixaSpecs>
-				<p id = nave0 , class = textoSpecs>
-					Número de vidas    -> 3 <br>
-					Velocidade         -> Normal <br>
-					Cooldown dos Tiros -> Normal
+			<figure id = BoxSpecs>
+				<p id = spaceship0 , class = textSpecs>
+					Number of lifes    -> 3 <br>
+					Speed              -> Normal <br>
+					Rocket Cooldown    -> Normal
 				</p>
-				<p id = nave1 , class = textoSpecs>
-					Número de vidas    -> 2 <br>
-					Velocidade         -> Muito Rápida <br>
-					Cooldown dos Tiros -> Normal
+				<p id = spaceship1 , class = textSpecs>
+					Number of lifes    -> 2 <br>
+					Speed              -> Very Fast <br>
+					Rocket Cooldown    -> Normal
 				</p>
-				<p id = nave2 , class = textoSpecs>
-					Número de vidas    -> 5 <br>
-					Velocidade         -> Lenta <br>
-					Cooldown dos Tiros -> Normal
+				<p id = spaceship2 , class = textSpecs>
+					Number of lifes    -> 5 <br>
+					Speed              -> Slow <br>
+					Rocket Cooldown    -> Normal
 				</p>
-				<p id = nave3 , class = textoSpecs>
-					Número de vidas    -> 2 <br>
-					Velocidade         -> Normal <br>
-					Cooldown dos Tiros -> Muito Rápido
+				<p id = spaceship3 , class = textSpecs>
+					Number of lifes    -> 2 <br>
+					Speed              -> Normal <br>
+					Rocket Cooldown    -> Very Fast
 				</p>
-				<p id = nave4 , class = textoSpecs>
-					Número de vidas    -> 3 <br>
-					Velocidade         -> Rápido <br>
-					Cooldown dos Tiros -> Rápido <br>
-					Nota: Maior que as outras naves
+				<p id = spaceship4 , class = textSpecs>
+					Number of lifes    -> 3 <br>
+					Speed              -> Fast <br>
+					Rocket Cooldown    -> Fast <br>
+					Keep in mind this spaceship is larger
 				</p>
 			</figure>
 
-			<img id="nave1_0" , class = nave src = "resources/menu/nave1_0.png"> </img>
-			<img id="nave0_0" , class = nave src = "resources/menu/nave0_0.png"> </img>
-			<img id="nave1_1" , class = nave src = "resources/menu/nave1_1.png"> </img>
-			<img id="nave0_1" , class = nave src = "resources/menu/nave0_1.png"> </img>
-			<img id="nave1_2" , class = nave src = "resources/menu/nave1_2.png"> </img>
-			<img id="nave0_2" , class = nave src = "resources/menu/nave0_2.png"> </img>
-			<img id="nave1_3" , class = nave src = "resources/menu/nave1_3.png"> </img>
-			<img id="nave0_3" , class = nave src = "resources/menu/nave0_3.png"> </img>
-			<img id="nave1_4" , class = nave src = "resources/menu/nave1_4.png"> </img>
-			<img id="nave0_4" , class = nave src = "resources/menu/nave0_4.png"> </img>
+			<img id="spaceship1_0" , class = spaceship src = "resources/menu/spaceship1_0.png"> </img>
+			<img id="spaceship0_0" , class = spaceship src = "resources/menu/spaceship0_0.png"> </img>
+			<img id="spaceship1_1" , class = spaceship src = "resources/menu/spaceship1_1.png"> </img>
+			<img id="spaceship0_1" , class = spaceship src = "resources/menu/spaceship0_1.png"> </img>
+			<img id="spaceship1_2" , class = spaceship src = "resources/menu/spaceship1_2.png"> </img>
+			<img id="spaceship0_2" , class = spaceship src = "resources/menu/spaceship0_2.png"> </img>
+			<img id="spaceship1_3" , class = spaceship src = "resources/menu/spaceship1_3.png"> </img>
+			<img id="spaceship0_3" , class = spaceship src = "resources/menu/spaceship0_3.png"> </img>
+			<img id="spaceship1_4" , class = spaceship src = "resources/menu/spaceship1_4.png"> </img>
+			<img id="spaceship0_4" , class = spaceship src = "resources/menu/spaceship0_4.png"> </img>
 		</figure>
 
 		<!-- LeaderBoard-->
-		<figure id = leaderBoard , class = fundo>
-			<p id = "jogadorLeaderBoard", class = "jogador"> </p>
-			<figure id = TabelaLeaderBoard>
+		<figure id = leaderBoard , class = background>
+			<p id = "playerLeaderBoard", class = "player"> </p>
+			<figure id = LeaderBoardTable>
 
-				<ul id = listaI>
+				<ul id = listI>
 					<ul id = playerI>
 						<li id = I0> </li>
 						<li id = I1> </li>
@@ -184,7 +182,7 @@
 
 
 
-				<ul id = listaC>
+				<ul id = listC>
 					<ul id = playerC>
 						<li id = C0> </li>
 						<li id = C1> </li>
@@ -206,82 +204,82 @@
 			</figure>
 
 
-			<img id="leaderBoard_0" , class = tras src = "resources/menu/leaderBoard_0.png"> </img>
+			<img id="leaderBoard_0" , class = back src = "resources/menu/leaderBoard_0.png"> </img>
 		</figure>
 
-		<!-- AjudaMenu-->
-		<figure id = ajudaMenu , class = fundo >
-			<figure id = CaixaAjuda>
-				<figure id = InformacaoAjuda> 
+		<!-- HelpMenu-->
+		<figure id = helpMenu , class = background >
+			<figure id = BoxHelp>
+				<figure id = helpInformation> 
 
-					<img id="ajudaMenuImg_0", class = "imgAjuda", src = "resources/menu/asteroideAjuda_0.png"> </img>
-					<p id = ajudaMenuTexto_0 , class = "textoAjuda"> [Asteroide] Se te acertar perdes uma vida e ficas temporariamente invoneravel </p>					
+					<img id="helpMenuImg_0", class = "imgHelp", src = "resources/menu/asteroidHelp_0.png"> </img>
+					<p id = helpMenuText_0 , class = "textHelp"> [Asteroid] If it hits you, you will lose a life and get invulnerable for a short period of time. </p>					
 
-					<img id="ajudaMenuImg_1", class = "imgAjuda", src = "resources/jogo/powerups_0.png"> </img>
-					<p id = ajudaMenuTexto_1 , class = "textoAjuda"> [PowerUp] Aumenta a velocidade da nave</p>
+					<img id="helpMenuImg_1", class = "imgHelp", src = "resources/game/powerups_0.png"> </img>
+					<p id = helpMenuText_1 , class = "textHelp"> [PowerUp] Faster spaceship. </p>
 					
-					<img id="ajudaMenuImg_2", class = "imgAjuda", src = "resources/jogo/powerups_1.png"> </img>
-					<p id = ajudaMenuTexto_2 , class = "textoAjuda"> [PowerUp] Nave ganha mais 1 vida </p>
+					<img id="helpMenuImg_2", class = "imgHelp", src = "resources/game/powerups_1.png"> </img>
+					<p id = helpMenuText_2 , class = "textHelp"> [PowerUp] One more life. </p>
 
-					<img id="ajudaMenuImg_3", class = "imgAjuda", src = "resources/jogo/powerups_2.png"> </img>
-					<p id = ajudaMenuTexto_3 , class = "textoAjuda"> [PowerUp] Escudo protetor de uso unico. Expira passado algum tempo</p>
+					<img id="helpMenuImg_3", class = "imgHelp", src = "resources/game/powerups_2.png"> </img>
+					<p id = helpMenuText_3 , class = "textHelp"> [PowerUp] A shield that gives you one more life. Fades away after a certain ammount of time. </p>
 					
-					<img id="ajudaMenuImg_4", class = "imgAjuda", src = "resources/jogo/powerups_3.png"> </img>
-					<p id = ajudaMenuTexto_4 , class = "textoAjuda"> [PowerUp] os tiros da nave ficam mais rapidos</p>
+					<img id="helpMenuImg_4", class = "imgHelp", src = "resources/game/powerups_3.png"> </img>
+					<p id = helpMenuText_4 , class = "textHelp"> [PowerUp] Your rockets will get faster. </p>
 
 
-					<img id="ajudaMenuImg_5", class = "imgAjuda", src = "resources/jogo/powerups_4.png"> </img>
-					<p id = ajudaMenuTexto_5 , class = "textoAjuda"> [PowerUp] A nave aumenta de tamanho</p>
+					<img id="helpMenuImg_5", class = "imgHelp", src = "resources/game/powerups_4.png"> </img>
+					<p id = helpMenuText_5 , class = "textHelp"> [PowerUp] Bigger spaceship. </p>
 
 
-					<img id="ajudaMenuImg_6", class = "imgAjuda", src = "resources/jogo/powerups_5.png"> </img>
-					<p id = ajudaMenuTexto_6 , class = "textoAjuda"> [PowerUp] A nave diminui de tamanho </p>
+					<img id="helpMenuImg_6", class = "imgHelp", src = "resources/game/powerups_5.png"> </img>
+					<p id = helpMenuText_6 , class = "textHelp"> [PowerUp] Smaller spaceship. </p>
 
 
-					<img id="ajudaMenuImg_7", class = "imgAjuda", src = "resources/jogo/powerups_6.png"> </img>
-					<p id = ajudaMenuTexto_7 , class = "textoAjuda"> [PowerUp] Diminui um pouco o cooldown dos tiros da nave </p>
+					<img id="helpMenuImg_7", class = "imgHelp", src = "resources/game/powerups_6.png"> </img>
+					<p id = helpMenuText_7 , class = "textHelp"> [PowerUp] Recudes cooldown between rockets by a bit. </p>
 
 
-					<img id="ajudaMenuImg_8", class = "imgAjuda", src = "resources/jogo/powerups_7.png"> </img>
-					<p id = ajudaMenuTexto_8 , class = "textoAjuda"> [PowerUp] Upgrade nos tiros da tua nave</p>
+					<img id="helpMenuImg_8", class = "imgHelp", src = "resources/game/powerups_7.png"> </img>
+					<p id = helpMenuText_8 , class = "textHelp"> [PowerUp] Level up on your Rocket. </p>
 
 
-					<img id="ajudaMenuImg_9", class = "imgAjuda", src = "resources/jogo/powerups_8.png"> </img>
-					<p id = ajudaMenuTexto_9 , class = "textoAjuda"> [PowerUp] Diminui significamente o cooldown dos tiros da nave</p>
+					<img id="helpMenuImg_9", class = "imgHelp", src = "resources/game/powerups_8.png"> </img>
+					<p id = helpMenuText_9 , class = "textHelp"> [PowerUp] Reduces cooldown between rockets drastically. </p>
 
 
-					<img id="ajudaMenuImg_10", class = "imgAjuda", src = "resources/jogo/boss_0.png"> </img>
-					<p id = ajudaMenuTexto_10 , class = "textoAjuda"> [Boss] Inimigo que podera aparecer prto do fim de um nivel </p>
+					<img id="helpMenuImg_10", class = "imgHelp", src = "resources/game/boss_0.png"> </img>
+					<p id = helpMenuText_10 , class = "textHelp"> [Boss] Soundetimes a Boss may appear. He is a thougher enemy, be carefull. </p>
 
-					<img id="ajudaMenuImg_11", class = "imgAjuda", src = "resources/jogo/tirosInimigos_0.png"> </img>
-					<p id = ajudaMenuTexto_11 , class = "textoAjuda"> [Tiros] Boss e inimigos vao dispara contra ti. Se te acertar perdes uma vida e ficas temporariamente invoneravel  </p>
+					<img id="helpMenuImg_11", class = "imgHelp", src = "resources/game/enemyRockets_0.png"> </img>
+					<p id = helpMenuText_11 , class = "textHelp"> [Rockets] Boss and Enemies will shot you and if it hits you, you will lose a life and get invulnerable for a short period of time. </p>
 
-					<img id="ajudaMenuImg_12", class = "imgAjuda", src = "resources/menu/tiroAjuda_0.png"> </img>
-					<p id = ajudaMenuTexto_12 , class = "textoAjuda"> [Tiros] No nivel 2 comeca com o tiro de nivel 2  </p>
+					<img id="helpMenuImg_12", class = "imgHelp", src = "resources/menu/rocketHelp_0.png"> </img>
+					<p id = helpMenuText_12 , class = "textHelp"> [Rockets] You will start with Rocket level 2 when you play campain level 2.</p>
 
-					<img id="ajudaMenuImg_13", class = "imgAjuda", src = "resources/menu/tiroAjuda_1.png"> </img>
-					<p id = ajudaMenuTexto_13 , class = "textoAjuda"> [Tiros] No nivel 3 comeca com o tiro de nivel 3</p>
+					<img id="helpMenuImg_13", class = "imgHelp", src = "resources/menu/rocketHelp_1.png"> </img>
+					<p id = helpMenuText_13 , class = "textHelp"> [Rockets] You will start with Rocket level 3 when you play campain level 3.</p>
 				</figure>
 			</figure>
 
-			<img id="ajudaMenu_0" , class = tras src = "resources/menu/ajudaMenu_0.png"> </img>
-			<img id="ajudaMenu_1" , class = play src = "resources/menu/ajudaMenu_1.png"> </img>
+			<img id="helpMenu_0" , class = back src = "resources/menu/helpMenu_0.png"> </img>
+			<img id="helpMenu_1" , class = play src = "resources/menu/helpMenu_1.png"> </img>
 		</figure>
 
-		<!-- ControlosMenu-->
-		<figure id = controlosMenu , class = fundo >
-			<figure id = CaixaControlos>
+		<!-- ControlsMenu-->
+		<figure id = controlsMenu , class = background >
+			<figure id = BoxControls>
 			</figure>
-			<img id="controlosMenu_0" , class = tras src = "resources/menu/controlosMenu_0.png"> </img>
-			<img id="controlosMenu_1" , src = "resources/menu/controlosMenu_1.png"> </img>
-			<img id="controlosMenu_2" , class = play , src = "resources/menu/controlosMenu_2.png"> </img>
+			<img id="controlsMenu_0" , class = back src = "resources/menu/controlsMenu_0.png"> </img>
+			<img id="controlsMenu_1" , src = "resources/menu/controlsMenu_1.png"> </img>
+			<img id="controlsMenu_2" , class = play , src = "resources/menu/controlsMenu_2.png"> </img>
 		</figure>
 
 
-		<!-- CreditosMenu-->
-		<figure id = creditosMenu , class = fundo >
-			<p id = "jogadorCreditos", class = "jogador"> </p>
-			<img id="creditosMenu_0" , class = tras src = "resources/menu/creditosMenu_0.png"> </img>
+		<!-- CreditsMenu-->
+		<figure id = creditsMenu , class = background >
+			<p id = "playerCredits", class = "player"> </p>
+			<img id="creditsMenu_0" , class = back src = "resources/menu/creditsMenu_0.png"> </img>
 		</figure>
 
 

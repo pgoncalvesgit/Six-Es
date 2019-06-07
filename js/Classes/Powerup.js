@@ -1,65 +1,65 @@
 "use strict";
 
-class Powerup extends Objeto{
+class Powerup extends Bulk{
 
-	constructor(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes, direcao, tempoInicial){
+	constructor(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate, direction, begginingTime){
 
-		super(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes, direcao);
+		super(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate, direction);
 
-		this.tempoInicial = tempoInicial;		
+		this.begginingTime = begginingTime;
+		this.refreshRate = refreshRate;
 	}
 	
-	//usado para mover em cada iteracao do render, se estiver fora da canvas é apagado do array de powerups
-	//Durante 20 segundos, sempre que colidir com um dos extremos da canvas, fica com uma direcao random contrária
-	//ao extremo com que colidiu.
-	mover(canvasHeight, canvasWidth, tempoAtual, powerups, indice){
-		if(tempoAtual - this.tempoInicial < 20000){
-			if (this.posicaoY + this.height >= canvasHeight){
-				this.direcao = Math.random() * 180;
+	//moves each iteration of render, if he is outside the canvas, gets erased from the Powerups Array
+	//For the first 20 seconds, each time it colides with a wall, he will change direction to point at a random location inside the canvas
+	move(canvasHeight, canvasWidth, currentTime, powerups, index){
+		if(currentTime - this.begginingTime < 20000){
+			if (this.positionY + this.height >= canvasHeight){
+				this.direction = Math.random() * 180;
 			}
-			else if(this.posicaoY <= 0){
-				this.direcao = -(Math.random() * 180);
+			else if(this.positionY <= 0){
+				this.direction = -(Math.random() * 180);
 			}
-			else if(this.posicaoX + this.width >= canvasWidth){
-				this.direcao = Math.random() * 180 + 90;
+			else if(this.positionX + this.width >= canvasWidth){
+				this.direction = Math.random() * 180 + 90;
 			}
-			else if(this.posicaoX <= 0){
-				this.direcao = Math.random() * 180 - 90;
+			else if(this.positionX <= 0){
+				this.direction = Math.random() * 180 - 90;
 			}
 		}
-		else if(this.posicaoY               > canvasHeight ||
-			    this.posicaoY + this.height < 0            ||
-			    this.posicaoX               > canvasWidth  ||
-			    this.posicaoX + this.width  < 0              ){
-			powerups.splice(indice, 1);
+		else if(this.positionY               > canvasHeight ||
+			    this.positionY + this.height < 0            ||
+			    this.positionX               > canvasWidth  ||
+			    this.positionX + this.width  < 0              ){
+			powerups.splice(index, 1);
 		}
 
-		this.posicaoY = this.posicaoY - this.velocidade * Math.sin(this.direcao * Math.PI/180);
-		this.posicaoX = this.posicaoX + this.velocidade * Math.cos(this.direcao * Math.PI/180);
+		this.positionY = this.positionY - this.speed * Math.sin(this.direction * Math.PI/180) * this.refreshRate / 60;
+		this.positionX = this.positionX + this.speed * Math.cos(this.direction * Math.PI/180) * this.refreshRate / 60;
 	}
 
-	//dependendo do id do powerup, este irá interagir com a nave de forma diferente
-	interage(nave, img, body, tempoAtual){
+	//interacts differently with the spaceship deppending on the powerup
+	interage(spaceship, img, body, currentTime){
 		switch(this.id){
-			case 0: nave.velocidade += 1          ; break;
-			case 1: nave.vida++                   ; break;
-			case 2: nave.ativaEscudo(tempoAtual)  ; break;
-			case 3: nave.rocketSpeed += 1         ; break;
-			case 4: nave.aumenta(body, tempoAtual); break;
-			case 5: nave.diminui(body, tempoAtual); break;
-			case 6: nave.cooldownRocketTotal -= 2 ; break;
-			case 7: nave.melhoraTiro(img)         ; break;
-			case 8: nave.cooldownRocketTotal  = 3 ; break;
-			default: nave.vida++                  ; break;
+			case 0: spaceship.speed += 1          ; break;
+			case 1: spaceship.life++                   ; break;
+			case 2: spaceship.activatesShield(currentTime)  ; break;
+			case 3: spaceship.rocketSpeed += 1         ; break;
+			case 4: spaceship.grow(body, currentTime); break;
+			case 5: spaceship.shrink(body, currentTime); break;
+			case 6: spaceship.cooldownRocketTotal -= 2 ; break;
+			case 7: spaceship.upgradeRocket(img)         ; break;
+			case 8: spaceship.cooldownRocketTotal  = 3 ; break;
+			default: spaceship.life++                  ; break;
 		}
 	}
 
-	//to string, pode ser usado para debugging
+	//to string, can be used for debugging
 	toString(){
-		return 	"Powerup: Coordenadas (" 	+ this.posicaoX 	+ "," 			+ this.posicaoY 	+ ")"
+		return 	"Powerup: CoordefillerTexts (" 	+ this.positionX 	+ "," 			+ this.positionY 	+ ")"
 			+ 	" Width: " 					+ this.width 		+ " Heigth: " 	+ this.height
-			+ 	" Velocidade -> " 			+ this.velocidade
+			+ 	" Velocidade -> " 			+ this.speed
 			+ 	" Clickable: " 				+ this.clickable 	+ " Dragable: " + this.dragable
-			+	" Direcao: " 				+ this.direcao;
+			+	" Direcao: " 				+ this.direction;
 	}
 }

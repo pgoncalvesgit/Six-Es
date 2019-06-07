@@ -6,7 +6,7 @@
 *Henrique Miguel Simões Silva hs@student.dei.uc.pt*
 *Paulo Alexandre da Silva Gonçalves pgoncalves@student.dei.uc.pt*
 
-# Link for the game -> <a href="http://super-spam-shooting-starguardian-spaceship-simulator.com"> super-spam-shooting-starguardian-spaceship-simulator</a>
+# Link for the game -> <a href="https://super-spam-shooting-starguardian-spaceship-simulator.netlify.com/"> super-spam-shooting-starguardian-spaceship-simulator</a>
 
 In this game, all you need to do is win. Ez game, ez life.
 

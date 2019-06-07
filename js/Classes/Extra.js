@@ -1,29 +1,29 @@
 "use strict";
 
-class Extra extends Componente{
+class Extra extends Component{
 
-	constructor(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes, componente, ativo){
+	constructor(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate, component, active){
 
-		super(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes);
+		super(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate);
 
-		this.componenteAxexado = componente;
-		this.ativo             = ativo;
-		this.tempoAtivado;
-		this.pisca;
+		this.attachedComponent = component;
+		this.active            = active;
+		this.timeActivated;
+		this.blink;
 	}
 
-	//usado para mover em cada iteracao do render
-	mover(){
-		this.posicaoX = this.componenteAxexado.posicaoX;
-		this.posicaoY = this.componenteAxexado.posicaoY;
+	//moves each iteration of render
+	move(){
+		this.positionX = this.attachedComponent.positionX;
+		this.positionY = this.attachedComponent.positionY;
 	}
 
-	//to string, pode ser usado para debugging
+	//to string, can be used for debugging
 	toString(){
-		return 	"Objeto: Coordenadas (" + this.posicaoX 	+ "," 			+ this.posicaoY 	+ ")"
+		return 	"Bulk: CoordefillerTexts (" + this.positionX 	+ "," 			+ this.positionY 	+ ")"
 			+ 	" Width: " 				+ this.width 		+ " Heigth: " 	+ this.height
-			+ 	" Velocidade -> " 		+ this.velocidade
+			+ 	" Velocidade -> " 		+ this.speed
 			+ 	" Clickable: " 			+ this.clickable 	+ " Dragable: " + this.dragable
-			+	" Rotacao: " 			+ this.direcao;
+			+	" Rotacao: " 			+ this.direction;
 	}
 }

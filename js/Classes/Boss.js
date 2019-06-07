@@ -1,197 +1,197 @@
 "use strict";
 
-class Boss extends Entidade{
+class Boss extends Entity{
 
-	constructor(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes, rocketSpeed, imgsTiros, indiceTiro, cooldown){
+	constructor(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate, rocketSpeed, imgsRockets, rocketIndex, cooldown){
 
-		super(posicaoX, posicaoY, width, height, naturalWidth, naturalHeight, velocidade, clickable, dragable, movivel, img, id, quantidadeframes, rocketSpeed, imgsTiros, indiceTiro, cooldown);
+		super(positionX, positionY, width, height, naturalWidth, naturalHeight, speed, clickable, dragable, movable, img, id, numberOfFrames, refreshRate, rocketSpeed, imgsRockets, rocketIndex, cooldown);
 		
-		this.vidaTotal;
-		this.vida;
-		this.fases;
-		this.faseAtual   = 0;
-		//usamos o this.sinal para o movimento
-		this.sinal 		 = 1;
-		this.inicio      = 1;
+		this.totalLife;
+		this.life;
+		this.stages;
+		this.currentStage = 0;
+		//this.signal is used for the movement
+		this.signal 	  = 1;
+		this.beggining    = 1;
+		
 
-		//o switch faz mudar a funcao de movimento e a de mudanca de fase conforme o id do boss
+		//based on boss's id, change the change of stage and the movement
 		switch(id){
 			case 0:
-				this.vidaTotal = 90;
-				this.vida  = 90;
-				this.fases = 3;
-				this.segundo_mover = function(ctx){
-					//var coordenadas = new Array(2);
-					if(this.posicaoX <= 0){
-						this.sinal = 1;
-						this.velocidade = 10;
+				this.totalLife = 90;
+				this.life  = 90;
+				this.stages = 3;
+				this.secondMovement = function(ctx){
+					//var coordefillerTexts = new Array(2);
+					if(this.positionX <= 0){
+						this.signal = 1;
+						this.speed = 10 * this.refreshRate/60;
 						this.cooldownRocketTotal = Math.floor(this.cooldownRocketIni/10);
 					}
-					else if(this.posicaoX >= ctx.canvas.width - this.width){
-						this.sinal = -1;
-						this.velocidade = 2;
+					else if(this.positionX >= ctx.canvas.width - this.width){
+						this.signal = -1;
+						this.speed = 2 * this.refreshRate/60;
 						this.cooldownRocketTotal = this.cooldownRocketIni;
 					}
-					this.posicaoX = this.posicaoX + this.sinal * this.velocidade;
+					this.positionX = this.positionX + this.signal * this.speed;
 				}
-				this.mudanca_fase = function(){
-					switch(this.faseAtual){
-						case 0: this.numTiro  = 2;this.cooldownRocketTotal = 30;break;
-						case 1: this.numTiro  = 4;this.cooldownRocketTotal = 20;break;
-						default: this.numTiro = 0;break;
+				this.nextStage = function(){
+					switch(this.currentStage){
+						case 0: this.rocketLevel  = 2;this.cooldownRocketTotal = 30;break;
+						case 1: this.rocketLevel  = 4;this.cooldownRocketTotal = 20;break;
+						default: this.rocketLevel = 0;break;
 					}
-					this.faseAtual++;
+					this.currentStage++;
 				}
 				break;
 			case 1:
-				this.vidaTotal = 120;
-				this.vida  = 120;
-				this.fases = 3;
-				this.segundo_mover = function(ctx){
-					//var coordenadas = new Array(2);
-					switch(this.sinal){
+				this.totalLife = 120;
+				this.life  = 120;
+				this.stages = 3;
+				this.secondMovement = function(ctx){
+					//var coordefillerTexts = new Array(2);
+					switch(this.signal){
 						case 0:
-							if(this.posicaoY <= 0){
-								this.sinal = 1;
-								this.velocidade = 4;
+							if(this.positionY <= 0){
+								this.signal = 1;
+								this.speed = 4 * this.refreshRate/60;
 							}
 							else{
-								this.posicaoY = this.posicaoY - this.velocidade;
+								this.positionY = this.positionY - this.speed;
 							}
 							break;
 						case 1:
-							if(this.posicaoX <= 0){
-								this.sinal = 2;
-								this.velocidade = 6;
+							if(this.positionX <= 0){
+								this.signal = 2;
+								this.speed = 6 * this.refreshRate/60;
 							}
 							else{
-								this.posicaoX = this.posicaoX - this.velocidade;
+								this.positionX = this.positionX - this.speed;
 							}
 							break;
 						case 2:
-							if(this.posicaoY >= ctx.canvas.height/2 - this.height){
-								this.sinal = 3;
-								this.velocidade = 10;
+							if(this.positionY >= ctx.canvas.height/2 - this.height){
+								this.signal = 3;
+								this.speed = 10 * this.refreshRate/60;
 							}
 							else{
-								this.posicaoY = this.posicaoY + this.velocidade;
+								this.positionY = this.positionY + this.speed;
 							}
 							break;
 						case 3:
-							if(this.posicaoX >= ctx.canvas.width - this.width){
-								this.sinal = 0;
-								this.velocidade = 15;
+							if(this.positionX >= ctx.canvas.width - this.width){
+								this.signal = 0;
+								this.speed = 15 * this.refreshRate/60;
 							}
 							else{
-								this.posicaoX = this.posicaoX + this.velocidade;
+								this.positionX = this.positionX + this.speed;
 							}
 							break;
 						default:
-							this.sinal = 0;
+							this.signal = 0;
 							break;
 					}
 				}
 				
-				this.mudanca_fase = function(){
-					switch(this.faseAtual){
-						case 0: this.numTiro  = 2;break;
-						case 1: this.numTiro  = 4;break;
-						default: this.numTiro = 0;
+				this.nextStage = function(){
+					switch(this.currentStage){
+						case 0: this.rocketLevel  = 2;break;
+						case 1: this.rocketLevel  = 4;break;
+						default: this.rocketLevel = 0;
 					}
-					this.faseAtual++;
+					this.currentStage++;
 				}
 				break;
 				break;
 			default:
-				this.fases = 3;
-				this.segundo_mover = function(ctx){
-					//var coordenadas = new Array(2);
-					if(this.posicaoX <= 0){
-						this.sinal = 1;
-						this.velocidade = 2;
+				this.stages = 3;
+				this.secondMovement = function(ctx){
+					//var coordefillerTexts = new Array(2);
+					if(this.positionX <= 0){
+						this.signal = 1;
+						this.speed = 2 * this.refreshRate/60;
 						this.cooldownRocketTotal = Math.floor(this.cooldownRocketIni/10);
 					}
-					else if(this.posicaoX >= ctx.canvas.width - this.width){
-						this.sinal = -1;
-						this.velocidade = 0.15;
+					else if(this.positionX >= ctx.canvas.width - this.width){
+						this.signal = -1;
+						this.speed = 0.15 * this.refreshRate/60;
 						this.cooldownRocketTotal = this.cooldownRocketIni;
 					}
-					this.posicaoX = this.posicaoX + this.sinal * this.velocidade;
+					this.positionX = this.positionX + this.signal * this.speed;
 				}
-				this.mudanca_fase = function(){
-					switch(this.faseAtual){
-						case 0: this.numTiro  = 2;break;
-						case 1: this.numTiro  = 4;break;
-						default: this.numTiro = 0;
+				this.nextStage = function(){
+					switch(this.currentStage){
+						case 0: this.rocketLevel  = 2;break;
+						case 1: this.rocketLevel  = 4;break;
+						default: this.rocketLevel = 0;
 					}
-					this.faseAtual++;
+					this.currentStage++;
 				}
 				break;
 				break;
 		}
 	}
 
-	//verifica se esta no inicio, decidindo que funcao de movimento chama
-	//move-se uma vez por cada iteracao do render
-	mover(ctx, t){
-		if(this.inicio == 1){
-			this.primeiro_mover();
+	//checks if it is in the beggining, so it then decides which function of movement to use
+	//moves each iteration of render
+	move(ctx, t){
+		if(this.beggining == 1){
+			this.firstMovement();
 		}
 		else{
-			this.segundo_mover(ctx);
+			this.secondMovement(ctx);
 		}
 	}
 	
-	//movimento antes de o boss estar totalmente no ecra
-	primeiro_mover(){
-		this.posicaoY = this.posicaoY + this.velocidade;
-		if (this.posicaoY > 0){
-			this.velocidade = 4;
-			this.inicio = 0;
+	//movement before all the boss appears on the screen 
+	firstMovement(){
+		this.positionY = this.positionY + this.speed;
+		if (this.positionY > 0){
+			this.speed = 4 * this.refreshRate/60;
+			this.beggining = 0;
 		}
 	}
 
-	//segundo movimento, abstrato, defenido no construtor
-	segundo_mover(ctx){
-		console.log("teste segundo_mover");
+	//secondMovement, abstract, defined in the constructor
+	secondMovement(ctx){
+		console.log("test secondMovement");
 	}
 
-	//mudaca de fase, abstrata, defenida no construtor
-	mudanca_fase(){
-		console.log("teste mudanca_fase");
+	//nextStage, abstract, defined in the constructor
+	nextStage(){
+		console.log("test nextStage");
 	}
 
-	//cria um novo tiro (dispara)
-	novoTiro(ctx, sons, body, tirosInimigos){
-		var posicaoY;
-		var velocidade;
+	//creates a new Rocket (shots)
+	newRocket(ctx, sounds, body, enemyRockets){
+		var positionY;
+		var speed;
 		
-		this.tiroReady = false;
+		this.rocketReady = false;
 
-		posicaoY = this.posicaoY + 3*this.width/4;
+		positionY = this.positionY + 3*this.width/4;
 
-		this.dispara(posicaoY, 270, tirosInimigos, sons, body);
+		this.shots(positionY, 270, enemyRockets, sounds, body);
 	}
 
-	//quando e atingido, verifica se tem de mudar de fase
-	atingido(){
-		this.vida = this.vida - 1;
-		//se tiver mais que uma fase e uma vida maior que 0
-		if(this.fases > 1 && this.vida > 0){
-			//dividmos a vida total pelo numero de fases
-			//para saber de quanto em quanto se tem de mudar de fase.
-			//Quando for multiplo, tem que mudar de fase
-			if(this.vida % Math.ceil(this.vidaTotal / this.fases) == 0){
-				this.mudanca_fase();
+	//when touched, loses a life and checks if it has to change stage
+	touched(){
+		this.life = this.life - 1;
+		//if he has more than one stage and at least 1 life left
+		if(this.stages > 1 && this.life > 0){
+			//we split the life evenly between the n number of stages
+			//to know how much hp it has to lose in order to change stage. 
+			if(this.life % Math.ceil(this.totalLife / this.stages) == 0){
+				this.nextStage();
 			}
 		}
 	}
 
-	//to string, pode ser usado para debugging
+	//to string, can be used for debugging
 	toString(){
-		return 	"Boss: Coordenadas (" 	+ this.posicaoX 	+ "," 			+ this.posicaoY 	+ ")"
+		return 	"Boss: CoordefillerTexts (" 	+ this.positionX 	+ "," 			+ this.positionY 	+ ")"
 			+ 	" Width: " 				+ this.width 		+ " Heigth: " 	+ this.height
-			+ 	" Velocidade -> " 		+ this.velocidade
+			+ 	" Velocidade -> " 		+ this.speed
 			+ 	" Clickable: " 			+ this.clickable 	+ " Dragable: " + this.dragable;
 	}
 }

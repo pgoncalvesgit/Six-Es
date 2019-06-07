@@ -1,3 +1,14 @@
+*{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+                               /* Code copyed from: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting */
+}
+
 body{
 	margin: 0px;
 	margin-top: 10px;
@@ -5,7 +16,7 @@ body{
 
 
 
-.fundo{	
+.background{	
 	position: relative;
 	margin:auto;
 	display:none;
@@ -14,7 +25,7 @@ body{
 	border:none;	
 }
 
-.jogador{
+.player{
 	position: absolute;
 	margin-top: 0px;
 	top :10px;
@@ -26,7 +37,7 @@ body{
 }
 
 
-.tras{
+.back{
 	position: absolute;
 	bottom :20px;
 	left :20px; 
@@ -41,7 +52,7 @@ body{
 
 /*-----------START MENU-------*/
 #startMenu{
-	background: url("../resources/menu/startMenu_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/startMenu_Background0.png") 0 0 /100% 100%;
 }
 #startMenu_0{
 	position: absolute;	
@@ -53,10 +64,10 @@ body{
 
 /*-----------LOGIN REG MENU-------*/
 #loginRegMenu{
-	background: url("../resources/menu/loginRegMenu_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/loginRegMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#nome{
+#name{
 	position: absolute;	
 	font-size:25pt;
 	font-weight: "bold";
@@ -83,7 +94,7 @@ body{
 /*-----------MAIN MENU-------*/
 
 #mainMenu{
-	background: url("../resources/menu/mainMenu_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/mainMenu_Background0.png") 0 0 /100% 100%;
 }
 
 
@@ -136,30 +147,30 @@ body{
 
 /*-----------NIVEL MENU-------*/
 
-#nivelMenu{
-	background: url("../resources/menu/nivelMenu_Fundo0.png") 0 0 /100% 100%;
+#levelMenu{
+	background: url("../resources/menu/levelMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#nivelMenu_0{
+#levelMenu_0{
 	display: none;
 	position: absolute;
 	top :250px;
 	left :510px; 
 }
 
-#nivelMenu_1{
+#levelMenu_1{
 	display: none;
 	position: absolute;
 	top :320px;
 	left :510px;
 }
-#nivelMenu_2{
+#levelMenu_2{
 	display: none;
 	position: absolute;
 	top :390px;
 	left :510px;
 }
-#nivelMenu_3{
+#levelMenu_3{
 	display: none;
 	position: absolute;
 	top :460px;
@@ -170,17 +181,17 @@ body{
 
 /*-----------ESCOLHER NAVE MENU-------*/
 
-#escolhernaveMenu{
-	background: url("../resources/menu/escolhernaveMenu_Fundo0.png") 0 0 /100% 100%;
+#chooseSpaceshipMenu{
+	background: url("../resources/menu/chooseSpaceshipMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#escolhernaveMenu_0{
+#chooseSpaceshipMenu_0{
 	position: absolute;
 	top :250px;
 	left :420px; 
 }
 
-#escolhernaveMenu_1{
+#chooseSpaceshipMenu_1{
 	position: absolute;
 	top :250px;
 	left :760px;
@@ -188,7 +199,7 @@ body{
 
 
 
-#CaixaAc{
+#BoxAc{
 	position: absolute;
 	margin: 0px;
 	padding: 10px;
@@ -197,11 +208,11 @@ body{
 	right: 55%;
 	bottom: 5%;
 	top: 70%; 
-	background: url("../resources/menu/escolhernaveMenu_Fundo1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/chooseSpaceshipMenu_Background1.png") 0 0 /100% 100%;
 	overflow-y: auto; 
 }
 
-#CaixaSpecs{
+#BoxSpecs{
 	position: absolute;
 	margin: 0px;
 	padding: 10px;
@@ -210,22 +221,22 @@ body{
 	right: 20%;
 	bottom: 5%;
 	top: 70%; 
-	background: url("../resources/menu/escolhernaveMenu_Fundo2.png") 0 0 /100% 100%;
+	background: url("../resources/menu/chooseSpaceshipMenu_Background2.png") 0 0 /100% 100%;
 	overflow-y: auto; 
 }
 
-.nave{
+.spaceship{
 	display: none;
 	position: absolute;
 }
 
-.textoAc{
+.textAc{
 	display:none;
 	font-family: Impact, Charcoal, sans-serif;
 	font-size: 16px;
 	color: #cddccc;
 }
-.textoSpecs{
+.textSpecs{
 	display:none;
 	font-family: Impact, Charcoal, sans-serif;
 	font-size: 16px;
@@ -249,11 +260,11 @@ body{
 	width: 300px;
 	height: 200px;
 	display:none;
-	background: url("../resources/menu/popUpMenu_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/popUpMenu_Background0.png") 0 0 /100% 100%;
 
 }
 
-#textoPop{
+#textPop{
 	position: absolute;
 	top :10px;
 	left :20px;
@@ -284,7 +295,7 @@ body{
 
 
 /*-----------PAUSA MENU-------*/
-#navPausa{
+#navPause{
 	position: absolute;
 	width: 100vw;
 	top: 94px;
@@ -293,65 +304,65 @@ body{
 
 
 
-#pausaMenu{
+#pauseMenu{
 	position: relative;
 	margin:auto;
 	z-index: 2;
 	width: 400px;
 	height: 500px;
 	display:none;
-	background: url("../resources/menu/pausaMenu_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/pauseMenu_Background0.png") 0 0 /100% 100%;
 
 }
 
-#pausaMenu_0{
+#pauseMenu_0{
 	position: absolute;
 	top :170px;
 	left :160px;
 
 }
-#pausaMenu_1{
+#pauseMenu_1{
 	position: absolute;
 	top :170px;
 	left :260px;
 
 }
-#pausaMenu_2{
+#pauseMenu_2{
 	position: absolute;
 	top :170px;
 	left :320px;
 
 }
-#pausaMenu_3{
+#pauseMenu_3{
 	position: absolute;
 	top :300px;
 	left :160px;
 
 }
-#pausaMenu_4{
+#pauseMenu_4{
 	position: absolute;
 	top :300px;
 	left :260px;
 
 }
-#pausaMenu_5{
+#pauseMenu_5{
 	position: absolute;
 	top :300px;
 	left :320px;
 
 }
-#pausaMenu_6{
+#pauseMenu_6{
 	position: absolute;
 	top :400px;
 	left :90px;
 }
 
 /*-----------AJUDA MENU-------*/
-#ajudaMenu{
-	background: url("../resources/menu/ajudaMenu_Fundo0.png") 0 0 /100% 100%;
+#helpMenu{
+	background: url("../resources/menu/helpMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#InformacaoAjuda{
+#helpInformation{
 	position: absolute;
 	margin: 0px;
 	padding: 0px;
@@ -362,7 +373,7 @@ body{
 	overflow-y: auto; 
 }
 
-#CaixaAjuda{
+#BoxHelp{
 	position: absolute;
 	margin: 0px;
 	padding: 10px;
@@ -370,10 +381,10 @@ body{
 	right: 15%;
 	top: 5%;
 	bottom: 5%;
-	background: url("../resources/menu/ajudaMenu_Fundo1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/helpMenu_Background1.png") 0 0 /100% 100%;
 }
 
-.imgAjuda{
+.imgHelp{
 	float:left;
 	width: 100px;
 	height: 100px;
@@ -384,7 +395,7 @@ body{
 	margin-bottom: 10px;
 }
 
-.textoAjuda{
+.textHelp{
 	float:left;
 	width: 740px;
 	height: 100px;
@@ -405,25 +416,25 @@ body{
 
 
 /*-----------CREDITOS MENU-------*/
-#creditosMenu{
-	background: url("../resources/menu/creditosMenu_Fundo0.png") 0 0 /100% 100%;
+#creditsMenu{
+	background: url("../resources/menu/creditsMenu_Background0.png") 0 0 /100% 100%;
 }
 
 
 
 /*-----------CONTROLOS MENU-------*/
-#controlosMenu{
-	background: url("../resources/menu/controlosMenu_Fundo0.png") 0 0 /100% 100%;
+#controlsMenu{
+	background: url("../resources/menu/controlsMenu_Background0.png") 0 0 /100% 100%;
 }
-#CaixaControlos{
+#BoxControls{
 	position: absolute;
 	left: 15%;
 	right: 15%;
 	top: 5%;
 	bottom: 5%;
-	background: url("../resources/menu/controlosMenu_Fundo1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/controlsMenu_Background1.png") 0 0 /100% 100%;
 }
-#controlosMenu_1{
+#controlsMenu_1{
 	display: none;
 	position: absolute;
 	bottom :20px;
@@ -433,21 +444,21 @@ body{
 
 /*-----------LEADERBOARD-------*/
 #leaderBoard{
-	background: url("../resources/menu/leaderBoard_Fundo0.png") 0 0 /100% 100%;
+	background: url("../resources/menu/leaderBoard_Background0.png") 0 0 /100% 100%;
 }
 
 
-#TabelaLeaderBoard{
+#LeaderBoardTable{
 	position: absolute;
 	left: 12%;
 	right: 12%;
 	top: 15%;
 	bottom: 15%;
-	background: url("../resources/menu/leaderBoard_Fundo1.png") 0 0 /100% 100%;
+	background: url("../resources/menu/leaderBoard_Background1.png") 0 0 /100% 100%;
 }
 
 
-#listaC, #listaI{
+#listC, #listI{
 	position: absolute;
 	top: 105px;
 	width: 400px;
@@ -468,10 +479,10 @@ body{
 	/*border: 2px solid;*/
 }
 
-#listaI{
+#listI{
 	margin-left: 3%;
 }
-#listaC{
+#listC{
 	margin-left: 53%;
 }
 
