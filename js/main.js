@@ -65,7 +65,7 @@ function main(){
 
 	//this way we can pass by reference
 	//currentMenu used to remove liseners from the page where the menu appears
-	var auxMisc = { "currentMenu" : "startMenu", "oldMenu": "fillerText", "gamemode": "fillerText", "secretPress": "PINAPPLE", "secretProgress": "", "playerAtual" : "filltext", "maxLevel": 3, "currentSpaceship" : 0, "cookieStore" : {"Spaceships": "1000", "Tutorial": 0}, "fps": 0 };
+	var auxMisc = { "currentMenu" : "startMenu", "oldMenu": "fillerText", "gamemode": "fillerText", "secretPress": "PINEAPPLE", "secretProgress": "", "playerAtual" : "filltext", "maxLevel": 3, "currentSpaceship" : 0, "cookieStore" : {"Spaceships": "1000", "Tutorial": 0}, "fps": 0 };
 
 
 
