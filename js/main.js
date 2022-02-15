@@ -1,6 +1,5 @@
 "use strict";
 
-import { loadEndingHandlers } from './handlers.js';
 
 (function()
 {	
@@ -58,7 +57,7 @@ function main(){
 
 	//used to change background colour
 	var body = document.getElementsByTagName("body")[0];
-	
+
 
 
     loadEndingHandlers(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux, player, domSpaceships);

@@ -1,7 +1,7 @@
 "use strict";
 
 
-export function loadEndingHandlers(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux, player, domSpaceships){
+function loadEndingHandlers(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux, player, domSpaceships){
 
 	function initEndHandler(ev){
 		window.removeEventListener("initEnd", initEndHandler);
@@ -57,6 +57,4 @@ export function loadEndingHandlers(auxMisc, menus, buttons, imgs, sounds, musics
 	window.addEventListener("initMenuEnd", initMenuEndHandler);
 
 }
-
-return loadEndingHandlers;
 
