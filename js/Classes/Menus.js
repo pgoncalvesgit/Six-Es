@@ -1,6 +1,6 @@
 "use strict";
 
-class d{
+class Menus{
 
 	constructor(document, menusArray){
 
