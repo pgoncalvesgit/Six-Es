@@ -25,11 +25,11 @@ class Player{
 
 	setCookie(){
 
-		document.cookie = this.name + "Level=" 	    + this.level      + ";expires=Thu, 02 Jan 2020 00:00:00 UTC;path=/";
-		document.cookie = this.name + "Campain="    + this.campain    + ";expires=Thu, 02 Jan 2020 00:00:00 UTC;path=/";
-		document.cookie = this.name + "Endless="    + this.endless    + ";expires=Thu, 02 Jan 2020 00:00:00 UTC;path=/";
-		document.cookie = this.name + "Spaceships=" + this.spaceships + ";expires=Thu, 02 Jan 2020 00:00:00 UTC;path=/";
-		document.cookie = this.name + "Tutorial="   + this.tutorial   + ";expires=Thu, 02 Jan 2020 00:00:00 UTC;path=/";
+		document.cookie = this.name + "Level=" 	    + this.level      + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
+		document.cookie = this.name + "Campain="    + this.campain    + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
+		document.cookie = this.name + "Endless="    + this.endless    + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
+		document.cookie = this.name + "Spaceships=" + this.spaceships + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
+		document.cookie = this.name + "Tutorial="   + this.tutorial   + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
 
 	}
 

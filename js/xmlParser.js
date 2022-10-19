@@ -66,7 +66,7 @@ function isEnemyWellFormatted(enemy_list_dom_element, enemyEntities, imgs){
 		normal_tratado.push(enemies);
 	}
 
-	enemyEntities[0] = normal_tratado;
+	enemyEntities[0] = (new Array()).push(normal_tratado);
 	
 	return true;
 }
@@ -74,11 +74,6 @@ function isEnemyWellFormatted(enemy_list_dom_element, enemyEntities, imgs){
 function isBossWellFormatted(boss_dom_element, enemyEntities, imgs){
 
 	
-	if(boss_dom_element.children[0].tagName == "parsererror"){
-		console.log("XML not well formatted");
-		return;
-	}
-
 	if(boss_dom_element.children.length != 0){
 		console.log("Formatting error in the boss (no childs allowed)");
 		return false;

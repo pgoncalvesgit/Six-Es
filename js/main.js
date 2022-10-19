@@ -52,7 +52,7 @@ function main(){
 
 	//saves buttons reference to the DOM
 	//this way we can do style.block and style.none to display and hide menus
-	var menus = new Menus(document, auxMisc["menusArray"]);
+	var menus = (new Menus(document, auxMisc["menusArray"]))["domElements"];
 
 
 	//used to change background colour
