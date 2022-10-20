@@ -355,8 +355,8 @@ class Game{
 		window.addEventListener("keyup"  , this.KeySpaceshipHandlerF);	
 		window.addEventListener("keydown", this.KeySpaceshipHandlerT);
 		
-		addEVLButtons(this.buttons, "popUpMenu", 0, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
-		addEVLButtons(this.buttons, "popUpMenu", 2, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		addEVLButtons(this.buttons, "popUpMenu", "yesButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		addEVLButtons(this.buttons, "popUpMenu", "noButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
 
 		this.step = function (time) {
 			game.currentTime = time;
@@ -878,8 +878,8 @@ class Game{
 		window.removeEventListener("keyup",   this.KeySpaceshipHandlerF);
 		window.removeEventListener("keydown", this.KeySpaceshipHandlerT);
 
-		removeEVLButtons(this.buttons, "popUpMenu", 0, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
-		removeEVLButtons(this.buttons, "popUpMenu", 2, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "yesButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "noButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
 
 		window.cancelAnimationFrame(this.requestId);
 		newRequestId = window.requestAnimationFrame(won_animation);
@@ -939,8 +939,8 @@ class Game{
 
 		window.removeEventListener("keyup",   this.KeySpaceshipHandlerF);
 		window.removeEventListener("keydown", this.KeySpaceshipHandlerT);
-		removeEVLButtons(this.buttons, "popUpMenu", 0, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
-		removeEVLButtons(this.buttons, "popUpMenu", 2, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "yesButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "noButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
 
 		window.cancelAnimationFrame(this.requestId);
 		newRequestId = window.requestAnimationFrame(lost_animation);
@@ -1028,7 +1028,7 @@ class Game{
 	//others listeners
 	togglePauseMenuGame(){
 
-		this.buttons["pauseMenu"][6].style.display = "block";
+		this.buttons["pauseMenu"]["back"].style.display = "block";
 
 		updateSoundButton(this.sounds, this.musics, this.buttons, this.auxClickHandler, this.auxMouseInHandler, this.auxMouseOutHandler);
 
@@ -1055,10 +1055,10 @@ class Game{
 
 
 	noClickHandlerGame(){
-		this.buttons["pauseMenu"][6].style.opacity = 1;
+		this.buttons["pauseMenu"]["back"].style.opacity = 1;
 
 		//places listeners on the buttons back
-		for (var i = 0 ; i < this.buttons["pauseMenu"].length; i++){
+		for (var i in this.buttons["pauseMenu"]){
 			if (this.buttons["pauseMenu"][i].style.opacity == 1 ){
 				addEVLButtons(this.buttons, "pauseMenu", i, this.auxClickHandler, this.auxMouseInHandler, this.auxMouseOutHandler);
 			}
@@ -1070,9 +1070,9 @@ class Game{
 
 	yesClickHandlerGame(){
 
-		this.buttons["pauseMenu"][6].style.opacity = 1;
+		this.buttons["pauseMenu"]["back"].style.opacity = 1;
 
-		for (var i = 0 ; i < this.buttons["pauseMenu"].length; i++){
+		for (var i in this.buttons["pauseMenu"]){
 			if (this.buttons["pauseMenu"][i].style.opacity == 1 ){
 				addEVLButtons(this.buttons, "pauseMenu", i, this.auxClickHandler, this.auxMouseInHandler, this.auxMouseOutHandler);
 			}
@@ -1084,8 +1084,8 @@ class Game{
 		window.removeEventListener("keyup",   this.KeySpaceshipHandlerF);
 		window.removeEventListener("keydown", this.KeySpaceshipHandlerT);
 
-		removeEVLButtons(this.buttons, "popUpMenu", 0, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
-		removeEVLButtons(this.buttons, "popUpMenu", 2, this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "yesButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
+		removeEVLButtons(this.buttons, "popUpMenu", "noButton", this.auxClickHandlerGame, this.auxMouseInHandler, this.auxMouseOutHandler);
 
 
 
