@@ -1096,6 +1096,22 @@ class Game{
 
 	}
 
+	domSpaceships(menus){
+		var spaceships = [];
+		let nSpaceships = (menus["chooseSpaceshipMenu"].childElementCount-6)/2 ; 
+	
+		//spaceships
+		for (let i = 0 ; i < nSpaceships;i++){
+			spaceships[i] = []
+			var spaceshipLocked = menus["chooseSpaceshipMenu"].children["spaceship0_"+i];
+			spaceships[i].push(spaceshipLocked);
+			var spaceship = menus["chooseSpaceshipMenu"].children["spaceship1_"+i];
+			spaceships[i].push(spaceship);
+		}
+	
+		return spaceships;
+	}
+
 
 	//to string, can be used for debugging
 	toString(){
