@@ -20,50 +20,18 @@ function main(){
 	var auxMisc = new GlobalVariables();
 
 
-
-	//extra references to the DOM
-	var domAux = new DomElements(
-		document.getElementById("textPop"),
-		document.getElementById("playerCredits"),
-		document.getElementById("name"),
-		document.getElementById("playerLevel"),
-		document.getElementById("playerMain"),
-		document.getElementById("playerLeaderBoard")
-	)
-
-
-
-
-	//load of the spaceships in the beggining to get the natural width and height
-	var nToLoad  = {"spaceship0": 5 , "spaceship1": 5 };
-	var nLoaded  = {"spaceship0": 0 , "spaceship1": 0 };
-	var imgsMenu = {"spaceship0": [], "spaceship1": []};
-	var imgs;
-	var sounds;
-	var musics;
-	var player = new Player();
-
-
-
-	//saves buttons reference to the DOM
-	//this way we can add/remove listeners freely
-	var buttons = {"pauseMenu": [], "startMenu" : [], "loginRegMenu": [], "popUpMenu" : [], "mainMenu" : [],"levelMenu": [], "chooseSpaceshipMenu": [], "leaderBoard" : [], "controlsMenu":[], "creditsMenu":[], "helpMenu":[] };
-
-
 	//saves buttons reference to the DOM
 	//this way we can do style.block and style.none to display and hide menus
 	var menus = (new Menus(document, auxMisc["menusArray"]))["domElements"];
 
 
-	//used to change background colour
-	var body = document.getElementsByTagName("body")[0];
-
-
 
     function initEndHandler(ev){
 		window.removeEventListener("initEnd", initEndHandler);
-		firstMenu(menus, auxMisc, musics, body);
-		menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, domSpaceships(menus), domAux, player);
+		firstMenu(menus, auxMisc);
+
+		auxMisc.loadSpaceships(menus);
+		menuListeners(auxMisc, menus);
 	}
 
 	function initSoundsEndHandler(ev){
@@ -78,11 +46,11 @@ function main(){
 		window.addEventListener("initSoundsEnd", initSoundsEndHandler);
 
 		//load the sounds of the game
-		nToLoad = {"rockets" : 1 , "buttons" : 2 ,"esc" : 2 };
-		sounds 	= {"rockets" : [], "buttons" : [],"esc" : []};
+		auxMisc.nToLoad = {"rockets" : 1 , "buttons" : 2 ,"esc" : 2 };
+		auxMisc.sounds = {"rockets" : [], "buttons" : [],"esc" : []};
 
 
-		initSounds(nToLoad, sounds);
+		initSounds(auxMisc);
 	}
 
 	function initImagesEndHandler(ev){
@@ -90,11 +58,11 @@ function main(){
 		window.addEventListener("initMusicsEnd", initMusicsEndHandler);
 
 		//load the music of the game
-		nToLoad  = {"campain" : 3 ,"endless" : 1 , "boss" : 2 ,"music": 1 };
-		musics   = {"campain" : [],"endless" : [], "boss" : [],"music": []};
+		auxMisc.nToLoad  = {"campaign" : 3 ,"endless" : 1 , "boss" : 2 ,"music": 1 };
+		auxMisc.musics   = {"campaign" : [],"endless" : [], "boss" : [],"music": []};
 
 
-		initMusics(nToLoad, musics);
+		initMusics(auxMisc);
 	}
 
 
@@ -102,121 +70,22 @@ function main(){
 		window.removeEventListener("initMenuEnd", initMenuEndHandler);
 		window.addEventListener("initImagesEnd", initImagesEndHandler);
 
-		//load the imagens of the game
-		var nToLoad = { "spaceship" : 5 , "enemies" : 2 , "boss" : 2 , "asteroids" : 1 , "powerups" : 9 , "others" : 1, "rockets" : 1 , "enemyRockets" : 1 , "background" : 1 , "explosions" : 1 , "gameover" : 2 , "win" : 1 };
-		var nLoaded = { "spaceship" : 0 , "enemies" : 0 , "boss" : 0 , "asteroids" : 0 , "powerups" : 0 , "others" : 0, "rockets" : 0 , "enemyRockets" : 0 , "background" : 0 , "explosions" : 0 , "gameover" : 0 , "win" : 0 };
-		imgs 	    = { "spaceship" : [], "enemies" : [], "boss" : [], "asteroids" : [], "powerups" : [], "others" : [],"rockets" : [], "enemyRockets" : [], "background" : [], "explosions" : [], "gameover" : [], "win" : []};
+		auxMisc.nToLoad = { "spaceship" : 5 , "enemies" : 2 , "boss" : 2 , "asteroids" : 1 , "powerups" : 9 , "others" : 1, "rockets" : 1 , "enemyRockets" : 1 , "background" : 1 , "explosions" : 1 , "gameover" : 2 , "win" : 1 };
+		auxMisc.nLoaded = { "spaceship" : 0 , "enemies" : 0 , "boss" : 0 , "asteroids" : 0 , "powerups" : 0 , "others" : 0, "rockets" : 0 , "enemyRockets" : 0 , "background" : 0 , "explosions" : 0 , "gameover" : 0 , "win" : 0 };
+		auxMisc.imgs = { "spaceship" : [], "enemies" : [], "boss" : [], "asteroids" : [], "powerups" : [], "others" : [],"rockets" : [], "enemyRockets" : [], "background" : [], "explosions" : [], "gameover" : [], "win" : []};
+
 		
-		initImages(nLoaded, nToLoad, imgs, imgsMenu);
+		initImages(auxMisc);
 
 	}
 
 	window.addEventListener("initMenuEnd", initMenuEndHandler);
 	
-	initMenu(nLoaded, nToLoad, imgsMenu);
+	initMenu(auxMisc);
 
 
 
-	//pause
-	var muteM = document.getElementById("pauseMenu_0");
-	buttons["pauseMenu"].push(muteM);
-	var volumeLowM = document.getElementById("pauseMenu_1");
-	buttons["pauseMenu"].push(volumeLowM);
-	var volumeHighM   = document.getElementById("pauseMenu_2");
-	buttons["pauseMenu"].push(volumeHighM);
-	
-	var muteS = document.getElementById("pauseMenu_3");
-	buttons["pauseMenu"].push(muteS);
-	var volumeLowS = document.getElementById("pauseMenu_4");
-	buttons["pauseMenu"].push(volumeLowS);
-	var volumeHighS   = document.getElementById("pauseMenu_5");
-	buttons["pauseMenu"].push(volumeHighS);
-
-	var back = document.getElementById("pauseMenu_6");
-	buttons["pauseMenu"].push(back);
-
-	//startMenu
-	var startButon = document.getElementById("startMenu_0");
-	buttons["startMenu"].push(startButon);
-
-
-	//loginRegMenu
-	var signUpButon = document.getElementById("loginRegMenu_0");
-	buttons["loginRegMenu"].push(signUpButon);
-	var loginButon = document.getElementById("loginRegMenu_1");
-	buttons["loginRegMenu"].push(loginButon);
-
-	//popUpMenu
-	var yesButon = document.getElementById("popUpMenu_0");
-	buttons["popUpMenu"].push(yesButon);
-	var okButon = document.getElementById("popUpMenu_1");
-	buttons["popUpMenu"].push(okButon);
-	var noButon = document.getElementById("popUpMenu_2");
-	buttons["popUpMenu"].push(noButon);
-
-	//mainMenu
-	var campain = document.getElementById("mainMenu_0");
-	buttons["mainMenu"].push(campain);
-	var endless = document.getElementById("mainMenu_1");
-	buttons["mainMenu"].push(endless);
-	var editor   = document.getElementById("mainMenu_2");
-	buttons["mainMenu"].push(editor);
-
-	var leave   = document.getElementById("mainMenu_3");
-	buttons["mainMenu"].push(leave);
-	var help   = document.getElementById("mainMenu_4");
-	buttons["mainMenu"].push(help);
-	var credits = document.getElementById("mainMenu_5");
-	buttons["mainMenu"].push(credits);
-	var leaderBoard = document.getElementById("mainMenu_6");
-	buttons["mainMenu"].push(leaderBoard);
-	var controls = document.getElementById("mainMenu_7");
-	buttons["mainMenu"].push(controls);
-
-	//levelMenu
-	var level1 = document.getElementById("levelMenu_0");
-	buttons["levelMenu"].push(level1);
-	var level2 = document.getElementById("levelMenu_1");
-	buttons["levelMenu"].push(level2);
-	var level3   = document.getElementById("levelMenu_2");
-	buttons["levelMenu"].push(level3);
-	var speedrun   = document.getElementById("levelMenu_3");
-	buttons["levelMenu"].push(speedrun);
-	var back   = document.getElementById("levelMenu_4");
-	buttons["levelMenu"].push(back);
-
-	//chooseSpaceshipMenu
-	var left = document.getElementById("chooseSpaceshipMenu_0");
-	buttons["chooseSpaceshipMenu"].push(left);
-	var right = document.getElementById("chooseSpaceshipMenu_1");
-	buttons["chooseSpaceshipMenu"].push(right);
-	var go   = document.getElementById("chooseSpaceshipMenu_2");
-	buttons["chooseSpaceshipMenu"].push(go);
-	var backChooseSpaceship   = document.getElementById("chooseSpaceshipMenu_3");
-	buttons["chooseSpaceshipMenu"].push(backChooseSpaceship);
-
-
-	//creditsMenu
-	var backCredits = document.getElementById("creditsMenu_0");
-	buttons["creditsMenu"].push(backCredits);
-
-	//helpMenu
-	var backHelp = document.getElementById("helpMenu_0");
-	buttons["helpMenu"].push(backHelp);
-	var nextHelp = document.getElementById("helpMenu_1");
-	buttons["helpMenu"].push(nextHelp);
-
-	//controlsMenu
-	var backControl = document.getElementById("controlsMenu_0");
-	buttons["controlsMenu"].push(backControl);
-	var nextControl = document.getElementById("controlsMenu_1");
-	buttons["controlsMenu"].push(nextControl);
-	var playControl = document.getElementById("controlsMenu_2");
-	buttons["controlsMenu"].push(playControl);
-
-	//leaderBoard
-	var leaderBoardBack = document.getElementById("leaderBoard_0");
-	buttons["leaderBoard"].push(leaderBoardBack);
+	auxMisc.buttons = new Buttons()
 
 }
 
@@ -227,7 +96,7 @@ function main(){
 
 
 
-function initMenu(nLoaded, nToLoad, imgsMenu){
+function initMenu(auxMisc){
 	var numToLoad = 0;
 
 	//Images load handler
@@ -235,33 +104,33 @@ function initMenu(nLoaded, nToLoad, imgsMenu){
 		var img = ev.target;
 
 		let key   = img.id.split("_")[0];
-		nLoaded[key] += 1;
+		auxMisc.nLoaded[key] += 1;
 
-		if (allLoaded(nLoaded, numToLoad) == true){
+		if (allLoaded(auxMisc.nLoaded, numToLoad) == true){
 			var evInitMenuEnd = new Event("initMenuEnd");
 			window.dispatchEvent(evInitMenuEnd);
 		}
 	}
 
-	for (let toLoad in nToLoad){
-		numToLoad += nToLoad[toLoad];
+	for (let toLoad in auxMisc.nToLoad){
+		numToLoad += auxMisc.nToLoad[toLoad];
 	}
 
-	for (let key in imgsMenu){
-		for (var i = 0; i < nToLoad[key]; i++ ){
+	for (let key in auxMisc.imgsMenu){
+		for (var i = 0; i < auxMisc.nToLoad[key]; i++ ){
 
-			imgsMenu[key][i] 		= new Image(); 
-			imgsMenu[key][i].addEventListener("load", imgMenuLoad);
+			auxMisc.imgsMenu[key][i] 		= new Image(); 
+			auxMisc.imgsMenu[key][i].addEventListener("load", imgMenuLoad);
 
-			imgsMenu[key][i].id 	= [key]+"_" + i;
-			imgsMenu[key][i].src 	= "resources/menu/"+[key]+"_" + i + ".png";  //dá ordem de loadmento da imagem
+			auxMisc.imgsMenu[key][i].id 	= [key]+"_" + i;
+			auxMisc.imgsMenu[key][i].src 	= "resources/menu/"+[key]+"_" + i + ".png";  //dá ordem de loadmento da imagem
 
 		}
 	}
 }
 
 
-function initImages(nLoaded, nToLoad, imgs, imgsMenu){
+function initImages(auxMisc){
 	var numToLoad = 0;
 
 	//Images load handler
@@ -269,42 +138,42 @@ function initImages(nLoaded, nToLoad, imgs, imgsMenu){
 		var img = ev.target;
 
 		let key   = img.id.split("_")[0];
-		nLoaded[key] += 1;
+		auxMisc.menuNLoaded[key] += 1;
 
-		if (allLoaded(nLoaded, numToLoad) == true){
+		if (allLoaded(auxMisc.menuNLoaded, numToLoad) == true){
 			var evInitImagesEnd = new Event("initImagesEnd");
-			imgs["imgsMenus"] = imgsMenu;
+			auxMisc.imgs["imgsMenu"] = auxMisc.imgsMenu;
 			window.dispatchEvent(evInitImagesEnd);
 		}
 	}
 
-	for (let toLoad in nToLoad){
-		numToLoad += nToLoad[toLoad];
+	for (let toLoad in auxMisc.menuNToLoad){
+		numToLoad += auxMisc.menuNToLoad[toLoad];
 	}
 
-	for (let key in imgs){
-		for (var i = 0; i < nToLoad[key]; i++ ){
+	for (let key in auxMisc.imgs){
+		for (var i = 0; i < auxMisc.menuNToLoad[key]; i++ ){
 
-			imgs[key][i] 		= new Image(); 
-			imgs[key][i].addEventListener("load", imgLoad);
+			auxMisc.imgs[key][i] 		= new Image(); 
+			auxMisc.imgs[key][i].addEventListener("load", imgLoad);
 
-			imgs[key][i].id 	= [key]+"_" + i;
-			imgs[key][i].src 	= "resources/game/"+[key]+"_" + i + ".png";  //dá ordem de loadmento da imagem
+			auxMisc.imgs[key][i].id 	= [key]+"_" + i;
+			auxMisc.imgs[key][i].src 	= "resources/game/"+[key]+"_" + i + ".png";  //dá ordem de loadmento da imagem
 
 		}
 	}
 
 }
 
-function initMusics(nToLoad, musics){
+function initMusics(auxMisc){
 
-	for (let key in musics){
-		for (var i = 0; i < nToLoad[key]; i++ ){
+	for (let key in auxMisc.musics){
+		for (var i = 0; i < auxMisc.nToLoad[key]; i++ ){
 
-			musics[key][i] 	 = new Audio();
+			auxMisc.musics[key][i] 	 = new Audio();
 
-			musics[key][i].id 	 = [key]+"_" + i;
-			musics[key][i].src  = "resources/musics/"+[key]+"_" + i + ".mp3";  //dá ordem de loadmento da imagem
+			auxMisc.musics[key][i].id 	 = [key]+"_" + i;
+			auxMisc.musics[key][i].src  = "resources/musics/"+[key]+"_" + i + ".mp3";  //dá ordem de loadmento da imagem
 
 		}
 	}
@@ -314,15 +183,15 @@ function initMusics(nToLoad, musics){
 	window.dispatchEvent(evInitEnd);
 }
 
-function initSounds(nToLoad, sounds){
+function initSounds(auxMisc){
 
-	for (let key in sounds){
-		for (var i = 0; i < nToLoad[key]; i++ ){
+	for (let key in auxMisc.sounds){
+		for (var i = 0; i < auxMisc.nToLoad[key]; i++ ){
 
-			sounds[key][i] 		= new Audio();
+			auxMisc.sounds[key][i] 		= new Audio();
 
-			sounds[key][i].id 	= [key]+"_" + i;
-			sounds[key][i].src 	= "resources/sounds/"+[key]+"_" + i + ".mp3";  //dá ordem de loadmento da imagem
+			auxMisc.sounds[key][i].id 	= [key]+"_" + i;
+			auxMisc.sounds[key][i].src 	= "resources/sounds/"+[key]+"_" + i + ".mp3";  //dá ordem de loadmento da imagem
 
 		}
 	}
@@ -395,51 +264,51 @@ function allLoaded(nLoaded,numToLoad){
 
 
 
-function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spaceships, domAux, player){
+function menuListeners(auxMisc, menus){
 
 	var auxKeyDownHandler = function(ev){
-		KeyDownHandler(ev, buttons, menus, auxMisc, sounds, musics, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+		KeyDownHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 	var auxClickHandler = function(ev){
 
-		sounds["buttons"][1].load();
-		sounds["buttons"][1].play().catch(function(){});
+		auxMisc.sounds["buttons"][1].load();
+		auxMisc.sounds["buttons"][1].play().catch(function(){});
 		
 		//which button?
 		switch(ev.target.id){
 
 			//PAUSA--------------
 			//mute
-			case("pauseMenu_0"): 
-				muteClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_muteM"): 
+				muteClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
-			case("pauseMenu_1"): 
-				somLowClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_volumeLowM"): 
+				somLowClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
-			case("pauseMenu_2"):
-				somHighClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_volumeHighM"):
+				somHighClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
-			case("pauseMenu_3"): 
-				muteClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_muteS"): 
+				muteClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
-			case("pauseMenu_4"): 
-				somLowClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_volumeLowS"): 
+				somLowClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
-			case("pauseMenu_5"):
-				somHighClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("pauseMenu_volumeHighS"):
+				somHighClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
-			case("pauseMenu_6"):
-				leaveDoGameClickHandler(auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux);
+			case("pauseMenu_back"):
+				leaveDoGameClickHandler(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
 
 
 
 			//START------------
-			case("startMenu_0"):
+			case("startMenu_startButton"):
 				startClickHandler(ev, menus, auxMisc);
 				break;
 
@@ -449,91 +318,91 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 
 			//LOGIN REG------------
 			//signUp
-			case("loginRegMenu_0"):
-				signUpClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("loginRegMenu_signUpButton"):
+				signUpClickHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
 			//login
-			case("loginRegMenu_1"):
-				loginClickHandler(menus, auxMisc, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("loginRegMenu_loginButton"):
+				loginClickHandler(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
 
 			//POP UP------------
 			//yes
-			case("popUpMenu_0"):
-				yesClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("popUpMenu_yesButton"):
+				yesClickHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 			//ok
-			case("popUpMenu_1"):
-				okClickHandler(ev, menus, auxMisc, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("popUpMenu_okButton"):
+				okClickHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 			//no
-			case("popUpMenu_2"):
-				noClickHandler(ev, menus, auxMisc, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			case("popUpMenu_noButton"):
+				noClickHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
 
 
 			//MAIN MENU------------
-			//campain
-			case("mainMenu_0"): 
-				campainClickHandler(ev, auxMisc, menus, domAux);
+			//campaign
+			case("mainMenu_campaign"): 
+				campaignClickHandler(ev, auxMisc, menus);
 				break;
 
 			//endless
-			case("mainMenu_1"):
-				endlessClickHandler(ev, auxMisc, menus, buttons, body, spaceships,imgs);
+			case("mainMenu_endless"):
+				endlessClickHandler(ev, auxMisc, menus);
 				break;
 
-			case("mainMenu_2"):
+			case("mainMenu_editor"):
 				console.log("editor");
 				break;
 
 			//closes game
-			case("mainMenu_3"): 
-				closesGameClickHandler(ev, auxMisc, sounds, musics, menus, body); 
+			case("mainMenu_leave"): 
+				closesGameClickHandler(ev, auxMisc, menus); 
 				break;
 
 			//help
-			case("mainMenu_4"):
-				helpClickHandler(ev, menus, auxMisc, body);
+			case("mainMenu_help"):
+				helpClickHandler(ev, menus, auxMisc);
 				break;
 
 			//credits
-			case("mainMenu_5"): 
-				creditsClickHandler(ev, menus, auxMisc, domAux);
+			case("mainMenu_credits"): 
+				creditsClickHandler(ev, menus, auxMisc);
 				break;
 			
 			//leaderBoard
-			case("mainMenu_6"): 
-				leaderBoardClickHandler(ev, menus, auxMisc, body, domAux);
+			case("mainMenu_leaderBoard"): 
+				leaderBoardClickHandler(ev, menus, auxMisc);
 				break;						
 			
 			//controls
-			case("mainMenu_7"): 
-				controlsClickHandler(ev, menus, auxMisc, body);
+			case("mainMenu_controls"): 
+				controlsClickHandler(ev, menus, auxMisc);
 				break;		
 
 
 			//LEVEL MENU------------
 			//level 1
-			case("levelMenu_0"): 
-				levelClickHandler(ev, auxMisc, menus, buttons, body, 1, spaceships, imgs);
+			case("levelMenu_level1"): 
+				levelClickHandler(ev, auxMisc, menus, 1);
 				break;
-			case("levelMenu_1"): 
-				levelClickHandler(ev, auxMisc, menus, buttons, body, 2, spaceships, imgs);
-				break;
-
-			case("levelMenu_2"):
-				levelClickHandler(ev, auxMisc, menus, buttons, body, 3, spaceships, imgs);
+			case("levelMenu_level2"): 
+				levelClickHandler(ev, auxMisc, menus, 2);
 				break;
 
-			case("levelMenu_3"):
-				speedrunClickHandler(ev, auxMisc, menus, buttons, body, spaceships, imgs);
+			case("levelMenu_level3"):
+				levelClickHandler(ev, auxMisc, menus, 3);
+				break;
+
+			case("levelMenu_speedrun"):
+				speedrunClickHandler(ev, auxMisc, menus);
 				break;
 			//back
-			case("levelMenu_4"):
+			case("levelMenu_back"):
 				levelMenuBack(ev, menus, auxMisc);
 				break;
 
@@ -543,22 +412,22 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 
 			//CHOOSE SPACESHIP MENU------------
 			//left
-			case("chooseSpaceshipMenu_1"): 
-				leftClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs);
+			case("chooseSpaceshipMenu_right"): 
+				leftClickHandler(ev, auxMisc, menus);
 				break;
 
 			//right
-			case("chooseSpaceshipMenu_0"): 
-				rightClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs);
+			case("chooseSpaceshipMenu_left"): 
+				rightClickHandler(ev, auxMisc, menus);
 				break;
 
 			//play
-			case("chooseSpaceshipMenu_2"):
-				playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("chooseSpaceshipMenu_go"):
+				playClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 			//back
-			case("chooseSpaceshipMenu_3"):
-				chooseSpaceshipsMenuBack(ev, menus, auxMisc, body);
+			case("chooseSpaceshipMenu_backChooseSpaceship"):
+				chooseSpaceshipsMenuBack(ev, menus, auxMisc);
 				break;
 
 
@@ -566,38 +435,38 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 
 			//LEADERBOARD------------
 			//back
-			case("leaderBoard_0"):
-				leaderBoardBackClickHandler(ev, menus, auxMisc, body);
+			case("leaderBoard_leaderBoardBack"):
+				leaderBoardBackClickHandler(ev, menus, auxMisc);
 				break;
 
 
 			//CREDITS MENU------------
 			//back
-			case("creditsMenu_0"):
+			case("creditsMenu_backCredits"):
 				creditsBackClickHandler(ev, menus, auxMisc);
 				break;
 
 			//CONTROLS MENU------------
 			//back
-			case("controlsMenu_0"):
-				controlsBackClickHandler(ev, menus, auxMisc, body, buttons, player);
+			case("controlsMenu_backControl"):
+				controlsBackClickHandler(ev, menus, auxMisc);
 				break;
 
-			case("controlsMenu_1"):
-				controlsNextClickHandler(ev, menus, auxMisc, body, buttons, player);
+			case("controlsMenu_nextControl"):
+				controlsNextClickHandler(ev, menus, auxMisc);
 				break;	
-			case("controlsMenu_2"):
-				controlsPlayClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("controlsMenu_playControll"):
+				controlsPlayClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 
 			//HELP MENU------------
 			//back
-			case("helpMenu_0"):
-				helpBackClickHandler(ev, menus, auxMisc, body, player);
+			case("helpMenu_backHelp"):
+				helpBackClickHandler(ev, menus, auxMisc);
 				break;
 			//next
-			case("helpMenu_1"):
-				helpPlayClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			case("helpMenu_nextHelp"):
+				helpPlayClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				break;
 		}
 	}
@@ -609,11 +478,11 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 			let key = ev.target.id.split("_")[0];
 			let index = ev.target.id.split("_")[1];
 
-			buttons[key][index].style.opacity = 0.7;
-			buttons[key][index].style.cursor = "pointer";
+			auxMisc.buttons[key][index].style.opacity = 0.7;
+			auxMisc.buttons[key][index].style.cursor = "pointer";
 
-			sounds["buttons"][0].load();
-			sounds["buttons"][0].play().catch(function(){});
+			auxMisc.sounds["buttons"][0].load();
+			auxMisc.sounds["buttons"][0].play().catch(function(){});
 	}
 
 	var auxMouseOutHandler = function(ev){
@@ -621,8 +490,8 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 			let key = ev.target.id.split("_")[0];
 			let index = ev.target.id.split("_")[1];
 
-			buttons[key][index].style.opacity = 1;
-			buttons[key][index].style.cursor = "default";
+			auxMisc.buttons[key][index].style.opacity = 1;
+			auxMisc.buttons[key][index].style.cursor = "default";
 
 	}
 
@@ -637,10 +506,10 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 	//if he is coming from the game and he didnt unlock fillerText Henrique
 	if (auxMisc["oldMenu"] == "chooseSpaceshipMenu" && menus["popUpMenu"].style.display == ""){
 
-		for(let key in buttons){
+		for(let key in auxMisc.buttons){
 			if(key != "pauseMenu"){
-				for ( var i = 0; i < Object.keys(buttons[key]).length; i++){
-					addEVLButtons(buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+				for (var i in auxMisc.buttons[key]){
+					addEVLButtons(auxMisc.buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				}
 			}
 		}
@@ -648,18 +517,18 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 	//beggining
 	}else if(auxMisc["oldMenu"] == "fillerText"){
 
-		for(let key in buttons){
-			for ( var i = 0; i < Object.keys(buttons[key]).length; i++){
-				addEVLButtons(buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		for(let key in auxMisc.buttons){
+			for (var i in auxMisc.buttons[key]){
+				addEVLButtons(auxMisc.buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 			}
 		}
 
 	//if he is coming from a game and he unlocked a spaceship
 	}else if(auxMisc["oldMenu"] == "chooseSpaceshipMenu" && menus["popUpMenu"].style.display == "block"){
-		for(let key in buttons){
+		for(let key in auxMisc.buttons){
 			if(key == "popUpMenu"){
-				for ( var i = 0; i < Object.keys(buttons[key]).length; i++){
-					addEVLButtons(buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+				for (var i in auxMisc.buttons[key]){
+					addEVLButtons(auxMisc.buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				}
 			}
 		}
@@ -691,9 +560,9 @@ function menuListeners(auxMisc, menus, buttons, imgs, sounds, musics, body, spac
 
 
 
-function EnterPress( menus, auxMisc, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux){
+function EnterPress(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	if(auxMisc["currentMenu"] == "loginRegMenu"){
-		loginClickHandler( menus, auxMisc, musics, buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler, body, domAux)
+		loginClickHandler(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler)
 	}
 }
 
@@ -701,12 +570,12 @@ function EnterPress( menus, auxMisc, musics, buttons, auxClickHandler, auxMouseI
 
 //Handlers vvvvvv
 
-function KeyDownHandler(ev, buttons, menus, auxMisc, sounds, musics, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
+function KeyDownHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
 
 	switch(ev.code) {
-		case "Escape": togglePauseMenu(buttons, menus, auxMisc, sounds, musics, auxClickHandler, auxMouseInHandler, auxMouseOutHandler); break;
-		case "Enter":  EnterPress(menus, auxMisc, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux); break;
+		case "Escape": togglePauseMenu(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler); break;
+		case "Enter":  EnterPress(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler); break;
 		case "KeyP":
 			auxMisc["secretProgress"] += "P";
 			if(auxMisc["secretPress"].indexOf(auxMisc["secretProgress"]) != 0){
@@ -714,10 +583,10 @@ function KeyDownHandler(ev, buttons, menus, auxMisc, sounds, musics, auxClickHan
 			}
 			else if(auxMisc["secretPress"] == auxMisc["secretProgress"]){
 				var unlockingSpaceship = 4;
-				unlockSpaceship(unlockingSpaceship, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player);
+				unlockSpaceship(unlockingSpaceship, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 			}
 			break;
-		default: secret(ev, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player);break;
+		default: secret(ev, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);break;
 		
 
 	}
@@ -726,174 +595,174 @@ function KeyDownHandler(ev, buttons, menus, auxMisc, sounds, musics, auxClickHan
 
 // PAUSE -------
 
-function muteClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
-	for(let key in musics){
+function muteClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+	for(let key in auxMisc.musics){
 		for ( let i = 0; i < Object.keys(musics[key]).length; i++){
-			musics[key][i].volume = 0;
+			auxMisc.musics[key][i].volume = 0;
 		}
 	}
 	
-	buttons["pauseMenu"][0].style.opacity = 0.3;
-	buttons["pauseMenu"][0].style.cursor = "default";
-	removeEVLButtons(buttons, "pauseMenu", 0, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["muteM"].style.opacity = 0.3;
+	auxMisc.buttons["pauseMenu"]["muteM"].style.cursor = "default";
+	removeEVLButtons(auxMisc.buttons, "pauseMenu", "pauseMenu", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	
-	buttons["pauseMenu"][1].style.opacity = 0.3;
-	buttons["pauseMenu"][1].style.cursor = "default";
-	removeEVLButtons(buttons, "pauseMenu", 1, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["volumeLowM"].style.opacity = 0.3;
+	auxMisc.buttons["pauseMenu"]["volumeLowM"].style.cursor = "default";
+	removeEVLButtons(auxMisc.buttons, "pauseMenu", "pauseMenu", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
 	//sound goes from 1 to 0
-	buttons["pauseMenu"][2].style.opacity = 1;
-	addEVLButtons(buttons, "pauseMenu", 2, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["volumeHighM"].style.opacity = 1;
+	addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeHighM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 }
 
-function somLowClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function somLowClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	console.log("-M");		
 	
 	//place volume up button again
-	if (musics["music"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][2].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 2, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.musics["music"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeHighM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 
-	for(let key in musics){
-		for ( let i = 0; i < Object.keys(musics[key]).length; i++){
-			musics[key][i].volume -= 0.2;
+	for(let key in auxMisc.musics){
+		for ( let i = 0; i < Object.keys(auxMisc.musics[key]).length; i++){
+			auxMisc.musics[key][i].volume -= 0.2;
 		}
 	}
 
 
 	//turn of mute and volume down buttons
-	if (musics["music"][0].volume - 0.2 < 0 ){
-		buttons["pauseMenu"][0].style.opacity = 0.3;
-		buttons["pauseMenu"][0].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 0, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.musics["music"][0].volume - 0.2 < 0 ){
+		auxMisc.buttons["pauseMenu"]["muteM"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["muteM"].style.cursor = "default";
+		removeEVLButtons(auxMisc.buttons, "pauseMenu", "muteM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-		buttons["pauseMenu"][1].style.opacity = 0.3;
-		buttons["pauseMenu"][1].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 1, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].style.cursor = "default";
+		removeEVLButtons(auxMisc.buttons, "pauseMenu", "volumeLowM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 }
 
-function somHighClickHandlerM(musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function somHighClickHandlerM(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	console.log("+M");		
 
 	//place volume down and mute buttons again
-	if (musics["music"][0].volume - 0.2 < 0 ){
-		buttons["pauseMenu"][0].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 0, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.musics["music"][0].volume - 0.2 < 0 ){
+		auxMisc.buttons["pauseMenu"]["muteM"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "muteM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-		buttons["pauseMenu"][1].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 1, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeLowM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
-	for(let key in musics){
-		for ( let i = 0; i < Object.keys(musics[key]).length; i++){
-			musics[key][i].volume += 0.2;
+	for(let key in auxMisc.musics){
+		for ( let i = 0; i < Object.keys(auxMisc.musics[key]).length; i++){
+			auxMisc.musics[key][i].volume += 0.2;
 		}
 	}
 
 
 	//turn off volume up button
-	if (musics["music"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][2].style.opacity = 0.3;
-		buttons["pauseMenu"][2].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 2, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.musics["music"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].style.cursor = "default";
+		removeEVLButtons(buttons, "pauseMenu", "volumeHighM", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 }
 
 
 
-function muteClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){	
-	for(let key in sounds){
-		for ( let i = 0; i < Object.keys(sounds[key]).length; i++){
-			sounds[key][i].volume = 0;
+function muteClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){	
+	for(let key in auxMisc.sounds){
+		for ( let i = 0; i < Object.keys(auxMisc.sounds[key]).length; i++){
+			auxMisc.sounds[key][i].volume = 0;
 		}
 	}
 
-	buttons["pauseMenu"][3].style.opacity = 0.3;
-	buttons["pauseMenu"][3].style.cursor = "default";
-	removeEVLButtons(buttons, "pauseMenu", 3, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["muteS"].style.opacity = 0.3;
+	auxMisc.buttons["pauseMenu"]["muteS"].style.cursor = "default";
+	removeEVLButtons(auxMisc.buttons, "pauseMenu", "muteS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-	buttons["pauseMenu"][4].style.opacity = 0.3;
-	buttons["pauseMenu"][4].style.cursor = "default";
-	removeEVLButtons(buttons, "pauseMenu", 4, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["volumeLowS"].style.opacity = 0.3;
+	auxMisc.buttons["pauseMenu"]["volumeLowS"].style.cursor = "default";
+	removeEVLButtons(auxMisc.buttons, "pauseMenu", "volumeLowS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
 
 	//sound goes from 1 to 0
-	buttons["pauseMenu"][5].style.opacity = 1;
-	addEVLButtons(buttons, "pauseMenu", 5, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	auxMisc.buttons["pauseMenu"]["volumeHighS"].style.opacity = 1;
+	addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeHighS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 }
 
-function somLowClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function somLowClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	console.log("-S");		
 	
 	//place volume up button again
-	if (sounds["buttons"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][5].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 5, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.sounds["buttons"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeHighS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 
-	for(let key in sounds){
-		for ( let i = 0; i < Object.keys(sounds[key]).length; i++){
-			sounds[key][i].volume -= 0.2;
+	for(let key in auxMisc.sounds){
+		for ( let i = 0; i < Object.keys(auxMisc.sounds[key]).length; i++){
+			auxMisc.sounds[key][i].volume -= 0.2;
 		}
 	}
 
 	//turn of mute and volume down buttons
-	if (sounds["buttons"][0].volume - 0.2 < 0 ){
-		buttons["pauseMenu"][4].style.opacity = 0.3;
-		buttons["pauseMenu"][4].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 4, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.sounds["buttons"][0].volume - 0.2 < 0 ){
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].style.cursor = "default";
+		removeEVLButtons(auxMisc.buttons, "pauseMenu", "volumeLowS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-		buttons["pauseMenu"][3].style.opacity = 0.3;
-		buttons["pauseMenu"][3].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 3, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		auxMisc.buttons["pauseMenu"]["muteS"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["muteS"].style.cursor = "default";
+		removeEVLButtons(auxMisc.buttons, "pauseMenu", "muteS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 }
 
 
 
-function somHighClickHandlerS(sounds, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function somHighClickHandlerS(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
 	//place mute and volume down buttons again
-	if (sounds["buttons"][0].volume - 0.2 < 0 ){
-		buttons["pauseMenu"][3].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 3, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.sounds["buttons"][0].volume - 0.2 < 0 ){
+		auxMisc.buttons["pauseMenu"]["muteS"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "muteS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-		buttons["pauseMenu"][4].style.opacity = 1;
-		addEVLButtons(buttons, "pauseMenu", 4, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].style.opacity = 1;
+		addEVLButtons(auxMisc.buttons, "pauseMenu", "volumeLowS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 
-	for(let key in sounds){
-		for ( let i = 0; i < Object.keys(sounds[key]).length; i++){
-			sounds[key][i].volume += 0.2;
+	for(let key in auxMisc.sounds){
+		for ( let i = 0; i < Object.keys(auxMisc.sounds[key]).length; i++){
+			auxMisc.sounds[key][i].volume += 0.2;
 		}
 	}
 
 	//turn off volume up button
-	if (sounds["buttons"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][5].style.opacity = 0.3;
-		buttons["pauseMenu"][5].style.cursor = "default";
-		removeEVLButtons(buttons, "pauseMenu", 5, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	if (auxMisc.sounds["buttons"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].style.opacity = 0.3;
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].style.cursor = "default";
+		removeEVLButtons(auxMisc.buttons, "pauseMenu", "volumeHighS", auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 	}
 
 }
-function leaveDoGameClickHandler(auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux){
+function leaveDoGameClickHandler(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
  	//var text = document.getElementById("textPop");
- 	var text = domAux["textPop"];
+ 	var text = auxMisc.domAux["textPop"];
 
-	text.innerHTML = "Quere voltar ao menu principal??"
+	text.innerHTML = "Quer voltar ao menu principal??"
 
-	buttons["popUpMenu"][0].style.display = "block";
-	buttons["popUpMenu"][1].style.display = "none";
-	buttons["popUpMenu"][2].style.display = "block";
+	auxMisc.buttons["popUpMenu"]["yesButton"].style.display = "block";
+	auxMisc.buttons["popUpMenu"]["okButton"].style.display = "none";
+	auxMisc.buttons["popUpMenu"]["noButton"].style.display = "block";
 	
 	menus["popUpMenu"].style.display = "block";
 	
@@ -909,12 +778,12 @@ function leaveDoGameClickHandler(auxMisc, menus, buttons, auxClickHandler, auxMo
 	//REMOVE BUTTONS EVENTLISTENNERS
 	//remove button ev listener that were left
 	//doesn't change opacity so we know which have to get the ev listeners back
-	for (var i = 0 ; i < buttons["pauseMenu"].length; i++){
-		if (buttons["pauseMenu"][i].style.opacity == 1 || i == 6){
-			removeEVLButtons(buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	for (var i in buttons["pauseMenu"]){
+		if (auxMisc.buttons["pauseMenu"][i].style.opacity == 1 || i == 6){
+			removeEVLButtons(auxMisc.buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 		}
 	}
-	buttons["pauseMenu"][6].style.opacity = 0.3;
+	auxMisc.buttons["pauseMenu"]["back"].style.opacity = 0.3;
 }
 
 
@@ -930,69 +799,69 @@ function startClickHandler(ev, menus, auxMisc){
 
 
 //LOGIN REG------
-function loginClickHandler(menus, auxMisc, musics, buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler, body, domAux, player){
+function loginClickHandler(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
 	//var name = document.getElementById("name").value;
-	var name = domAux["name"].value;
+	var name = auxMisc.domAux["name"].value;
 
 	//name doesn't exist -> PopUp
 	if(checkCookie(name) == false){
 		
 		//var text = document.getElementById("textPop");
-		var text = domAux["textPop"];
+		var text = auxMisc.domAux["textPop"];
 
 		text.innerHTML = "There isn't an account with that username."
 
-		buttons["popUpMenu"][0].style.display = "none";
-		buttons["popUpMenu"][1].style.display = "block";
-		buttons["popUpMenu"][2].style.display = "none";
+		auxMisc.buttons["popUpMenu"]["yesButton"].style.display = "none";
+		auxMisc.buttons["popUpMenu"]["okButton"].style.display = "block";
+		auxMisc.buttons["popUpMenu"]["noButton"].style.display = "none";
 		
 		menus["popUpMenu"].style.display = "block";
 
 		//REMOVE BUTTONS EVENTLISTENNERS
-		for (var i = 0 ; i < buttons["loginRegMenu"].length; i++){
-			removeEVLButtons(buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
-			buttons["loginRegMenu"][i].style.opacity = 1;
+		for (let i in auxMisc.buttons["loginRegMenu"]){
+			removeEVLButtons(auxMisc.buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			auxMisc.buttons["loginRegMenu"][i].style.opacity = 1;
 		}
 
 
 	}else{
-		player.name = name;
-		player.getCookie();
-		login(name, menus, auxMisc, musics, body, buttons, domAux, player);
+		auxMisc.player.name = name;
+		auxMisc.player.getCookie();
+		login(name, menus, auxMisc);
 	}
 	
 }
 
-function signUpClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler, body, domAux, player){
+function signUpClickHandler(ev, menus, auxMisc, auxClickHandler,auxMouseInHandler,auxMouseOutHandler){
 	
 	//var name = document.getElementById("name").value;
-	var name = domAux["name"].value;
+	var name = auxMisc.domAux["name"].value;
 
 	//invalid name
 	if( name.indexOf("Level")      != -1 ||
-	    name.indexOf("Campain")    != -1 ||
+	    name.indexOf("campaign")    != -1 ||
 	    name.indexOf("Endless")    != -1 ||
 	    name.indexOf("Spaceships") != -1 ||
 	    name.indexOf("Tutorial")   != -1 ||
 	    name.indexOf(" ")          != -1 ||
 	    name == ""){
 		//var text = document.getElementById("textPop");
-		var text = domAux["textPop"];
+		var text = auxMisc.domAux["textPop"];
 
-		text.innerHTML = "Invalid Username. Keep in mind your name can't be empty, contain spaces or the words: \"Level\", \"Campain\", \"Endless\", \"Spaceships\" and \"Tutorial\"";
+		text.innerHTML = "Invalid Username. Keep in mind your name can't be empty, contain spaces or the words: \"Level\", \"campaign\", \"Endless\", \"Spaceships\" and \"Tutorial\"";
 
-		buttons["popUpMenu"][0].style.display = "none";
-		buttons["popUpMenu"][1].style.display = "block";
-		buttons["popUpMenu"][2].style.display = "none";
+		auxMisc.buttons["popUpMenu"]["yesButton"].style.display = "none";
+		auxMisc.buttons["popUpMenu"]["okButton"].style.display = "block";
+		auxMisc.buttons["popUpMenu"]["noButton"].style.display = "none";
 		
 		menus["popUpMenu"].style.display = "block";
 
 		//REMOVE BUTTONS EVENTLISTENNERS
-		for (var i = 0 ; i < buttons["loginRegMenu"].length; i++){
-			removeEVLButtons(buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		for (var i = 0 ; i < auxMisc.buttons["loginRegMenu"].length; i++){
+			removeEVLButtons(auxMisc.buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-			buttons["loginRegMenu"][i].style.opacity = 1;
+			auxMisc.buttons["loginRegMenu"][i].style.opacity = 1;
 		}
 
 
@@ -1000,27 +869,27 @@ function signUpClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler
 	}else if(checkCookie(name) == true){
 
 		//var text = document.getElementById("textPop");
-		var text = domAux["textPop"];
+		var text = auxMisc.domAux["textPop"];
 
 		text.innerHTML = "This username has saved progress. Are you sure you want to erase it?"
 
-		buttons["popUpMenu"][0].style.display = "block";
-		buttons["popUpMenu"][1].style.display = "none";
-		buttons["popUpMenu"][2].style.display = "block";
+		auxMisc.buttons["popUpMenu"]["yesButton"].style.display = "block";
+		auxMisc.buttons["popUpMenu"]["okButton"].style.display = "none";
+		auxMisc.buttons["popUpMenu"]["noButton"].style.display = "block";
 		
 		menus["popUpMenu"].style.display = "block";
 
 
 		//REMOVE BUTTONS EVENTLISTENNERS
-		for (var i = 0 ; i < buttons["loginRegMenu"].length; i++){
-			removeEVLButtons(buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
-			buttons["loginRegMenu"][i].style.opacity = 1;
+		for (var i in auxMisc.buttons["loginRegMenu"]){
+			removeEVLButtons(auxMisc.buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+			auxMisc.buttons["loginRegMenu"][i].style.opacity = 1;
 		}
 
 
 	}else{
-	 	player.createPlayer(name);
-	 	login(name, menus, auxMisc, musics, body, buttons, domAux, player);
+		auxMisc.player.createPlayer(name);
+	 	login(name, menus, auxMisc);
 	}
 
 
@@ -1029,7 +898,7 @@ function signUpClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler
 
 
 //POP UP------
-function yesClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler, body, domAux, player){
+function yesClickHandler(ev, menus, auxMisc, auxClickHandler,auxMouseInHandler,auxMouseOutHandler){
 
 	menus["popUpMenu"].style.display = "";
 	menus["popUpMenu"].style.zIndex  = 1;
@@ -1040,14 +909,14 @@ function yesClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler,au
 
 		
 		//var name = document.getElementById("name").value;
-		var name = domAux["name"].value;
+		var name = auxMisc.domAux["name"].value;
 
-		player.createPlayer(name);
-		login(name, menus, auxMisc, musics, body, buttons, domAux, player);
+		auxMisc.player.createPlayer(name);
+		login(name, menus, auxMisc);
 
 		//Reset Listeners
-		for (var i = 0 ; i < buttons["loginRegMenu"].length; i++){
-			addEVLButtons(buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		for (var i in auxMisc.buttons["loginRegMenu"]){
+			addEVLButtons(auxMisc.buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
 		}
 	}
@@ -1057,7 +926,7 @@ function yesClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler,au
 
 		for (var i = 0 ; i < buttons["pauseMenu"].length; i++){
 			if (buttons["pauseMenu"][i].style.opacity == 1 ){
-				addEVLButtons(buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+				addEVLButtons(auxMisc.buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 			}
 		}
 
@@ -1069,17 +938,17 @@ function yesClickHandler(ev, menus, auxMisc, musics, buttons, auxClickHandler,au
 
 }
 
-function okClickHandler(ev, menus, auxMisc, buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler){
+function okClickHandler(ev, menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	menus["popUpMenu"].style.display = "";			
 	menus["popUpMenu"].style.zIndex  = 1;
 
 	//if the PopUpMenu has style.display = "block" and the user came from a game
 	//this means he unlocked something ingame.
 	if(auxMisc["oldMenu"] == "algumGame;_;"){
-		for(let key in buttons){
+		for(let key in auxMisc.buttons){
 			if(key != "pauseMenu" || key != "popUpMenu" ){
-				for (var i = 0; i < Object.keys(buttons[key]).length; i++){
-					addEVLButtons(buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+				for (var i in auxMisc.buttons[key]){
+					addEVLButtons(auxMisc.buttons, key, i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 				}
 			}
 		}
@@ -1088,21 +957,21 @@ function okClickHandler(ev, menus, auxMisc, buttons, auxClickHandler,auxMouseInH
 	}//if the PopUpMemu is on the Log Reg Menu or MainMenu
 	else{
 		//Reset Listeners
-		for (var i = 0 ; i < buttons[auxMisc["currentMenu"]].length; i++){
-			addEVLButtons(buttons, auxMisc["currentMenu"], i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		for (var i in auxMisc.buttons[auxMisc["currentMenu"]]){
+			addEVLButtons(auxMisc.buttons, auxMisc["currentMenu"], i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 		}
 	}
 }
 
-function noClickHandler(ev, menus, auxMisc,buttons, auxClickHandler,auxMouseInHandler,auxMouseOutHandler){
+function noClickHandler(ev, menus, auxMisc, auxClickHandler,auxMouseInHandler,auxMouseOutHandler){
 	menus["popUpMenu"].style.display = "";			
 	menus["popUpMenu"].style.zIndex  = 1;
 
 	//if the PopUpMemu is on the Log Reg Menu
 	if (auxMisc["currentMenu"] == "loginRegMenu"){
 		//Reset listeners
-		for (var i = 0 ; i < buttons["loginRegMenu"].length; i++){
-				addEVLButtons(buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+		for (var i in auxMisc.buttons["loginRegMenu"]){
+				addEVLButtons(auxMisc.buttons, "loginRegMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 		}
 
 	//if the PopUpMemu appears while ingame (Henrique)
@@ -1111,7 +980,7 @@ function noClickHandler(ev, menus, auxMisc,buttons, auxClickHandler,auxMouseInHa
 
 		for (var i = 0 ; i < buttons["pauseMenu"].length; i++){
 			if (buttons["pauseMenu"][i].style.opacity == 1 ){
-				addEVLButtons(buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+				addEVLButtons(auxMisc.buttons, "pauseMenu", i, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 			}
 		}*/
 	}
@@ -1119,7 +988,7 @@ function noClickHandler(ev, menus, auxMisc,buttons, auxClickHandler,auxMouseInHa
 
 
 //MAIN MENU------
-function campainClickHandler(ev, auxMisc, menus, domAux){
+function campaignClickHandler(ev, auxMisc, menus){
 	menus["mainMenu"].style.display  = "";
 	menus["levelMenu"].style.display = "block";
 
@@ -1130,11 +999,11 @@ function campainClickHandler(ev, auxMisc, menus, domAux){
  	var name = auxMisc["playerAtual"];
  	console.log(name);
 	//document.getElementById("playerLevel").innerHTML = name;
-	domAux["playerLevel"].innerHTM = name;
+	auxMisc.domAux["playerLevel"].textContent = name;
 }
 
-function endlessClickHandler(ev, auxMisc, menus, buttons, body, spaceships,imgs){
-	body.bgColor = "#0a131f";
+function endlessClickHandler(ev, auxMisc, menus){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["mainMenu"].style.display = "";
 	menus["chooseSpaceshipMenu"].style.display = "block";
 
@@ -1142,11 +1011,11 @@ function endlessClickHandler(ev, auxMisc, menus, buttons, body, spaceships,imgs)
 	auxMisc["oldMenu"] = "mainMenu";
 	auxMisc["gamemode"] = "endless";
 
-	putCorrectSpaceships(auxMisc, menus, buttons, spaceships,imgs);
+	putCorrectSpaceships(auxMisc, menus);
 }
 
-function playEndlessClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
-	body.bgColor = "black";
+function playEndlessClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+	auxMisc.body.bgColor = "black";
 
 	menus["chooseSpaceshipMenu"].style.display    = "";
 	menus["canvasFigure"].style.display = "block";
@@ -1156,16 +1025,16 @@ function playEndlessClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musi
 	auxMisc["oldMenu"] = "chooseSpaceshipMenu";
 
 
-	removeEventListeners(buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
-	new Game(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux,  auxClickHandler, auxMouseInHandler, auxMouseOutHandler, -1, player);
+	removeEventListeners(auxMisc.buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	new Game(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, -1);
 }
 
-function closesGameClickHandler(ev, auxMisc, sounds, musics, menus, body){
+function closesGameClickHandler(ev, auxMisc, menus){
 	menus["mainMenu"].style.display  = "";
-	firstMenu(menus, auxMisc, musics, body);
+	firstMenu(menus, auxMisc);
 }
 
-function creditsClickHandler(ev, menus, auxMisc, domAux){
+function creditsClickHandler(ev, menus, auxMisc){
 	menus["mainMenu"].style.display = "";
 	menus["creditsMenu"].style.display = "block";
 	auxMisc["currentMenu"] = "creditsMenu";
@@ -1174,11 +1043,11 @@ function creditsClickHandler(ev, menus, auxMisc, domAux){
 
  	var name = auxMisc["playerAtual"];
 	//document.getElementById("playerCredits").innerHTML = name;
-	domAux["playerCredits"].innerHTML = name;
+	auxMisc.domAux["playerCredits"].innerHTML = name;
 }
 
-function helpClickHandler(ev, menus, auxMisc, body){
-	body.bgColor = "#0a131f";
+function helpClickHandler(ev, menus, auxMisc){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["mainMenu"].style.display = "";
 	menus["helpMenu"].style.display = "block";
 	auxMisc["currentMenu"] = "helpMenu";
@@ -1186,8 +1055,8 @@ function helpClickHandler(ev, menus, auxMisc, body){
 
 }
 
-function leaderBoardClickHandler(ev, menus, auxMisc, body, domAux){
-	body.bgColor = "#0a131f";
+function leaderBoardClickHandler(ev, menus, auxMisc){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["mainMenu"].style.display = "";
 	menus["leaderBoard"].style.display = "block";
 	auxMisc["currentMenu"] = "leaderBoard";
@@ -1196,11 +1065,11 @@ function leaderBoardClickHandler(ev, menus, auxMisc, body, domAux){
 
  	var name = auxMisc["playerAtual"];
 	//document.getElementById("playerLeaderBoard").innerHTML = name;
-	domAux["playerLeaderBoard"].innerHTML = name;
+	auxMisc.domAux["playerLeaderBoard"].innerHTML = name;
 }
 
-function controlsClickHandler(ev, menus, auxMisc, body){
-	body.bgColor = "#0a131f";
+function controlsClickHandler(ev, menus, auxMisc){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["mainMenu"].style.display = "";
 	menus["controlsMenu"].style.display = "block";
 	auxMisc["currentMenu"] = "controlsMenu";
@@ -1215,8 +1084,8 @@ function controlsClickHandler(ev, menus, auxMisc, body){
 
 
 //NIVEL MENU-------
-function levelClickHandler(ev, auxMisc, menus, buttons, body, level, spaceships, imgs){
-	body.bgColor = "#0a131f";
+function levelClickHandler(ev, auxMisc, menus, level){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["levelMenu"].style.display = "";
 	menus["chooseSpaceshipMenu"].style.display = "block";
 
@@ -1224,11 +1093,11 @@ function levelClickHandler(ev, auxMisc, menus, buttons, body, level, spaceships,
 	auxMisc["oldMenu"] = "levelMenu";
 	auxMisc["gamemode"] = "level_" + level;
 
-	putCorrectSpaceships(auxMisc, menus, buttons, spaceships, imgs);
+	putCorrectSpaceships(auxMisc, menus);
 }
 
-function speedrunClickHandler(ev, auxMisc, menus, buttons, body, spaceships, imgs){
-	body.bgColor = "#0a131f";
+function speedrunClickHandler(ev, auxMisc, menus){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["levelMenu"].style.display = "";
 	menus["chooseSpaceshipMenu"].style.display = "block";
 
@@ -1236,10 +1105,10 @@ function speedrunClickHandler(ev, auxMisc, menus, buttons, body, spaceships, img
 	auxMisc["oldMenu"] = "levelMenu";
 	auxMisc["gamemode"] = "speedrun";
 
-	putCorrectSpaceships(auxMisc, menus, buttons, spaceships, imgs);
+	putCorrectSpaceships(auxMisc, menus);
 }
 
-function levelMenuBack(ev,menus,auxMisc){
+function levelMenuBack(ev, menus, auxMisc){
 	menus["levelMenu"].style.display = "";
 	menus["mainMenu"].style.display = "block";
 
@@ -1252,13 +1121,13 @@ function levelMenuBack(ev,menus,auxMisc){
 
 
 //CHOOSE SPACESHIP MENU-------
-function playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
+function playClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
 	//hasn't seen the controls menu
 	if(auxMisc["cookieStore"]["Tutorial"][0] == "0"){
 
 		//appears Controls
-		body.bgColor = "#0a131f";
+		auxMisc.body.bgColor = "#0a131f";
 
 		menus["chooseSpaceshipMenu"].style.display    = "";
 		menus["controlsMenu"].style.display = "block";
@@ -1269,17 +1138,17 @@ function playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, aux
 		//checks if the user knows the Help menu
 		if(auxMisc["cookieStore"]["Tutorial"][1] == "0" ){
 			//buttonNext
-			buttons["controlsMenu"][1].style.display = "block";
+			auxMisc.buttons["controlsMenu"]["nextControl"].style.display = "block";
 		}else{
 			//buttonPlay
-			buttons["controlsMenu"][2].style.display = "block";
+			auxMisc.buttons["controlsMenu"]["playControl"].style.display = "block";
 		}
 
 	//hasn't seen the help menu <=> Tutorial[1] == "0"
 	}else if (auxMisc["cookieStore"]["Tutorial"] == "10"){
 		
 		//appears Help
-		body.bgColor = "#0a131f";
+		auxMisc.body.bgColor = "#0a131f";
 
 		menus["chooseSpaceshipMenu"].style.display    = "";
 		menus["helpMenu"].style.display = "block";
@@ -1289,32 +1158,32 @@ function playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, aux
 		auxMisc["currentMenu"] = "helpMenu";
 
 		//appears buttons 
-		buttons["helpMenu"][1].style.display = "block";
+		auxMisc.buttons["helpMenu"]["nextHelp"].style.display = "block";
 	
 	//user knows controls and help menus
 	}else if (auxMisc["cookieStore"]["Tutorial"] == "11"){
 		var gamemode = auxMisc["gamemode"].split("_")[0]; 
 
-		buttons["helpMenu"][1].style.display = "";
-		buttons["controlsMenu"][1].style.display = "";
-		buttons["controlsMenu"][2].style.display = "";
+		auxMisc.buttons["helpMenu"]["nextHelp"].style.display = "";
+		auxMisc.buttons["controlsMenu"]["nextControl"].style.display = "";
+		auxMisc.buttons["controlsMenu"]["playControl"].style.display = "";
 
 
 
 		if ( gamemode== "level"){
-			playLevelClickHandler(ev, auxMisc, menus, buttons, imgs, sounds,musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, parseInt(auxMisc["gamemode"].split("_")[1]), domAux, player);
+			playLevelClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, parseInt(auxMisc["gamemode"].split("_")[1]));
 		}
 		else if (gamemode == "speedrun"){
-			playSpeedrunClickHandler(ev, auxMisc, menus, buttons, imgs, sounds,musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler,  body, domAux, player);
+			playSpeedrunClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 		}
 		else if (gamemode == "endless"){
-			playEndlessClickHandler(ev, auxMisc, menus, buttons, imgs, sounds,musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+			playEndlessClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 		}
 	}
 }
 
-function playLevelClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, level, domAux, player){
-	body.bgColor = "black";
+function playLevelClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, level){
+	auxMisc.body.bgColor = "black";
 
 	menus["chooseSpaceshipMenu"].style.display    = "";
 	menus["canvasFigure"].style.display = "block";
@@ -1324,11 +1193,11 @@ function playLevelClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics
 	auxMisc["oldMenu"] = "chooseSpaceshipMenu";
 
 
-	removeEventListeners(buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
-	new Game(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux,  auxClickHandler, auxMouseInHandler, auxMouseOutHandler, level, player);
+	removeEventListeners(auxMisc.buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	new Game(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, level);
 }
 
-function playSpeedrunClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
+function playSpeedrunClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	body.bgColor = "black";
 
 	menus["chooseSpaceshipMenu"].style.display    = "";
@@ -1339,11 +1208,11 @@ function playSpeedrunClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, mus
 	auxMisc["oldMenu"] = "chooseSpaceshipMenu";
 
 
-	removeEventListeners(buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
-	new Game(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux,  auxClickHandler, auxMouseInHandler, auxMouseOutHandler, 0, player);
+	removeEventListeners(auxMisc.buttons, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	new Game(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, 0);
 }
 
-function rightClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs){
+function rightClickHandler(ev, auxMisc, menus){
 
 	//var data = player.getCookie(auxMisc["playerAtual"]);
 	var spaceshipsUser = auxMisc["cookieStore"]["Spaceships"];
@@ -1355,10 +1224,10 @@ function rightClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs){
 	var right = spaceshipAntiga;
 	var leave_right = myMod(auxMisc["currentSpaceship"] + 2, spaceshipsUser.length);
 
-	auxChangeSpaceships(menus, buttons,spaceships,imgs, spaceshipsUser, spaceshipAntiga, appears_left, auxMisc["currentSpaceship"], right, leave_right);
+	auxChangeSpaceships(menus, auxMisc, spaceshipsUser, spaceshipAntiga, appears_left, auxMisc["currentSpaceship"], right, leave_right);
 }
 
-function leftClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs){
+function leftClickHandler(ev, auxMisc, menus){
 
 	//var data = player.getCookie(auxMisc["playerAtual"]);
 	var spaceshipsUser = auxMisc["cookieStore"]["Spaceships"];
@@ -1371,14 +1240,14 @@ function leftClickHandler(ev, auxMisc, menus, buttons, spaceships, imgs){
 	var left = spaceshipAntiga;
 	var appears_right = myMod(auxMisc["currentSpaceship"] + 1, spaceshipsUser.length);
 
-	auxChangeSpaceships(menus, buttons,spaceships,imgs, spaceshipsUser, spaceshipAntiga, left, auxMisc["currentSpaceship"], appears_right, leave_left);
+	auxChangeSpaceships(menus, auxMisc, spaceshipsUser, spaceshipAntiga, left, auxMisc["currentSpaceship"], appears_right, leave_left);
 
 }
 
-function chooseSpaceshipsMenuBack(ev, menus, auxMisc, body){
+function chooseSpaceshipsMenuBack(ev, menus, auxMisc){
 	menus["chooseSpaceshipMenu"].style.display = "";
 
-	body.bgColor = "#00081d";
+	auxMisc.body.bgColor = "#00081d";
 	if( auxMisc["gamemode"] != "endless" ){
 
 		menus["levelMenu"].style.display = "block";
@@ -1399,8 +1268,8 @@ function chooseSpaceshipsMenuBack(ev, menus, auxMisc, body){
 
 
 //LEADERBOARD------
-function leaderBoardBackClickHandler(ev, menus, auxMisc, body){
-	body.bgColor = "#00081d";
+function leaderBoardBackClickHandler(ev, menus, auxMisc){
+	auxMisc.body.bgColor = "#00081d";
 	menus["leaderBoard"].style.display = "";
 	menus["mainMenu"].style.display = "block";
 
@@ -1425,66 +1294,66 @@ function creditsBackClickHandler(ev, menus, auxMisc){
 
 
 //CONTROLOS MENU -----
-function controlsBackClickHandler(ev, menus, auxMisc,body, buttons, player){
+function controlsBackClickHandler(ev, menus, auxMisc){
 	
 	menus["controlsMenu"].style.display = "";
 
-	buttons["controlsMenu"][1].style.display = "";
-	buttons["controlsMenu"][2].style.display = "";
+	auxMisc.buttons["controlsMenu"]["nextControl"].style.display = "";
+	auxMisc.buttons["controlsMenu"]["playControl"].style.display = "";
 
 	//user already saw the Controls menu
 	auxMisc["cookieStore"]["Tutorial"] = "1"+auxMisc["cookieStore"]["Tutorial"][1];
-	player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
+	auxMisc.player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
 
 
 	if(auxMisc["oldMenu"] == "mainMenu"){
-		body.bgColor = "#00081d";
+		auxMisc.body.bgColor = "#00081d";
 		menus["mainMenu"].style.display = "block";
 		auxMisc["currentMenu"] = "mainMenu";
 		auxMisc["oldMenu"] = "controlsMenu";
 	}else{
-		body.bgColor = "#0a131f";
+		auxMisc.body.bgColor = "#0a131f";
 		menus["chooseSpaceshipMenu"].style.display = "block";
 		auxMisc["currentMenu"] = "chooseSpaceshipMenu";
 
 		auxMisc["oldMenu"] = "controlsMenu";
 		
-		buttons["helpMenu"][1].style.display = "";
+		auxMisc.buttons["helpMenu"]["nextHelp"].style.display = "";
 	}
 }
 
-function controlsNextClickHandler(ev, menus, auxMisc, body, buttons, player){
-	body.bgColor = "#0a131f";
+function controlsNextClickHandler(ev, menus, auxMisc){
+	auxMisc.body.bgColor = "#0a131f";
 	menus["controlsMenu"].style.display = "";
 	menus["helpMenu"].style.display = "block";
 	auxMisc["currentMenu"] = "helpMenu";
 	auxMisc["oldMenu"] = "controlsMenu";
 
 	auxMisc["cookieStore"]["Tutorial"] = "1"+auxMisc["cookieStore"]["Tutorial"][1] ;
-	player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
+	auxMisc.player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
 
-	buttons["helpMenu"][1].style.display = "block";
+	auxMisc.buttons["helpMenu"]["nextHelp"].style.display = "block";
 }
 
-function controlsPlayClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
+function controlsPlayClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	menus["controlsMenu"].style.display = "";
 	
 	//user already saw the Controls menu
 	auxMisc["cookieStore"]["Tutorial"] = "1"+auxMisc["cookieStore"]["Tutorial"][1] ;
-	player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
+	auxMisc.player.updateCoockiesTutorial(auxMisc,"1"+auxMisc["cookieStore"]["Tutorial"][1]);
 
-	playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+	playClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 }
 
 //HELP MENU------
-function helpBackClickHandler(ev, menus, auxMisc, body, player){
+function helpBackClickHandler(ev, menus, auxMisc){
 	//goes to the old menu
 	//if Tutorial[1] == 1 goes to mainMenu;
 	//if Tutorial[1] == 0 goes to controls or chooseSpaceshipsMenu
 	if(auxMisc["oldMenu"] == "mainMenu"){
-		body.bgColor = "#00081d";
+		auxMisc.body.bgColor = "#00081d";
 	}else{
-		body.bgColor = "#0a131f";
+		auxMisc.body.bgColor = "#0a131f";
 	}
 
 	menus["helpMenu"].style.display = "";
@@ -1495,17 +1364,17 @@ function helpBackClickHandler(ev, menus, auxMisc, body, player){
 	
 	//user already saw the Help menu
 	auxMisc["cookieStore"]["Tutorial"] = auxMisc["cookieStore"]["Tutorial"][0]+"1" ;
-	player.updateCoockiesTutorial(auxMisc, auxMisc["cookieStore"]["Tutorial"][0]+"1");
+	auxMisc.player.updateCoockiesTutorial(auxMisc, auxMisc["cookieStore"]["Tutorial"][0]+"1");
 }
 
-function helpPlayClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player){
+function helpPlayClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	menus["helpMenu"].style.display = "";
 	
 	//user already saw the Help menu
 	auxMisc["cookieStore"]["Tutorial"] = auxMisc["cookieStore"]["Tutorial"][0]+"1" ;
-	player.updateCoockiesTutorial(auxMisc, auxMisc["cookieStore"]["Tutorial"][0]+"1");
+	auxMisc.player.updateCoockiesTutorial(auxMisc, auxMisc["cookieStore"]["Tutorial"][0]+"1");
 
-	playClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, body, domAux, player);
+	playClickHandler(ev, auxMisc, menus, auxKeyDownHandler, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 }
 
 //Handlers ^^^^^^
@@ -1532,7 +1401,7 @@ function helpPlayClickHandler(ev, auxMisc, menus, buttons, imgs, sounds, musics,
 
 
 //Aux Functions  vvvvvvvv
-function secret(ev, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player){
+function secret(ev, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	var unlockingSpaceship = 4;
 
 	//checks if he is on the mainMenu, if he still doesn't have the spaceship and if the popUp menu isn't open
@@ -1540,17 +1409,17 @@ function secret(ev, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler,
 		auxMisc["secretProgress"] += ev.code.substring(3);
 
 		if(auxMisc["secretPress"] == auxMisc["secretProgress"]){
-			unlockSpaceship(unlockingSpaceship, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player);	
+			unlockSpaceship(unlockingSpaceship, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);	
 		}
 
 	}
 }
 
-function unlockSpaceship(unlockingSpaceship, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player){
+function unlockSpaceship(unlockingSpaceship, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	var spaceshipsStr = "";
 
 	//update spaceships	
-	player.updateCoockiesSpaceships(auxMisc,unlockingSpaceship);
+	auxMisc.player.updateCoockiesSpaceships(auxMisc, unlockingSpaceship);
  	for(var i = 0; i < auxMisc["cookieStore"]["Spaceships"].length; i++){
 
  		if(i == unlockingSpaceship){
@@ -1563,29 +1432,29 @@ function unlockSpaceship(unlockingSpaceship, auxMisc, menus, buttons, auxClickHa
 
 
  	//var text = document.getElementById("textPop");
- 	var  text = domAux["textPop"];
+ 	var  text = auxMisc.domAux["textPop"];
 
 	text.innerHTML = "Congratulations you unlocked spaceship number "+ unlockingSpaceship;
 
-	buttons["popUpMenu"][0].style.display = "none";
-	buttons["popUpMenu"][1].style.display = "block";
-	buttons["popUpMenu"][2].style.display = "none";
+	auxMisc.buttons["popUpMenu"]["yesButton"].style.display = "none";
+	auxMisc.buttons["popUpMenu"]["okButton"].style.display = "block";
+	auxMisc.buttons["popUpMenu"]["noButton"].style.display = "none";
 	
 	menus["popUpMenu"].style.display = "block";
 
 	//REMOVE BUTTONS EVENTLISTENNERS
-	for (var i = 0 ; i < buttons["mainMenu"].length; i++){
-		buttons["mainMenu"][i].removeEventListener("click",auxClickHandler);
-		buttons["mainMenu"][i].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["mainMenu"][i].removeEventListener("mouseout",auxMouseOutHandler);	
-		buttons["mainMenu"][i].style.opacity = 1;
+	for (var i = 0 ; i < auxMisc.buttons["mainMenu"].length; i++){
+		auxMisc.buttons["mainMenu"][i].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["mainMenu"][i].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["mainMenu"][i].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["mainMenu"][i].style.opacity = 1;
 	}
 }
 
-function unlocksSpaceshipByLevel(levelCompletado, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player){
+function unlocksSpaceshipByLevel(levelCompletado, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	switch(levelCompletado){ 
-		case(2):    unlockSpaceship(3, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player);break;
-		case(-11):  unlockSpaceship(2, auxMisc, menus, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, domAux, player);break;
+		case(2):    unlockSpaceship(3, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);break;
+		case(-11):  unlockSpaceship(2, auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);break;
 	}
 }
 
@@ -1606,60 +1475,60 @@ function playSound(musics, level){
 		musics["endless"][0].loop = true;
 		musics["endless"][0].load();
 		musics["endless"][0].play().catch(function(){});
-	//campain
+	//campaign
 	}else{
-		musics["campain"][level - 1].loop = true;
-		musics["campain"][level - 1].load();
-		musics["campain"][level - 1].play().catch(function(){});
+		musics["campaign"][level - 1].loop = true;
+		musics["campaign"][level - 1].load();
+		musics["campaign"][level - 1].play().catch(function(){});
 	}
 }
 
-function updateSoundButton(sounds, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function updateSoundButton(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 	//max Sound Volume
-	if(sounds["buttons"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][5].style.opacity = 0.3;	
+	if(auxMisc.sounds["buttons"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].style.opacity = 0.3;	
 		
-		buttons["pauseMenu"][5].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][5].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][5].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["volumeHighS"].removeEventListener("mouseout",auxMouseOutHandler);	
 	
 	//min Sound Volume
-	}else if (sounds["buttons"][0].volume - 0.2 < 0){
-		buttons["pauseMenu"][3].style.opacity = 0.3;	
+	}else if (auxMisc.sounds["buttons"][0].volume - 0.2 < 0){
+		auxMisc.buttons["pauseMenu"]["muteS"].style.opacity = 0.3;	
 		
-		buttons["pauseMenu"][3].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][3].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][3].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["muteS"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["muteS"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["muteS"].removeEventListener("mouseout",auxMouseOutHandler);	
 
-		buttons["pauseMenu"][4].style.opacity = 0.3;	
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].style.opacity = 0.3;	
 		
-		buttons["pauseMenu"][4].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][4].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][4].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowS"].removeEventListener("mouseout",auxMouseOutHandler);	
 	}
 
 
 	//max Music Volume
-	if(musics["music"][0].volume + 0.2 > 1){
-		buttons["pauseMenu"][2].style.opacity = 0.3;	
+	if(auxMisc.musics["music"][0].volume + 0.2 > 1){
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].style.opacity = 0.3;	
 		
-		buttons["pauseMenu"][2].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][2].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][2].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["volumeHighM"].removeEventListener("mouseout",auxMouseOutHandler);	
 	
 	//min Music Volume
-	}else if (musics["music"][0].volume - 0.2 < 0){
-		buttons["pauseMenu"][0].style.opacity = 0.3;	
+	}else if (auxMisc.musics["music"][0].volume - 0.2 < 0){
+		auxMisc.buttons["pauseMenu"]["muteM"].style.opacity = 0.3;	
 		
-		buttons["pauseMenu"][0].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][0].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][0].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["muteM"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["muteM"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["muteM"].removeEventListener("mouseout",auxMouseOutHandler);	
 
-		buttons["pauseMenu"][1].style.opacity = 0.3;	
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].style.opacity = 0.3;	
 	
-		buttons["pauseMenu"][1].removeEventListener("click",auxClickHandler);
-		buttons["pauseMenu"][1].removeEventListener("mouseover",auxMouseInHandler);
-		buttons["pauseMenu"][1].removeEventListener("mouseout",auxMouseOutHandler);	
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].removeEventListener("click",auxClickHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].removeEventListener("mouseover",auxMouseInHandler);
+		auxMisc.buttons["pauseMenu"]["volumeLowM"].removeEventListener("mouseout",auxMouseOutHandler);	
 	}
 }
 
@@ -1675,75 +1544,75 @@ function removeEVLButtons(buttons, key, i, auxClickHandler, auxMouseInHandler, a
 	buttons[key][i].removeEventListener("mouseout", auxMouseOutHandler);
 }
 
-function auxChangeSpaceships(menus, buttons, spaceships, imgs, spaceshipsUser, spaceshipAntiga, left, middle, right, leave){
+function auxChangeSpaceships(menus, auxMisc, spaceshipsUser, spaceshipAntiga, left, middle, right, leave){
 	//left
 	if (parseInt(spaceshipsUser[left]) == 1 ){
-		spaceships[left][1].style.left = "280px" ;
-		spaceships[left][1].style.top = "200px" ;
-		spaceships[left][1].style.display = "block" ;
-		spaceships[left][1].style.opacity = 0.3;
+		auxMisc.spaceships[left][1].style.left = "280px" ;
+		auxMisc.spaceships[left][1].style.top = "200px" ;
+		auxMisc.spaceships[left][1].style.display = "block" ;
+		auxMisc.spaceships[left][1].style.opacity = 0.3;
 
-		spaceships[left][1].width  = imgs["imgsMenus"]["spaceship"+1][left].naturalWidth/2 ;
-		spaceships[left][1].height = imgs["imgsMenus"]["spaceship"+1][left].naturalHeight/2;
+		auxMisc.spaceships[left][1].width  = auxMisc["imgsMenu"]["spaceship"+1][left].naturalWidth/2 ;
+		auxMisc.spaceships[left][1].height = auxMisc["imgsMenu"]["spaceship"+1][left].naturalHeight/2;
 	}else{
-		spaceships[left][0].style.left = "280px" ;
-		spaceships[left][0].style.top = "200px" ;
-		spaceships[left][0].style.display = "block" ;
-		spaceships[left][0].style.opacity = 0.3;
+		auxMisc.spaceships[left][0].style.left = "280px" ;
+		auxMisc.spaceships[left][0].style.top = "200px" ;
+		auxMisc.spaceships[left][0].style.display = "block" ;
+		auxMisc.spaceships[left][0].style.opacity = 0.3;
 
-		spaceships[left][0].width  = imgs["imgsMenus"]["spaceship"+0][left].naturalWidth/2 ;
-		spaceships[left][0].height = imgs["imgsMenus"]["spaceship"+0][left].naturalHeight/2;
+		auxMisc.spaceships[left][0].width  = auxMisc["imgsMenu"]["spaceship"+0][left].naturalWidth/2 ;
+		auxMisc.spaceships[left][0].height = auxMisc["imgsMenu"]["spaceship"+0][left].naturalHeight/2;
 	}
 
 
 	//spaceship middle
 	if (parseInt(spaceshipsUser[middle]) == 1 ){
-		buttons["chooseSpaceshipMenu"][2].style.display = "block";
+		auxMisc.buttons["chooseSpaceshipMenu"]["go"].style.display = "block";
 
-		spaceships[middle][1].style.left = "510px" ;
-		spaceships[middle][1].style.top = "100px" ;
-		spaceships[middle][1].style.display = "block" ;
-		spaceships[middle][1].style.opacity = 1;
+		auxMisc.spaceships[middle][1].style.left = "510px" ;
+		auxMisc.spaceships[middle][1].style.top = "100px" ;
+		auxMisc.spaceships[middle][1].style.display = "block" ;
+		auxMisc.spaceships[middle][1].style.opacity = 1;
 
-		spaceships[middle][1].width  = imgs["imgsMenus"]["spaceship"+1][middle].naturalWidth ;
-		spaceships[middle][1].height = imgs["imgsMenus"]["spaceship"+1][middle].naturalHeight;
+		auxMisc.spaceships[middle][1].width  = auxMisc["imgsMenu"]["spaceship"+1][middle].naturalWidth ;
+		auxMisc.spaceships[middle][1].height = auxMisc["imgsMenu"]["spaceship"+1][middle].naturalHeight;
 	}else{
-		buttons["chooseSpaceshipMenu"][2].style.display = "none";
+		auxMisc.buttons["chooseSpaceshipMenu"]["go"].style.display = "none";
 
-		spaceships[middle][0].style.left = "510px" ;
-		spaceships[middle][0].style.top = "100px" ;
-		spaceships[middle][0].style.display = "block" ;
-		spaceships[middle][0].style.opacity = 1;
+		auxMisc.spaceships[middle][0].style.left = "510px" ;
+		auxMisc.spaceships[middle][0].style.top = "100px" ;
+		auxMisc.spaceships[middle][0].style.display = "block" ;
+		auxMisc.spaceships[middle][0].style.opacity = 1;
 
-		spaceships[middle][0].width  = imgs["imgsMenus"]["spaceship"+0][middle].naturalWidth ;
-		spaceships[middle][0].height = imgs["imgsMenus"]["spaceship"+0][middle].naturalHeight;
+		auxMisc.spaceships[middle][0].width  = auxMisc["imgsMenu"]["spaceship"+0][middle].naturalWidth ;
+		auxMisc.spaceships[middle][0].height = auxMisc["imgsMenu"]["spaceship"+0][middle].naturalHeight;
 
 	}
 
 	//right
 	if (parseInt(spaceshipsUser[right]) == 1 ){
-		spaceships[right][1].style.left = "860px" ;
-		spaceships[right][1].style.top = "200px" ;
-		spaceships[right][1].style.display = "block" ;
-		spaceships[right][1].style.opacity = 0.3;
+		auxMisc.spaceships[right][1].style.left = "860px" ;
+		auxMisc.spaceships[right][1].style.top = "200px" ;
+		auxMisc.spaceships[right][1].style.display = "block" ;
+		auxMisc.spaceships[right][1].style.opacity = 0.3;
 
-		spaceships[right][1].width  = imgs["imgsMenus"]["spaceship"+1][right].naturalWidth/2 ;
-		spaceships[right][1].height = imgs["imgsMenus"]["spaceship"+1][right].naturalHeight/2;
+		auxMisc.spaceships[right][1].width  = auxMisc["imgsMenu"]["spaceship"+1][right].naturalWidth/2 ;
+		auxMisc.spaceships[right][1].height = auxMisc["imgsMenu"]["spaceship"+1][right].naturalHeight/2;
 	}else{
-		spaceships[right][0].style.left = "860px" ;
-		spaceships[right][0].style.top = "200px" ;
-		spaceships[right][0].style.display = "block";
-		spaceships[right][0].style.opacity = 0.3;
+		auxMisc.spaceships[right][0].style.left = "860px" ;
+		auxMisc.spaceships[right][0].style.top = "200px" ;
+		auxMisc.spaceships[right][0].style.display = "block";
+		auxMisc.spaceships[right][0].style.opacity = 0.3;
 
-		spaceships[right][0].width  = imgs["imgsMenus"]["spaceship"+0][right].naturalWidth/2 ;
-		spaceships[right][0].height = imgs["imgsMenus"]["spaceship"+0][right].naturalHeight/2;
+		auxMisc.spaceships[right][0].width  = auxMisc["imgsMenu"]["spaceship"+0][right].naturalWidth/2 ;
+		auxMisc.spaceships[right][0].height = auxMisc["imgsMenu"]["spaceship"+0][right].naturalHeight/2;
 	}
 
 	//leave 
 
 	if(leave != "aqui leave no existe"){
-		spaceships[leave][0].style.display = "" ;
-		spaceships[leave][1].style.display = "" ;
+		auxMisc.spaceships[leave][0].style.display = "" ;
+		auxMisc.spaceships[leave][1].style.display = "" ;
 
 		//texts
 		menus["chooseSpaceshipMenu"].children["BoxAc"].children["spaceship"+spaceshipAntiga].style.display = "";
@@ -1759,7 +1628,7 @@ function auxChangeSpaceships(menus, buttons, spaceships, imgs, spaceshipsUser, s
 
 
 
-function putCorrectSpaceships(auxMisc, menus, buttons, spaceships, imgs){
+function putCorrectSpaceships(auxMisc, menus){
 
 	//var data = player.getCookie(auxMisc["playerAtual"]);
 	var spaceshipsUser = auxMisc["cookieStore"]["Spaceships"];
@@ -1770,8 +1639,8 @@ function putCorrectSpaceships(auxMisc, menus, buttons, spaceships, imgs){
 
 	//erases everything in the beggining, then it writes.
 	for (let i = 0 ; i < nSpaceships;i++){
-		spaceships[i][0].style.display = "";
-		spaceships[i][1].style.display = "";
+		auxMisc.spaceships[i][0].style.display = "";
+		auxMisc.spaceships[i][1].style.display = "";
 	}
 	for (let i = 0 ; i < nSpaceships;i++){
 		menus["chooseSpaceshipMenu"].children["BoxAc"].children["spaceship"+i].style.display = "";
@@ -1783,62 +1652,48 @@ function putCorrectSpaceships(auxMisc, menus, buttons, spaceships, imgs){
 	var right = myMod(auxMisc["currentSpaceship"] + 1, nSpaceships);
 
 
-	auxChangeSpaceships(menus, buttons,spaceships,imgs, spaceshipsUser, "no ha spaceship old", left, auxMisc["currentSpaceship"], right, "aqui leave no existe");
+	auxChangeSpaceships(menus, auxMisc, spaceshipsUser, "no ha spaceship old", left, auxMisc["currentSpaceship"], right, "aqui leave no existe");
 }
 
 
 
-function domSpaceships(menus){
-	var spaceships = [];
-	let nSpaceships = (menus["chooseSpaceshipMenu"].childElementCount-6)/2 ; 
 
-	//spaceships
-	for (let i = 0 ; i < nSpaceships;i++){
-		spaceships[i] = []
-		var spaceshipLocked = menus["chooseSpaceshipMenu"].children["spaceship0_"+i];
-		spaceships[i].push(spaceshipLocked);
-		var spaceship = menus["chooseSpaceshipMenu"].children["spaceship1_"+i];
-		spaceships[i].push(spaceship);
-	}
-
-	return spaceships;
-}
 
 
 function myMod(n, m) {
   return ((n % m) + m) % m;
 }
 
-function togglePauseMenu(buttons, menus, auxMisc, sounds, musics, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
+function togglePauseMenu(menus, auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler){
 
-	updateSoundButton(sounds, musics, buttons, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
+	updateSoundButton(auxMisc, auxClickHandler, auxMouseInHandler, auxMouseOutHandler);
 
-	buttons["pauseMenu"][6].style.display = "none";
+	auxMisc.buttons["pauseMenu"]["back"].style.display = "none";
 
 	// only clicks on the options if the popUpMenu is with style.display = ""
 	if(menus["pauseMenu"].style.display == "" && menus["popUpMenu"].style.display == ""){
 		menus["pauseMenu"].style.display = "block";
 
-		sounds["esc"][0].load();
-		sounds["esc"][0].play().catch(function(){});
+		auxMisc.sounds["esc"][0].load();
+		auxMisc.sounds["esc"][0].play().catch(function(){});
 
-		for (var i = 0 ; i < buttons[auxMisc["currentMenu"]].length; i++){
-			buttons[auxMisc["currentMenu"]][i].removeEventListener("click",auxClickHandler);
-			buttons[auxMisc["currentMenu"]][i].removeEventListener("mouseover",auxMouseInHandler);
-			buttons[auxMisc["currentMenu"]][i].removeEventListener("mouseout",auxMouseOutHandler);
+		for (let i in buttons[auxMisc["currentMenu"]]){
+			auxMisc.buttons[auxMisc["currentMenu"]][i].removeEventListener("click",auxClickHandler);
+			auxMisc.buttons[auxMisc["currentMenu"]][i].removeEventListener("mouseover",auxMouseInHandler);
+			auxMisc.buttons[auxMisc["currentMenu"]][i].removeEventListener("mouseout",auxMouseOutHandler);
 		}
 
 	}//if the user is ingame and he unlocks a spaceship, only click on options when the popUpMenu disappears
 	else if (menus["popUpMenu"].style.display == ""){
 		menus["pauseMenu"].style.display = "";
 
-		sounds["esc"][1].load();
-		sounds["esc"][1].play().catch(function(){});
+		auxMisc.sounds["esc"][1].load();
+		auxMisc.sounds["esc"][1].play().catch(function(){});
 
-		for (var i = 0 ; i < buttons[auxMisc["currentMenu"]].length; i++){
-			buttons[auxMisc["currentMenu"]][i].addEventListener("click", auxClickHandler);
-			buttons[auxMisc["currentMenu"]][i].addEventListener("mouseover", auxMouseInHandler);
-			buttons[auxMisc["currentMenu"]][i].addEventListener("mouseout", auxMouseOutHandler);
+		for (let i in buttons[auxMisc["currentMenu"]]){
+			auxMisc.buttons[auxMisc["currentMenu"]][i].addEventListener("click", auxClickHandler);
+			auxMisc.buttons[auxMisc["currentMenu"]][i].addEventListener("mouseover", auxMouseInHandler);
+			auxMisc.buttons[auxMisc["currentMenu"]][i].addEventListener("mouseout", auxMouseOutHandler);
 		}
 
 	}
@@ -1864,13 +1719,13 @@ function removeEventListeners(buttons, auxKeyDownHandler, auxClickHandler, auxMo
 }
 
 
-function firstMenu(menus, auxMisc, musics, body){
-	body.bgColor = "#00083b";
+function firstMenu(menus, auxMisc){
+	auxMisc.body.bgColor = "#00083b";
 
 	if(auxMisc["oldMenu"] == "fillerText"){
-		musics["music"][0].loop = true;
-		musics["music"][0].load();
-		musics["music"][0].play().catch(function(){});
+		auxMisc.musics["music"][0].loop = true;
+		auxMisc.musics["music"][0].load();
+		auxMisc.musics["music"][0].play().catch(function(){});
 	}
 
 	menus["startMenu"].style.display = "block";
@@ -1884,7 +1739,7 @@ function firstMenu(menus, auxMisc, musics, body){
 
 
 function mainMenu(menus, auxMisc, musics, body){
-	body.bgColor = "#00081d";
+	auxMisc.body.bgColor = "#00081d";
 	menus["canvasFigure"].style.display = "";
 	menus["loginRegMenu"].style.display = "";
 	menus["mainMenu"].style.display = "block";
@@ -1917,26 +1772,28 @@ function mainMenu(menus, auxMisc, musics, body){
 }
 
 
-function login(name, menus, auxMisc, musics, body, buttons, domAux, player){
+function login(name, menus, auxMisc){
 	auxMisc["playerAtual"] = name;
 	//document.getElementById("playerMain").innerHTML = name;
-	domAux["playerMain"].innerHTML = name; 
+	auxMisc.domAux["playerMain"].innerHTML = name; 
 
-	mainMenu(menus, auxMisc, musics, body);
+	mainMenu(menus, auxMisc);
 	//readsCookies(menus, auxMisc);
-	unlocksLevels(buttons, player);
-}
 
-function unlocksLevels(buttons, player){
-	var level = player.level;
-	for(var i = 0; i < parseInt(level) + 1; i++){
-		buttons["levelMenu"][i].style.display = "block";
+	// Unlock levels
+	var level = parseInt(auxMisc.player.level);
+	var i = 0;
+	for(; i < parseInt(level) + 1; i++){
+		auxMisc.buttons["levelMenu"]["level" + (i + 1)].style.display = "block";
 	}
 
-	for(;i < buttons["levelMenu"].length -1 ;i++){
-		buttons["levelMenu"][i].style.display = "";
+	for(;i < auxMisc.maxLevel; i++){
+		auxMisc.buttons["levelMenu"]["level" + (i + 1)].style.display = "";
 	}
 
+	if (i == auxMisc.maxLevel){
+		auxMisc.buttons["levelMenu"]["speedrun"].style.display = "";
+	}
 }
 
 
@@ -1945,13 +1802,14 @@ function readsCookies(menus, auxMisc){
 	// {"player1": [0,0,0,"1000"] , "player2": [1,123,0,"1110"]}
 	var players = parsesCookies();
 	//Save the players/records on the LeaderBoard (Henrique)
-	//{"Campain": {"player1": 45 ,"gameCampain":27 } ,"Endless":{"player1": 332388,"me": 3442} }
+	//{"campaign": {"player1": 45 ,"gamecampaign":27 } ,"Endless":{"player1": 332388,"me": 3442} }
 	var records  = createRecordsArray(players, auxMisc);
 	fillLeaderBoard(records, menus);
 
-
-	auxMisc["cookieStore"]["Tutorial"]   = players[auxMisc["playerAtual"]][4];
-	auxMisc["cookieStore"]["Spaceships"] = players[auxMisc["playerAtual"]][3];
+	if (auxMisc["playerAtual"] in players){
+		auxMisc["cookieStore"]["Tutorial"]   = players[auxMisc["playerAtual"]][4];
+		auxMisc["cookieStore"]["Spaceships"] = players[auxMisc["playerAtual"]][3];
+	}
 }
 
 
@@ -1978,8 +1836,8 @@ function parsesCookies() {
 			}
 			players[name][0] = splitedCookie[1];
 
-		}else if (splitedCookie[0].indexOf("Campain") != -1) {
-			name = splitedCookie[0].substring(0,splitedCookie[0].indexOf("Campain"));
+		}else if (splitedCookie[0].indexOf("campaign") != -1) {
+			name = splitedCookie[0].substring(0,splitedCookie[0].indexOf("campaign"));
 			if(players[name] == undefined){
 				players[name] = new Array();
 			}
@@ -2015,14 +1873,14 @@ function parsesCookies() {
 
 function createRecordsArray(players, auxMisc){
 	//Save the players/records on the LeaderBoard (Henrique)
-	//{"Campain": {"player1": 45 ,"gameCampain":27 } ,"Endless":{"player1": 332388,"me": 3442} }
-	var records = {"Campain":{}, "Endless":{} };
+	//{"campaign": {"player1": 45 ,"gamecampaign":27 } ,"Endless":{"player1": 332388,"me": 3442} }
+	var records = {"campaign":{}, "Endless":{} };
 
 	for (let user in players){
 		//verificar se ja tem os levels every desbloqueados
 		if (players[user][0] == auxMisc["maxLevel"] && players[user][1] != 0){
 			//coloca o player no dict dos records
-			records["Campain"][user] = players[user][1];
+			records["campaign"][user] = players[user][1];
 		}
 		if (players[user][2] != 0){
 			//coloca o player no dict dos records
@@ -2030,10 +1888,10 @@ function createRecordsArray(players, auxMisc){
 		}
 	}
 
-	// Sort Campain
+	// Sort campaign
 	// Create items array
-	var items = Object.keys(records["Campain"]).map(function(key) {
-		return [key, records["Campain"][key]];
+	var items = Object.keys(records["campaign"]).map(function(key) {
+		return [key, records["campaign"][key]];
 	});
 
 	// Sort the array based on the second element
@@ -2041,11 +1899,11 @@ function createRecordsArray(players, auxMisc){
 		return second[1] - first[1];
 	});
 
-	var aux = {"Campain":{}  };
+	var aux = {"campaign":{}  };
 	for (let i = 0;i < items.length;i++){
-		aux["Campain"][items[i][0]] = items[i][1];
+		aux["campaign"][items[i][0]] = items[i][1];
 	}
-	records["Campain"] = aux["Campain"];
+	records["campaign"] = aux["campaign"];
 
 
 
@@ -2077,10 +1935,10 @@ function fillLeaderBoard(records, menus){
 	//declared as var i, so it stays with the value of when the for ended
 	var i;
 
-	//CAMPAIN
-	for (i = 0; i < 6 && i < Object.keys(records["Campain"]).length; i++){
-		player.children[i].innerHTML = Object.keys(records["Campain"])[i];
-		result.children[i].innerHTML = Object.values(records["Campain"])[i];
+	//campaign
+	for (i = 0; i < 6 && i < Object.keys(records["campaign"]).length; i++){
+		player.children[i].innerHTML = Object.keys(records["campaign"])[i];
+		result.children[i].innerHTML = Object.values(records["campaign"])[i];
 	}
 	for (;i < 6; i++){
 		player.children[i].innerHTML = "";
@@ -2120,7 +1978,7 @@ function checkCookie(name) {
 
 		if(splitedCookie[0].indexOf(name) == 0 &&
 			(splitedCookie[0].substring(name.length) == "Level"      ||
-			 splitedCookie[0].substring(name.length) == "Campain"    ||
+			 splitedCookie[0].substring(name.length) == "campaign"    ||
 			 splitedCookie[0].substring(name.length) == "Endless"    ||
 			 splitedCookie[0].substring(name.length) == "Spaceships" ||
 			 splitedCookie[0].substring(name.length) == "Tutorial") ) {

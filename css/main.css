@@ -54,7 +54,7 @@ body{
 #startMenu{
 	background: url("../resources/menu/startMenu_Background0.png") 0 0 /100% 100%;
 }
-#startMenu_0{
+#startMenu_startButton{
 	position: absolute;	
 	top :460px;
 	left :510px;
@@ -78,12 +78,12 @@ body{
 
 }
 
-#loginRegMenu_0{
+#loginRegMenu_signUpButton{
 	position: absolute;	
 	top :500px;
 	left :480px;
 }
-#loginRegMenu_1{
+#loginRegMenu_loginButton{
 	position: absolute;	
 	top :495px;
 	left :700px;
@@ -98,20 +98,20 @@ body{
 }
 
 
-#mainMenu_0{
+#mainMenu_campaign{
 	position: absolute;
 	top :250px;
 	left :505px; 
 }
 
-#mainMenu_1{
+#mainMenu_endless{
 	position: absolute;
 	top :350px;
 	left :510px;
 
 }
 
-#mainMenu_2{
+#mainMenu_editor{
 	position: absolute;
 	top :450px;
 	left :510px;
@@ -120,25 +120,25 @@ body{
 
 
 
-#mainMenu_4{
+#mainMenu_help{
 	position: absolute;
 	bottom :60px;
 	left :470px;
 }
 
-#mainMenu_5{
+#mainMenu_credits{
 	position: absolute;
 	bottom :62px;
 	left :770px;
 
 }
-#mainMenu_6{
+#mainMenu_leaderBoard{
 	position: absolute;
 	bottom :60px;
 	left :670px;
 }
 
-#mainMenu_7{
+#mainMenu_controls{
 	position: absolute;
 	bottom :60px;
 	left:570px;
@@ -151,26 +151,26 @@ body{
 	background: url("../resources/menu/levelMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#levelMenu_0{
+#levelMenu_level1{
 	display: none;
 	position: absolute;
 	top :250px;
 	left :510px; 
 }
 
-#levelMenu_1{
+#levelMenu_level2{
 	display: none;
 	position: absolute;
 	top :320px;
 	left :510px;
 }
-#levelMenu_2{
+#levelMenu_level3{
 	display: none;
 	position: absolute;
 	top :390px;
 	left :510px;
 }
-#levelMenu_3{
+#levelMenu_speedrun{
 	display: none;
 	position: absolute;
 	top :460px;
@@ -185,13 +185,13 @@ body{
 	background: url("../resources/menu/chooseSpaceshipMenu_Background0.png") 0 0 /100% 100%;
 }
 
-#chooseSpaceshipMenu_0{
+#chooseSpaceshipMenu_left{
 	position: absolute;
 	top :250px;
 	left :420px; 
 }
 
-#chooseSpaceshipMenu_1{
+#chooseSpaceshipMenu_right{
 	position: absolute;
 	top :250px;
 	left :760px;
@@ -274,17 +274,17 @@ body{
 }
 
 
-#popUpMenu_0{
+#popUpMenu_yesButton{
 	position: absolute;
 	top :150px;
 	left :40px;
 }
-#popUpMenu_1{
+#popUpMenu_okButton{
 	position: absolute;
 	top :150px;
 	left :125px;
 }
-#popUpMenu_2{
+#popUpMenu_noButton{
 	position: absolute;
 	top :150px;
 	left :190px;
@@ -315,43 +315,43 @@ body{
 
 }
 
-#pauseMenu_0{
+#pauseMenu_muteM{
 	position: absolute;
 	top :170px;
 	left :160px;
 
 }
-#pauseMenu_1{
+#pauseMenu_volumeLowM{
 	position: absolute;
 	top :170px;
 	left :260px;
 
 }
-#pauseMenu_2{
+#pauseMenu_volumeHighM{
 	position: absolute;
 	top :170px;
 	left :320px;
 
 }
-#pauseMenu_3{
+#pauseMenu_muteS{
 	position: absolute;
 	top :300px;
 	left :160px;
 
 }
-#pauseMenu_4{
+#pauseMenu_volumeLowS{
 	position: absolute;
 	top :300px;
 	left :260px;
 
 }
-#pauseMenu_5{
+#pauseMenu_volumeHighS{
 	position: absolute;
 	top :300px;
 	left :320px;
 
 }
-#pauseMenu_6{
+#pauseMenu_back{
 	position: absolute;
 	top :400px;
 	left :90px;
@@ -434,7 +434,7 @@ body{
 	bottom: 5%;
 	background: url("../resources/menu/controlsMenu_Background1.png") 0 0 /100% 100%;
 }
-#controlsMenu_1{
+#controlsMenu_nextControl{
 	display: none;
 	position: absolute;
 	bottom :20px;

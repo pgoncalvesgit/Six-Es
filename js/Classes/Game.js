@@ -2,21 +2,21 @@
 
 class Game{
 
-	constructor(auxMisc, menus, buttons, imgs, sounds, musics, body, domAux,  auxClickHandler, auxMouseInHandler, auxMouseOutHandler, level, player){
+	constructor(auxMisc, menus, auxClickHandler, auxMouseInHandler, auxMouseOutHandler, level){
 
 		this.auxMisc = auxMisc;
 		this.menus   = menus;
-		this.buttons = buttons;
-		this.imgs    = imgs;
-		this.sounds  = sounds;
-		this.musics  = musics;
-		this.body    = body;
-		this.domAux  = domAux;
+		this.buttons = auxMisc.buttons;
+		this.imgs    = auxMisc.imgs;
+		this.sounds  = auxMisc.sounds;
+		this.musics  = auxMisc.musics;
+		this.body    = auxMisc.body;
+		this.domAux  = auxMisc.domAux;
 		this.auxClickHandler    = auxClickHandler;
 		this.auxMouseInHandler  = auxMouseInHandler;
 		this.auxMouseOutHandler = auxMouseOutHandler;
 
-		this.player = player;
+		this.player = auxMisc.player;
 
 		this.spaceship;
 		this.asteroids;
@@ -131,7 +131,7 @@ class Game{
 
 			function finish(ev){
 				this.canvas.removeEventListener(this.currentCanvasEvName, this.currentCanvasEvFunction);
-				this.player.updateCoockiesCampain(auxMisc, buttons, this.spaceship.points);
+				this.player.updateCoockiescampaign(auxMisc, buttons, this.spaceship.points);
 
 				menuListeners(this.auxMisc, this.menus, this.buttons, this.imgs, this.sounds, this.musics, this.body, domSpaceships(this.menus), this.domAux, this.player);
 				mainMenu(this.menus, this.auxMisc, this.musics, this.body);
@@ -235,7 +235,7 @@ class Game{
 		enemyEntities[0] = null;
 
 		var rawFile = new XMLHttpRequest();
-	    rawFile.open("GET", "levels/campain/level_" + this.level + ".txt", true);
+	    rawFile.open("GET", "levels/campaign/level_" + this.level + ".txt", true);
 	    rawFile.onreadystatechange = function (){
 	        if(rawFile.readyState === 4){
 	            if(rawFile.status === 200 || rawFile.status == 0){
@@ -329,13 +329,13 @@ class Game{
 
 				//POP UP------------
 				//yes
-				case("popUpMenu_0"):
+				case("popUpMenu_yesButton"):
 					console.log("yes of the Game");
 					this.yesClickHandlerGame();
 					break;
 
 				//no
-				case("popUpMenu_2"):
+				case("popUpMenu_noButton"):
 					console.log("no of the Game");
 					this.noClickHandlerGame();
 					break;
@@ -824,7 +824,7 @@ class Game{
 		var game = this;
 		//level completed, returns -1 if the player already completed the level.
 		//if doesnt need to unlock a spaceship returns 1,2,3 when completing the levels 1,2,3 respectivly
-		//when in campain mode, completes a level and updates the cookies
+		//when in campaign mode, completes a level and updates the cookies
 		if(this.gamemode == 0){
 			levelCompletado = this.player.updateCoockiesLevel(this.auxMisc, this.buttons, this.level);
 		}
@@ -855,7 +855,7 @@ class Game{
 					levelCompletado = -11
 				}
 
-				//if its on campain or custom (not implemented yet), returns to the main menu
+				//if its on campaign or custom (not implemented yet), returns to the main menu
 				if(game.gamemode == 0 || game.gamemode == 3){
 
 					unlocksSpaceshipByLevel(levelCompletado, game.auxMisc, game.menus, game.buttons, game.auxClickHandler, game.auxMouseInHandler, game.auxMouseOutHandler, game.domAux, game.player);

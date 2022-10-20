@@ -11,9 +11,12 @@
 
 		<script type="text/javascript" src="js/Classes/Game.js" defer="true"></script>
 		<script type="text/javascript" src="js/Classes/Player.js" defer="true"></script>
-		<script type="text/javascript" src="js/Classes/GlobalVariables.js" defer="true"></script>
 		<script type="text/javascript" src="js/Classes/DomElements.js" defer="true"></script>
 		<script type="text/javascript" src="js/Classes/Menus.js" defer="true"></script>
+
+		
+		<script type="text/javascript" src="js/Data/GlobalVariables.js" defer="true"></script>
+		<script type="text/javascript" src="js/Data/Buttons.js" defer="true"></script>
 
 		<script type="text/javascript" src="js/Classes/Component.js" defer="true"></script>
 		
@@ -42,13 +45,13 @@
 		<!-- MenuPause-->
 		<nav id = "navPause">
 			<figure id = pauseMenu>
-				<img id="pauseMenu_0" src = "resources/menu/pauseMenu_0.png"> </img>
-				<img id="pauseMenu_1" src = "resources/menu/pauseMenu_1.png"> </img>
-				<img id="pauseMenu_2" src = "resources/menu/pauseMenu_2.png"> </img>				
-				<img id="pauseMenu_3" src = "resources/menu/pauseMenu_3.png"> </img>
-				<img id="pauseMenu_4" src = "resources/menu/pauseMenu_4.png"> </img>
-				<img id="pauseMenu_5" src = "resources/menu/pauseMenu_5.png"> </img>
-				<img id="pauseMenu_6" src = "resources/menu/pauseMenu_6.png"> </img>
+				<img id="pauseMenu_muteM" src = "resources/menu/pauseMenu_0.png"> </img>
+				<img id="pauseMenu_volumeLowM" src = "resources/menu/pauseMenu_1.png"> </img>
+				<img id="pauseMenu_volumeHighM" src = "resources/menu/pauseMenu_2.png"> </img>				
+				<img id="pauseMenu_muteS" src = "resources/menu/pauseMenu_3.png"> </img>
+				<img id="pauseMenu_volumeLowS" src = "resources/menu/pauseMenu_4.png"> </img>
+				<img id="pauseMenu_volumeHighS" src = "resources/menu/pauseMenu_5.png"> </img>
+				<img id="pauseMenu_back" src = "resources/menu/pauseMenu_6.png"> </img>
 			</figure>
 		</nav>
 
@@ -57,9 +60,9 @@
 		<nav id = navPop>
 			<figure id = popUpMenu>
 				<p id = textPop>Sample Text. Shouldn't appear. Please contact a senior technician ... </p>
-				<img id = "popUpMenu_0" src = "resources/menu/popUpMenu_0.png"> </img>
-				<img id = "popUpMenu_1" src = "resources/menu/popUpMenu_1.png"> </img>	
-				<img id = "popUpMenu_2" src = "resources/menu/popUpMenu_2.png"> </img>
+				<img id = "popUpMenu_yesButton" src = "resources/menu/popUpMenu_0.png"> </img>
+				<img id = "popUpMenu_okButton" src = "resources/menu/popUpMenu_1.png"> </img>	
+				<img id = "popUpMenu_noButton" src = "resources/menu/popUpMenu_2.png"> </img>
 			</figure>
 		</nav>
 
@@ -68,7 +71,7 @@
 
 		<!-- StartMenu-->
 		<figure id = startMenu , class = background>
-			<img id="startMenu_0" src = "resources/menu/startMenu_0.png"> </img>
+			<img id="startMenu_startButton" src = "resources/menu/startMenu_0.png"> </img>
 		</figure>
 
 
@@ -76,8 +79,8 @@
 		<figure id = loginRegMenu , class = background>
 			<input id = name , type = "text" value = "YourName", maxlength = "8">
 			<!-- input type = "text"  -->
-			<img id = "loginRegMenu_0" src = "resources/menu/loginRegMenu_0.png"> </img>
-			<img id = "loginRegMenu_1" src = "resources/menu/loginRegMenu_1.png"> </img>
+			<img id = "loginRegMenu_signUpButton" src = "resources/menu/loginRegMenu_0.png"> </img>
+			<img id = "loginRegMenu_loginButton" src = "resources/menu/loginRegMenu_1.png"> </img>
 		</figure>
 
 
@@ -85,32 +88,32 @@
 		<!-- MainMenu-->
 		<figure id = mainMenu , class = background >
 			<p id = "playerMain", class = "player"> </p>
-			<img id="mainMenu_0" src = "resources/menu/mainMenu_0.png"> </img>
-			<img id="mainMenu_1" src = "resources/menu/mainMenu_1.png"> </img>
-			<img id="mainMenu_2" src = "resources/menu/mainMenu_2.png"> </img>
-			<img id="mainMenu_3" , class = back , src = "resources/menu/mainMenu_3.png"> </img>
-			<img id="mainMenu_4" src = "resources/menu/mainMenu_4.png"> </img>
-			<img id="mainMenu_5" src = "resources/menu/mainMenu_5.png"> </img>
-			<img id="mainMenu_6" src = "resources/menu/mainMenu_6.png"> </img>
-			<img id="mainMenu_7" src = "resources/menu/mainMenu_7.png"> </img>
+			<img id="mainMenu_campaign" src = "resources/menu/mainMenu_0.png"> </img>
+			<img id="mainMenu_endless" src = "resources/menu/mainMenu_1.png"> </img>
+			<img id="mainMenu_editor" src = "resources/menu/mainMenu_2.png"> </img>
+			<img id="mainMenu_leave" , class = back , src = "resources/menu/mainMenu_3.png"> </img>
+			<img id="mainMenu_help" src = "resources/menu/mainMenu_4.png"> </img>
+			<img id="mainMenu_credits" src = "resources/menu/mainMenu_5.png"> </img>
+			<img id="mainMenu_leaderBoard" src = "resources/menu/mainMenu_6.png"> </img>
+			<img id="mainMenu_controls" src = "resources/menu/mainMenu_7.png"> </img>
 		</figure>
 		
 		<!-- LevelMenu-->
 		<figure id = levelMenu , class = background >
 			<p id = "playerLevel", class = "player"> </p>
-			<img id="levelMenu_0" src = "resources/menu/levelMenu_0.png"> </img>
-			<img id="levelMenu_1" src = "resources/menu/levelMenu_1.png"> </img>
-			<img id="levelMenu_2" src = "resources/menu/levelMenu_2.png"> </img>
-			<img id="levelMenu_3" src = "resources/menu/levelMenu_3.png"> </img>
-			<img id="levelMenu_4" , class = back src = "resources/menu/levelMenu_4.png"> </img>
+			<img id="levelMenu_level1" src = "resources/menu/levelMenu_0.png"> </img>
+			<img id="levelMenu_level2" src = "resources/menu/levelMenu_1.png"> </img>
+			<img id="levelMenu_level3" src = "resources/menu/levelMenu_2.png"> </img>
+			<img id="levelMenu_speedrun" src = "resources/menu/levelMenu_3.png"> </img>
+			<img id="levelMenu_back" , class = back src = "resources/menu/levelMenu_4.png"> </img>
 		</figure>
 
 		<!-- ChoosespaceshipMenu-->
 		<figure id = chooseSpaceshipMenu , class = background >
-			<img id="chooseSpaceshipMenu_0" src = "resources/menu/chooseSpaceshipMenu_0.png"> </img>
-			<img id="chooseSpaceshipMenu_1" src = "resources/menu/chooseSpaceshipMenu_1.png"> </img>
-			<img id="chooseSpaceshipMenu_2" , class = play , src = "resources/menu/chooseSpaceshipMenu_2.png"> </img>
-			<img id="chooseSpaceshipMenu_3", class = back  src = "resources/menu/chooseSpaceshipMenu_3.png"> </img>
+			<img id="chooseSpaceshipMenu_left" src = "resources/menu/chooseSpaceshipMenu_0.png"> </img>
+			<img id="chooseSpaceshipMenu_right" src = "resources/menu/chooseSpaceshipMenu_1.png"> </img>
+			<img id="chooseSpaceshipMenu_go" , class = play , src = "resources/menu/chooseSpaceshipMenu_2.png"> </img>
+			<img id="chooseSpaceshipMenu_backChooseSpaceship", class = back  src = "resources/menu/chooseSpaceshipMenu_3.png"> </img>
 
 			<figure id = BoxAc>
 				<p id = spaceship0 , class = textAc> - Standard spaceship -</p>
@@ -210,7 +213,7 @@
 			</figure>
 
 
-			<img id="leaderBoard_0" , class = back src = "resources/menu/leaderBoard_0.png"> </img>
+			<img id="leaderBoard_leaderBoardBack" , class = back src = "resources/menu/leaderBoard_0.png"> </img>
 		</figure>
 
 		<!-- HelpMenu-->
@@ -261,31 +264,31 @@
 					<p id = helpMenuText_11 , class = "textHelp"> [Rockets] Boss and Enemies will shot you and if it hits you, you will lose a life and get invulnerable for a short period of time. </p>
 
 					<img id="helpMenuImg_12", class = "imgHelp", src = "resources/menu/rocketHelp_0.png"> </img>
-					<p id = helpMenuText_12 , class = "textHelp"> [Rockets] You will start with Rocket level 2 when you play campain level 2.</p>
+					<p id = helpMenuText_12 , class = "textHelp"> [Rockets] You will start with Rocket level 2 when you play campaign level 2.</p>
 
 					<img id="helpMenuImg_13", class = "imgHelp", src = "resources/menu/rocketHelp_1.png"> </img>
-					<p id = helpMenuText_13 , class = "textHelp"> [Rockets] You will start with Rocket level 3 when you play campain level 3.</p>
+					<p id = helpMenuText_13 , class = "textHelp"> [Rockets] You will start with Rocket level 3 when you play campaign level 3.</p>
 				</figure>
 			</figure>
 
-			<img id="helpMenu_0" , class = back src = "resources/menu/helpMenu_0.png"> </img>
-			<img id="helpMenu_1" , class = play src = "resources/menu/helpMenu_1.png"> </img>
+			<img id="helpMenu_backHelp" , class = back src = "resources/menu/helpMenu_0.png"> </img>
+			<img id="helpMenu_nextHelp" , class = play src = "resources/menu/helpMenu_1.png"> </img>
 		</figure>
 
 		<!-- ControlsMenu-->
 		<figure id = controlsMenu , class = background >
 			<figure id = BoxControls>
 			</figure>
-			<img id="controlsMenu_0" , class = back src = "resources/menu/controlsMenu_0.png"> </img>
-			<img id="controlsMenu_1" , src = "resources/menu/controlsMenu_1.png"> </img>
-			<img id="controlsMenu_2" , class = play , src = "resources/menu/controlsMenu_2.png"> </img>
+			<img id="controlsMenu_backControl" , class = back src = "resources/menu/controlsMenu_0.png"> </img>
+			<img id="controlsMenu_nextControl" , src = "resources/menu/controlsMenu_1.png"> </img>
+			<img id="controlsMenu_playControl" , class = play , src = "resources/menu/controlsMenu_2.png"> </img>
 		</figure>
 
 
 		<!-- CreditsMenu-->
 		<figure id = creditsMenu , class = background >
 			<p id = "playerCredits", class = "player"> </p>
-			<img id="creditsMenu_0" , class = back src = "resources/menu/creditsMenu_0.png"> </img>
+			<img id="creditsMenu_backCredits" , class = back src = "resources/menu/creditsMenu_0.png"> </img>
 		</figure>
 
 

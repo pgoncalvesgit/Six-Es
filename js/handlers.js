@@ -33,8 +33,8 @@ function loadEndingHandlers(auxMisc, menus, buttons, imgs, sounds, musics, body,
 		window.addEventListener("initMusicsEnd", initMusicsEndHandler);
 
 		//load the music of the game
-		nToLoad  = {"campain" : 3 ,"endless" : 1 , "boss" : 2 ,"music": 1 };
-		musics   = {"campain" : [],"endless" : [], "boss" : [],"music": []};
+		nToLoad  = {"campaign" : 3 ,"endless" : 1 , "boss" : 2 ,"music": 1 };
+		musics   = {"campaign" : [],"endless" : [], "boss" : [],"music": []};
 
 
 		initMusics(nToLoad, musics);

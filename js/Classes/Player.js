@@ -6,7 +6,7 @@ class Player{
 
 		this.name;
 		this.level;
-		this.campain;
+		this.campaign;
 		this.endless;
 		this.spaceships;
 		this.tutorial;
@@ -16,7 +16,7 @@ class Player{
 	createPlayer(name){
 		this.name       = name;
 		this.level      = 0;
-		this.campain    = 0;
+		this.campaign    = 0;
 		this.endless    = 0;
 		this.spaceships = "10000";
 		this.tutorial   = "00";
@@ -26,7 +26,7 @@ class Player{
 	setCookie(){
 
 		document.cookie = this.name + "Level=" 	    + this.level      + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
-		document.cookie = this.name + "Campain="    + this.campain    + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
+		document.cookie = this.name + "campaign="    + this.campaign    + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
 		document.cookie = this.name + "Endless="    + this.endless    + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
 		document.cookie = this.name + "Spaceships=" + this.spaceships + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
 		document.cookie = this.name + "Tutorial="   + this.tutorial   + ";expires=Thu, 02 Jan 2023 00:00:00 UTC;path=/";
@@ -35,7 +35,7 @@ class Player{
 
 	getCookie(){
 		var searchLevel 	 = this.name + "Level";
-		var searchCampain    = this.name + "Campain";
+		var searchcampaign    = this.name + "campaign";
 		var searchEndless    = this.name + "Endless";
 		var searchSpaceships = this.name + "Spaceships";
 		var searchTutorial   = this.name + "Tutorial";
@@ -54,15 +54,15 @@ class Player{
 
 			if(splitedCookie[0].indexOf(this.name) == 0 &&
 				(splitedCookie[0].substring(this.name.length) == "Level"      ||
-				 splitedCookie[0].substring(this.name.length) == "Campain"    ||
+				 splitedCookie[0].substring(this.name.length) == "campaign"    ||
 				 splitedCookie[0].substring(this.name.length) == "Endless"    ||
 				 splitedCookie[0].substring(this.name.length) == "Spaceships" ||
 				 splitedCookie[0].substring(this.name.length) == "Tutorial") ) {
 				if (splitedCookie[0].indexOf(searchLevel) == 0) {
 					this.level = splitedCookie[1];
 				}
-				else if (splitedCookie[0].indexOf(searchCampain) == 0) {
-					this.campain = splitedCookie[1];
+				else if (splitedCookie[0].indexOf(searchcampaign) == 0) {
+					this.campaign = splitedCookie[1];
 				}
 				else if (splitedCookie[0].indexOf(searchEndless) == 0) {
 					this.endless = splitedCookie[1];
@@ -92,9 +92,9 @@ class Player{
 	 	return -1;
 	}
 
-	updateCoockiesCampain(auxMisc, buttons, points){
-	 	if(parseInt(this.campain) < points){
-	 		this.campain = points
+	updateCoockiescampaign(auxMisc, buttons, points){
+	 	if(parseInt(this.campaign) < points){
+	 		this.campaign = points
 	 		this.setCookie();
 	 	}
 	}
