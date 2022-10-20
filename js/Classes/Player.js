@@ -85,7 +85,7 @@ class Player{
 	updateCoockiesLevel(auxMisc, buttons, level){
 	 	if(parseInt(this.level) == level - 1){
 	 		this.level = level;
-	 		buttons["levelMenu"][this.level].style.display = "block";
+	 		buttons["levelMenu"]["level" + this.level].style.display = "block";
 	 		this.setCookie();
 	 		return level;
 	 	}
